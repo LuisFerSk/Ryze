@@ -14,7 +14,7 @@ import PeriodoAcademicoTable from "../components/periodoAcademico/PeriodoAcademi
 
 const Accordions = [
   createAccordion(
-    "Nuevo registro",
+    "Agregar registro",
     <LibraryAddIcon color="primary" />,
     <PeriodoAcademicoForm />,
   ),
