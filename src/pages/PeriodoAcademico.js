@@ -23,11 +23,11 @@ const Accordions = [
 export default function PeriodoAcademico() {
   return (
     <Page title="Periodo academico | Ryze">
-      <Container maxWidth="xl" >
+      <Container>
         <Grid container spacing={6}>
           <Grid item xs={12} md={12} sm={12} lg={12}>
             <Card>
-              <ControlledAccordions accordions={Accordions} />
+              <ControlledAccordions accordions={Accordions} indexOpen={0} />
             </Card>
           </Grid>
           <Grid item xs={12} md={12} sm={12} lg={12}>

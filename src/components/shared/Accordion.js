@@ -12,9 +12,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import useStyles from "../../theme/accordion";
 
-export default function PeriodoAcademico({ accordions }) {
+export default function CustomAccordion({ accordions, indexOpen }) {
 	const classes = useStyles();
-	const [expanded, setExpanded] = useState(false);
+	const [expanded, setExpanded] = useState(indexOpen >= 0 ? indexOpen : false);
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
