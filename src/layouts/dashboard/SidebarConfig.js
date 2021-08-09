@@ -21,12 +21,12 @@ const sidebarConfig = [
   },
   {
     title: 'periodo academico',
-    path: '/404',
+    path: '/dashboard/periodo_academico',
     icon: getIcon(clockFill)
   },
   {
     title: 'facultades',
-    path: '/404',
+    path: '/dashboard/user',
     icon: getIcon(openBookFill)
   },
   {

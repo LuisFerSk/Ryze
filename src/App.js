@@ -1,11 +1,7 @@
-// routes
+import React from 'react';
 import Router from './routes';
-// theme
 import ThemeConfig from './theme';
-// components
 import ScrollToTop from './components/ScrollToTop';
-
-// ----------------------------------------------------------------------
 
 export default function App() {
   return (
