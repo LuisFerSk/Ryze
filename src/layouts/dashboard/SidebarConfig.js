@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react';
-import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
+import schoolIcon from '@iconify/icons-mdi/school';
+import bookFill from '@iconify/icons-eva/book-fill';
+import clockFill from '@iconify/icons-eva/clock-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
+import personFill from '@iconify/icons-eva/person-fill';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
-import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import openBookFill from '@iconify/icons-eva/book-open-fill';
+import briefcaseFill from '@iconify/icons-eva/briefcase-fill';
+import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 
 // ----------------------------------------------------------------------
 
@@ -18,34 +20,44 @@ const sidebarConfig = [
     icon: getIcon(pieChart2Fill)
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
+    title: 'periodo academico',
+    path: '/404',
+    icon: getIcon(clockFill)
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
+    title: 'facultades',
+    path: '/404',
+    icon: getIcon(openBookFill)
   },
   {
-    title: 'blog',
-    path: '/dashboard/blog',
+    title: 'programas',
+    path: '/404',
     icon: getIcon(fileTextFill)
   },
   {
-    title: 'login',
-    path: '/login',
-    icon: getIcon(lockFill)
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon(personAddFill)
-  },
-  {
-    title: 'Not found',
+    title: 'asignaturas',
     path: '/404',
-    icon: getIcon(alertTriangleFill)
+    icon: getIcon(bookFill)
+  },
+  {
+    title: 'grupo',
+    path: '/404',
+    icon: getIcon(peopleFill)
+  },
+  {
+    title: 'estudiantes',
+    path: '/404',
+    icon: getIcon(schoolIcon)
+  },
+  {
+    title: 'profesores',
+    path: '/404',
+    icon: getIcon(briefcaseFill)
+  },
+  {
+    title: 'usuarios',
+    path: '/404',
+    icon: getIcon(personFill)
   }
 ];
 

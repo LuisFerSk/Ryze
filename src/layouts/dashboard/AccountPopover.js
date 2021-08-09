@@ -16,17 +16,17 @@ import account from '../../_mocks_/account';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'Inicio',
     icon: homeFill,
     linkTo: '/'
   },
   {
-    label: 'Profile',
+    label: 'Perfil',
     icon: personFill,
     linkTo: '#'
   },
   {
-    label: 'Settings',
+    label: 'Configuraciones',
     icon: settings2Fill,
     linkTo: '#'
   }
@@ -111,7 +111,7 @@ export default function AccountPopover() {
 
         <Box sx={{ p: 2, pt: 1.5 }}>
           <Button fullWidth color="inherit" variant="outlined">
-            Logout
+            Cerrar sesion
           </Button>
         </Box>
       </MenuPopover>
