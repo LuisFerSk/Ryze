@@ -3,12 +3,13 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
-import User from './pages/User';
-import Blog from './pages/Blog';
 import Login from './pages/Login';
+import Grupo from './pages/Grupo';
 import NotFound from './pages/Page404';
-import Products from './pages/Products';
+import Facultad from './pages/Facultad';
+import Programa from './pages/Programa';
 import Register from './pages/Register';
+import Asignatura from './pages/Asignatura';
 import DashboardApp from './pages/DashboardApp';
 import PeriodoAcademico from "./pages/PeriodoAcademico";
 
@@ -22,10 +23,11 @@ export default function Router() {
       children: [
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
         { path: 'periodo_academico', element: <PeriodoAcademico /> },
-        { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'facultad', element: <Facultad /> },
+        { path: 'programa', element: <Programa /> },
+        { path: 'asignatura', element: <Asignatura /> },
+        { path: 'grupo', element: <Grupo /> },
       ]
     },
     {

@@ -26,37 +26,41 @@ const sidebarConfig = [
   },
   {
     title: 'facultades',
-    path: '/dashboard/user',
+    path: '/dashboard/facultad',
     icon: getIcon(openBookFill)
   },
   {
     title: 'programas',
-    path: '/404',
+    path: '/dashboard/programa',
     icon: getIcon(fileTextFill)
   },
   {
     title: 'asignaturas',
-    path: '/404',
+    path: '/dashboard/asignatura',
     icon: getIcon(bookFill)
   },
   {
-    title: 'grupo',
-    path: '/404',
+    title: 'grupos',
+    path: '/dashboard/grupo',
+
     icon: getIcon(peopleFill)
   },
   {
     title: 'estudiantes',
-    path: '/404',
+    path: '/dashboard/estudiante',
+
     icon: getIcon(schoolIcon)
   },
   {
     title: 'profesores',
-    path: '/404',
+    path: '/dashboard/profesor',
+
     icon: getIcon(briefcaseFill)
   },
   {
     title: 'usuarios',
-    path: '/404',
+    path: '/dashboard/usuario',
+
     icon: getIcon(personFill)
   }
 ];

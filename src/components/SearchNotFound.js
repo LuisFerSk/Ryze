@@ -15,8 +15,8 @@ export default function SearchNotFound({ searchQuery = '', ...other }) {
         No se encontro
       </Typography>
       <Typography variant="body2" align="center">
-        No results found for &nbsp;
-        <strong>&quot;{searchQuery}&quot;</strong>. Try checking for typos or using complete words.
+        No se encontraron resultados para &nbsp;
+        <strong>&quot;{searchQuery}&quot;</strong>. Intente comprobar si hay errores tipográficos o utilice palabras completas.
       </Typography>
     </Paper>
   );

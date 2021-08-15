@@ -5,11 +5,12 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
-const initPeriodoAcademico = {
+import facultades from '../../_mocks_/facultad';
+
+const initPrograma = {
     titulo: "",
     estado: "",
-    fechaFin: "",
-    fechaInicio: "",
+    facultad: ""
 };
 
 const estados = [
@@ -17,17 +18,17 @@ const estados = [
     { label: "Cerrado", value: false },
 ]
 
-const PeriodoAcademicoForm = ({ init }) => {
+const ProgramaForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [periodoAcademico, setPeriodoAcademico] = useState(init ? init.data : initPeriodoAcademico);
+    const [programa, setPrograma] = useState(init ? init.data : initPrograma);
 
-    const { titulo, estado, fechaFin, fechaInicio } = periodoAcademico;
+    const { titulo, facultad, estado } = programa;
 
     const updateState = (e) => {
         setMensaje();
-        setPeriodoAcademico({
-            ...periodoAcademico,
+        setPrograma({
+            ...programa,
             [e.target.name]: e.target.value,
         });
     };
@@ -35,7 +36,7 @@ const PeriodoAcademicoForm = ({ init }) => {
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (titulo.trim() === "" || fechaFin.trim() === "" || fechaInicio.trim() === "" || estado.trim() === "") {
+        if (titulo.trim() === "" || facultad.trim() === "" || estado.trim() === "") {
             setMensaje(
                 <Alert severity="error">
                     ¡Digite todos los campos antes de continuar!
@@ -53,29 +54,45 @@ const PeriodoAcademicoForm = ({ init }) => {
             return;
         }
 
-        setPeriodoAcademico(initPeriodoAcademico);
+        setPrograma(initPrograma);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
             </Alert>,
         );
-
     };
 
     return (
         <form noValidate autoComplete="off" onSubmit={submitForm}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} md={12} sm={12} lg={12}>
                     <TextField
                         fullWidth
                         name="titulo"
                         value={titulo}
                         variant="outlined"
                         onChange={updateState}
-                        label="Periodo academico"
+                        label="Programa"
                     />
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} md={12} sm={8} lg={8}>
+                    <TextField
+                        select
+                        fullWidth
+                        name="facultad"
+                        label="Facultad"
+                        value={facultad}
+                        variant="outlined"
+                        onChange={(e) => updateState(e)}
+                    >
+                        {facultades.map((row, index) =>
+                            <MenuItem key={index} value={row.titulo}>
+                                {row.titulo}
+                            </MenuItem>
+                        )}
+                    </TextField>
+                </Grid>
+                <Grid item xs={12} md={12} sm={4} lg={4}>
                     <TextField
                         select
                         fullWidth
@@ -90,36 +107,7 @@ const PeriodoAcademicoForm = ({ init }) => {
                                 {row.label}
                             </MenuItem>
                         )}
-
                     </TextField>
-                </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
-                    <TextField
-                        fullWidth
-                        type="date"
-                        name="fechaInicio"
-                        variant="outlined"
-                        value={fechaInicio}
-                        onChange={updateState}
-                        label="Fecha de inicio"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
-                    <TextField
-                        fullWidth
-                        type="date"
-                        name="fechaFin"
-                        value={fechaFin}
-                        variant="outlined"
-                        onChange={updateState}
-                        label="Fecha de finalizacion"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12}>
                     <Button
@@ -139,4 +127,4 @@ const PeriodoAcademicoForm = ({ init }) => {
     );
 };
 
-export default PeriodoAcademicoForm;
+export default ProgramaForm;

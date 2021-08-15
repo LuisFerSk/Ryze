@@ -1,49 +1,34 @@
 import CustomTable from "../shared/Table"
-import { sentenceCase } from 'change-case';
 
-import {
-    Stack,
-    Avatar,
-    TableCell,
-    Typography,
-} from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
+
+import data from '../../_mocks_/periodoAcademico';
 
 import Label from '../Label';
 
-import USERLIST from '../../_mocks_/user';
-
 const headLabel = [
-    { id: 'name', label: 'Name', alignRight: false },
-    { id: 'company', label: 'Company', alignRight: false },
-    { id: 'role', label: 'Role', alignRight: false },
-    { id: 'isVerified', label: 'Verified', alignRight: false },
-    { id: 'status', label: 'Status', alignRight: false }
+    { id: 'titulo', label: 'Periodo', alignRight: false },
+    { id: 'fechaInicio', label: 'Fecha de inicio', alignRight: false },
+    { id: 'fechaFin', label: 'Fecha de finalización', alignRight: false },
+    { id: 'estado', label: 'Estado', alignRight: false, },
+    { id: '' }
 ];
 
 const cells = (row) => {
-    const { name, role, status, company, avatarUrl, isVerified } = row;
+    const { titulo, estado, fechaInicio, fechaFin } = row;
 
     return (
         <>
-            <TableCell component="th" scope="row" padding="none">
-                <Stack direction="row" alignItems="center" spacing={2}>
-                    <Avatar alt={name} src={avatarUrl} />
-                    <Typography variant="subtitle2" noWrap>
-                        {name}
-                    </Typography>
-                </Stack>
-            </TableCell>
-            <TableCell align="left">{company}</TableCell>
-            <TableCell align="left">{role}</TableCell>
-            <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+            <TableCell align="left">{titulo}</TableCell>
+            <TableCell align="left">{fechaInicio}</TableCell>
+            <TableCell align="left">{fechaFin}</TableCell>
             <TableCell align="left">
                 <Label
                     variant="ghost"
-                    color={(status === 'banned' && 'error') || 'success'}
+                    color={(estado === true && 'success') || 'error'}
                 >
-                    {sentenceCase(status)}
-                </Label>
-            </TableCell>
+                    {estado === true ? 'Abierto' : 'Cerrado'}
+                </Label></TableCell>
         </>
     );
 };
@@ -51,7 +36,7 @@ const cells = (row) => {
 const PeriodoAcademicoTable = () => {
 
     return (
-        <CustomTable cells={cells} headLabel={headLabel} data={USERLIST} selectBy="name" />
+        <CustomTable cells={cells} headLabel={headLabel} data={data} selectBy="titulo" searchBy="titulo" />
     );
 };
 

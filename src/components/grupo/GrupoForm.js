@@ -5,29 +5,25 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
-const initPeriodoAcademico = {
+import profesores from '../../_mocks_/profesor';
+import asignaturas from '../../_mocks_/asignatura';
+
+const initGrupo = {
     titulo: "",
-    estado: "",
-    fechaFin: "",
-    fechaInicio: "",
+    estado: ""
 };
 
-const estados = [
-    { label: "Abierto", value: true },
-    { label: "Cerrado", value: false },
-]
-
-const PeriodoAcademicoForm = ({ init }) => {
+const GrupoForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [periodoAcademico, setPeriodoAcademico] = useState(init ? init.data : initPeriodoAcademico);
+    const [grupo, setGrupo] = useState(init ? init.data : initGrupo);
 
-    const { titulo, estado, fechaFin, fechaInicio } = periodoAcademico;
+    const { numero, asignatura, profesor } = grupo;
 
     const updateState = (e) => {
         setMensaje();
-        setPeriodoAcademico({
-            ...periodoAcademico,
+        setGrupo({
+            ...grupo,
             [e.target.name]: e.target.value,
         });
     };
@@ -35,7 +31,7 @@ const PeriodoAcademicoForm = ({ init }) => {
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (titulo.trim() === "" || fechaFin.trim() === "" || fechaInicio.trim() === "" || estado.trim() === "") {
+        if (numero.trim() === "" || asignatura.trim() === "" || profesor.trim() === "") {
             setMensaje(
                 <Alert severity="error">
                     ¡Digite todos los campos antes de continuar!
@@ -53,72 +49,60 @@ const PeriodoAcademicoForm = ({ init }) => {
             return;
         }
 
-        setPeriodoAcademico(initPeriodoAcademico);
+        setGrupo(initGrupo);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
             </Alert>,
         );
-
     };
 
     return (
         <form noValidate autoComplete="off" onSubmit={submitForm}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
-                    <TextField
-                        fullWidth
-                        name="titulo"
-                        value={titulo}
-                        variant="outlined"
-                        onChange={updateState}
-                        label="Periodo academico"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} md={12} sm={12} lg={12}>
                     <TextField
                         select
                         fullWidth
-                        name="estado"
-                        label="Estado"
-                        value={estado}
+                        name="profesor"
+                        label="Profesor"
+                        value={profesor}
                         variant="outlined"
                         onChange={(e) => updateState(e)}
                     >
-                        {estados.map((row, index) =>
-                            <MenuItem key={index} value={row.value}>
-                                {row.label}
+                        {profesores.map((row, index) =>
+                            <MenuItem key={index} value={row.cedula}>
+                                {`${row.cedula} - ${row.nombre}`}
                             </MenuItem>
                         )}
-
                     </TextField>
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} md={12} sm={8} lg={8}>
                     <TextField
+                        select
                         fullWidth
-                        type="date"
-                        name="fechaInicio"
+                        name="asignatura"
+                        label="Asignatura"
+                        value={asignatura}
                         variant="outlined"
-                        value={fechaInicio}
-                        onChange={updateState}
-                        label="Fecha de inicio"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
+                        onChange={(e) => updateState(e)}
+                    >
+                        {asignaturas.map((row, index) =>
+                            <MenuItem key={index} value={row.codigo}>
+                                {`${row.codigo} - ${row.titulo}`}
+                            </MenuItem>
+                        )}
+                    </TextField>
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} md={12} sm={4} lg={4}>
                     <TextField
                         fullWidth
-                        type="date"
-                        name="fechaFin"
-                        value={fechaFin}
+                        type="number"
+                        name="numero"
+                        label="Grupo"
+                        value={numero}
                         variant="outlined"
                         onChange={updateState}
-                        label="Fecha de finalizacion"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12}>
@@ -139,4 +123,4 @@ const PeriodoAcademicoForm = ({ init }) => {
     );
 };
 
-export default PeriodoAcademicoForm;
+export default GrupoForm;

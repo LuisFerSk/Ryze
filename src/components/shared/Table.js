@@ -37,7 +37,7 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator, query, searchBy) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -45,14 +45,14 @@ function applySortFilter(array, comparator, query) {
         return a[1] - b[1];
     });
     if (query) {
-        return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        return filter(array, (_user) => _user[searchBy].toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
 }
 
 // ----------------------------------------------------------------------
 
-export default function CustomTable({ headLabel, data, selectBy, cells }) {
+export default function CustomTable({ headLabel, data, selectBy, cells, searchBy }) {
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
     const [selected, setSelected] = useState([]);
@@ -108,7 +108,7 @@ export default function CustomTable({ headLabel, data, selectBy, cells }) {
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    const filteredUsers = applySortFilter(data, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(data, getComparator(order, orderBy), filterName, searchBy);
 
     const isUserNotFound = filteredUsers.length === 0;
 
@@ -154,7 +154,7 @@ export default function CustomTable({ headLabel, data, selectBy, cells }) {
                                                 />
                                             </TableCell>
                                             {cells(row)}
-                                            <TableCell align="right">
+                                            <TableCell padding="checkbox">
                                                 <TableMoreMenu />
                                             </TableCell>
                                         </TableRow>
