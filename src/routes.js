@@ -9,6 +9,7 @@ import NotFound from './pages/Page404';
 import Facultad from './pages/Facultad';
 import Programa from './pages/Programa';
 import Register from './pages/Register';
+import Estudiante from './pages/Estudiante';
 import Asignatura from './pages/Asignatura';
 import DashboardApp from './pages/DashboardApp';
 import PeriodoAcademico from "./pages/PeriodoAcademico";
@@ -27,6 +28,7 @@ export default function Router() {
         { path: 'facultad', element: <Facultad /> },
         { path: 'programa', element: <Programa /> },
         { path: 'asignatura', element: <Asignatura /> },
+        { path: 'estudiante', element: <Estudiante /> },
         { path: 'grupo', element: <Grupo /> },
       ]
     },

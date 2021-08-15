@@ -72,7 +72,7 @@ const GrupoForm = ({ init }) => {
                     >
                         {profesores.map((row, index) =>
                             <MenuItem key={index} value={row.cedula}>
-                                {`${row.cedula} - ${row.nombre}`}
+                                {`${row.cedula} - ${row.nombres} ${row.apellidos}`}
                             </MenuItem>
                         )}
                     </TextField>
