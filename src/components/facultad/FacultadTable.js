@@ -9,7 +9,6 @@ import facultades from '../../_mocks_/facultad';
 const headLabel = [
     { id: 'titulo', label: 'Facultad', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false},
-    { id: '' }
 ];
 
 const cells = (row) => {

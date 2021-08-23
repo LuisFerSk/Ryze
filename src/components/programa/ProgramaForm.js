@@ -13,6 +13,12 @@ const initPrograma = {
     facultad: ""
 };
 
+const initError = {
+    titulo: false,
+    estado: false,
+    facultad: false
+};
+
 const estados = [
     { label: "Abierto", value: true },
     { label: "Cerrado", value: false },
@@ -25,6 +31,8 @@ const ProgramaForm = ({ init }) => {
 
     const { titulo, facultad, estado } = programa;
 
+    const [error, setError] = useState(initError);
+
     const updateState = (e) => {
         setMensaje();
         setPrograma({
@@ -33,15 +41,33 @@ const ProgramaForm = ({ init }) => {
         });
     };
 
+    const updateError = (key, value) => {
+        setError(old => ({ ...old, [key]: value }));
+    }
+
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (titulo.trim() === "" || facultad.trim() === "" || estado.trim() === "") {
-            setMensaje(
-                <Alert severity="error">
-                    ¡Digite todos los campos antes de continuar!
-                </Alert>,
-            );
+        setMensaje();
+
+        let error = false;
+
+        if (titulo.length < 5) {
+            updateError("titulo", true);
+            error = true;
+        }
+
+        if (facultad.trim() === "") {
+            updateError("facultad", true);
+            error = true;
+        }
+
+        if (typeof estado !== "boolean") {
+            updateError("estado", true);
+            error = true;
+        }
+
+        if (error) {
             return;
         }
 
@@ -54,6 +80,7 @@ const ProgramaForm = ({ init }) => {
             return;
         }
 
+        setError(initError);
         setPrograma(initPrograma);
         setMensaje(
             <Alert severity="success">
@@ -70,9 +97,23 @@ const ProgramaForm = ({ init }) => {
                         fullWidth
                         name="titulo"
                         value={titulo}
-                        variant="outlined"
-                        onChange={updateState}
                         label="Programa"
+                        variant="outlined"
+                        error={error.titulo}
+                        helperText={titulo.length < 5 ? "Minimo 5 caracteres" : null}
+                        onChange={(e) => {
+                            const key = e.target.name;
+
+                            if (e.target.value.length > 30) {
+                                return;
+                            }
+
+                            if (e.target.value.length >= 5) {
+                                updateError(key, false);
+                            }
+
+                            updateState(e);
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={8} lg={8}>
@@ -83,7 +124,12 @@ const ProgramaForm = ({ init }) => {
                         label="Facultad"
                         value={facultad}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.facultad}
+                        helperText={facultad.trim() === "" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            updateError(e.target.name, false);
+                            updateState(e);
+                        }}
                     >
                         {facultades.map((row, index) =>
                             <MenuItem key={index} value={row.titulo}>
@@ -100,7 +146,12 @@ const ProgramaForm = ({ init }) => {
                         label="Estado"
                         value={estado}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.estado}
+                        helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            updateError(e.target.name, false);
+                            updateState(e);
+                        }}
                     >
                         {estados.map((row, index) =>
                             <MenuItem key={index} value={row.value}>

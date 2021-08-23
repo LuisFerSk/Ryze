@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import MaskedInput from 'react-text-mask';
+
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import Alert from "@material-ui/lab/Alert";
@@ -17,10 +19,23 @@ const estados = [
     { label: "Cerrado", value: false },
 ]
 
+function TextMaskCustom(props) {
+    const { ...other } = props;
+
+    return (
+        <MaskedInput
+            {...other}
+            mask={[/[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
+            placeholderChar={'\u2000'}
+            showMask
+        />
+    );
+}
+
 const PeriodoAcademicoForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [periodoAcademico, setPeriodoAcademico] = useState(init ? init.data : initPeriodoAcademico);
+    const [periodoAcademico, setPeriodoAcademico] = useState(init ? init : initPeriodoAcademico);
 
     const { titulo, estado, fechaFin, fechaInicio } = periodoAcademico;
 
@@ -73,6 +88,12 @@ const PeriodoAcademicoForm = ({ init }) => {
                         variant="outlined"
                         onChange={updateState}
                         label="Periodo academico"
+                        InputProps={{
+                            inputComponent: TextMaskCustom,
+                        }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={6} lg={6}>
@@ -124,7 +145,7 @@ const PeriodoAcademicoForm = ({ init }) => {
                 <Grid item xs={12} md={12} sm={12} lg={12}>
                     <Button
                         type="submit"
-                        color="primary"
+                        color={init ? "info" : "primary"}
                         variant="outlined"
                         startIcon={<SaveIcon />}
                     >

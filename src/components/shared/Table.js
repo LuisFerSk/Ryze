@@ -16,7 +16,6 @@ import {
 import Scrollbar from '../Scrollbar';
 import SearchNotFound from '../SearchNotFound';
 import TableListHead from "./table/TableListHead";
-import TableMoreMenu from "./table/TableMoreMenu";
 import TableListToolbar from "./table/TableListToolbar";
 
 // ----------------------------------------------------------------------
@@ -154,9 +153,6 @@ export default function CustomTable({ headLabel, data, selectBy, cells, searchBy
                                                 />
                                             </TableCell>
                                             {cells(row)}
-                                            <TableCell padding="checkbox">
-                                                <TableMoreMenu />
-                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}

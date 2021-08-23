@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import Alert from "@material-ui/lab/Alert";
@@ -10,10 +11,18 @@ const initFacultad = {
     estado: ""
 };
 
+const initError = {
+    titulo: false,
+    estado: false
+};
+
 const estados = [
     { label: "Abierto", value: true },
     { label: "Cerrado", value: false },
 ]
+
+
+
 
 const FacultadForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
@@ -21,6 +30,8 @@ const FacultadForm = ({ init }) => {
     const [facultad, setFacultad] = useState(init ? init.data : initFacultad);
 
     const { titulo, estado } = facultad;
+
+    const [error, setError] = useState(initError);
 
     const updateState = (e) => {
         setMensaje();
@@ -30,15 +41,28 @@ const FacultadForm = ({ init }) => {
         });
     };
 
+    const updateError = (key, value) => {
+        setError(old => ({ ...old, [key]: value }));
+    }
+
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (titulo.trim() === "" || estado.trim() === "") {
-            setMensaje(
-                <Alert severity="error">
-                    ¡Digite todos los campos antes de continuar!
-                </Alert>,
-            );
+        setMensaje();
+
+        let error = false;
+
+        if (titulo.length < 5) {
+            updateError("titulo", true);
+            error = true;
+        }
+
+        if (typeof estado !== "boolean") {
+            updateError("estado", true);
+            error = true;
+        }
+
+        if (error) {
             return;
         }
 
@@ -51,6 +75,7 @@ const FacultadForm = ({ init }) => {
             return;
         }
 
+        setError(initError);
         setFacultad(initFacultad);
         setMensaje(
             <Alert severity="success">
@@ -67,9 +92,21 @@ const FacultadForm = ({ init }) => {
                         fullWidth
                         name="titulo"
                         value={titulo}
-                        variant="outlined"
-                        onChange={updateState}
                         label="Facultad"
+                        variant="outlined"
+                        error={error.titulo}
+                        helperText={titulo.length < 5 ? "Minimo 5 caracteres" : null}
+                        onChange={(e) => {
+                            if (e.target.value.length > 30) {
+                                return;
+                            }
+
+                            if (e.target.value.length >= 5) {
+                                updateError(e.target.name, false);
+                            }
+
+                            updateState(e);
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={4} lg={4}>
@@ -80,7 +117,12 @@ const FacultadForm = ({ init }) => {
                         label="Estado"
                         value={estado}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.estado}
+                        helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            updateError(e.target.name, false);
+                            updateState(e);
+                        }}
                     >
                         {estados.map((row, index) =>
                             <MenuItem key={index} value={row.value}>

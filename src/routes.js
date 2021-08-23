@@ -43,7 +43,6 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
-
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
