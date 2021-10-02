@@ -1,63 +1,70 @@
 import { useState } from "react";
 
-import MaskedInput from 'react-text-mask';
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
-const initPeriodoAcademico = {
-    titulo: "",
-    estado: "",
-    fechaFin: "",
-    fechaInicio: "",
-};
+import estados from "../../_mocks_/estados";
+import ControlError from "../shared/ControlError";
+import ControlObjectForm from "../shared/ControlObjectForm";
+import TituloPeriodoAcademico from "./PeriodoAcademicoTitulo";
+import { initPeriodoAcademico as init } from "../../_mocks_/periodoAcademico";
 
-const estados = [
-    { label: "Abierto", value: true },
-    { label: "Cerrado", value: false },
-]
+const initPeriodoAcademico = init("");
 
-function TextMaskCustom(props) {
-    const { ...other } = props;
-
-    return (
-        <MaskedInput
-            {...other}
-            mask={[/[1-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
-            placeholderChar={'\u2000'}
-            showMask
-        />
-    );
-}
+const initError = init(false);
 
 const PeriodoAcademicoForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [periodoAcademico, setPeriodoAcademico] = useState(init ? init : initPeriodoAcademico);
+    const [periodoAcademico, setPeriodoAcademico, updateState] = ControlObjectForm(init ? init : initPeriodoAcademico, setMensaje);
 
     const { titulo, estado, fechaFin, fechaInicio } = periodoAcademico;
 
-    const updateState = (e) => {
-        setMensaje();
-        setPeriodoAcademico({
-            ...periodoAcademico,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [error, setError, updateError] = ControlError(initError);
 
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (titulo.trim() === "" || fechaFin.trim() === "" || fechaInicio.trim() === "" || estado.trim() === "") {
-            setMensaje(
-                <Alert severity="error">
-                    ¡Digite todos los campos antes de continuar!
-                </Alert>,
-            );
+        setMensaje();
+
+        let error = false;
+
+        if (titulo.trim().length !== 7) {
+            updateError("titulo", true);
+            error = true;
+        } else {
+            updateError("titulo", false);
+        }
+
+        if (typeof estado !== "boolean") {
+            updateError("estado", true);
+            error = true;
+        } else {
+            updateError("estado", false);
+        }
+
+        if (fechaInicio.trim() === "" || fechaInicio.trim().length !== 10) {
+            updateError("fechaInicio", true);
+            error = true;
+        } else {
+            updateError("fechaInicio", false);
+        }
+
+        if (fechaFin.trim() === "" || fechaFin.trim().length !== 10 || fechaInicio >= fechaFin) {
+            updateError("fechaFin", true);
+            error = true;
+        } else {
+            updateError("fechaFin", false);
+        }
+
+        if (error === true) {
             return;
         }
+
+        setError(initError);
+        setPeriodoAcademico(initPeriodoAcademico);
 
         if (init) {
             setMensaje(
@@ -68,7 +75,6 @@ const PeriodoAcademicoForm = ({ init }) => {
             return;
         }
 
-        setPeriodoAcademico(initPeriodoAcademico);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
@@ -86,10 +92,21 @@ const PeriodoAcademicoForm = ({ init }) => {
                         name="titulo"
                         value={titulo}
                         variant="outlined"
-                        onChange={updateState}
+                        error={error.titulo}
+                        onChange={(e) => {
+                            if (e.target.value.trim().length === 7) {
+                                updateError(e.target.name, false);
+                            }
+                            updateState(e)
+                        }}
                         label="Periodo academico"
+                        helperText={
+                            titulo.trim().length !== 7 ?
+                                "Verifique que el titulo cumpla con el formato Ej: 2020-20"
+                                : null
+                        }
                         InputProps={{
-                            inputComponent: TextMaskCustom,
+                            inputComponent: TituloPeriodoAcademico,
                         }}
                         InputLabelProps={{
                             shrink: true,
@@ -104,14 +121,20 @@ const PeriodoAcademicoForm = ({ init }) => {
                         label="Estado"
                         value={estado}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.estado}
+                        helperText={typeof estado !== "boolean" ? "Seleccione una opcion" : null}
+                        onChange={(e) => {
+                            if (typeof e.target.value === "boolean") {
+                                updateError(e.target.name, false);
+                            }
+                            updateState(e)
+                        }}
                     >
                         {estados.map((row, index) =>
                             <MenuItem key={index} value={row.value}>
                                 {row.label}
                             </MenuItem>
                         )}
-
                     </TextField>
                 </Grid>
                 <Grid item xs={12} md={12} sm={6} lg={6}>
@@ -121,8 +144,19 @@ const PeriodoAcademicoForm = ({ init }) => {
                         name="fechaInicio"
                         variant="outlined"
                         value={fechaInicio}
-                        onChange={updateState}
                         label="Fecha de inicio"
+                        error={error.fechaInicio}
+                        helperText={fechaInicio.trim() === "" ? "Seleccione una fecha inicial" : null}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if (value.trim() !== "" && value.trim().length === 10) {
+                                updateError(e.target.name, false);
+                            }
+                            if (value < fechaFin) {
+                                updateError("fechaFin", false);
+                            }
+                            updateState(e)
+                        }}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -135,8 +169,22 @@ const PeriodoAcademicoForm = ({ init }) => {
                         name="fechaFin"
                         value={fechaFin}
                         variant="outlined"
-                        onChange={updateState}
+                        error={error.fechaFin}
                         label="Fecha de finalizacion"
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if (value.trim() !== "" && value.trim().length === 10 && fechaInicio < value) {
+                                updateError(e.target.name, false);
+                            }
+                            updateState(e)
+                        }}
+                        helperText={
+                            fechaInicio.trim() === "" ?
+                                "Debe seleccionar una fecha inicial"
+                                : fechaInicio >= fechaFin ?
+                                    "La fecha final no puede ser menor o igual a la inicial"
+                                    : null
+                        }
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -145,9 +193,9 @@ const PeriodoAcademicoForm = ({ init }) => {
                 <Grid item xs={12} md={12} sm={12} lg={12}>
                     <Button
                         type="submit"
-                        color={init ? "info" : "primary"}
                         variant="outlined"
                         startIcon={<SaveIcon />}
+                        color={init ? "info" : "primary"}
                     >
                         {init ? "Actualizar" : "Registrar"}
                     </Button>
