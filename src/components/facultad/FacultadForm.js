@@ -1,49 +1,27 @@
 import { useState } from "react";
 
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
-const initFacultad = {
-    titulo: "",
-    estado: ""
-};
+import estados from "../../_mocks_/estados";
+import ControlError from "../shared/ControlError";
+import ControlObjectForm from "../shared/ControlObjectForm";
+import { initFacultad as init } from "../../_mocks_/facultad";
 
-const initError = {
-    titulo: false,
-    estado: false
-};
+const initFacultad = init("");
 
-const estados = [
-    { label: "Abierto", value: true },
-    { label: "Cerrado", value: false },
-]
-
-
-
+const initError = init(false);
 
 const FacultadForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [facultad, setFacultad] = useState(init ? init.data : initFacultad);
+    const [facultad, setFacultad, updateState] = ControlObjectForm(init ? init.data : initFacultad, setMensaje);
 
     const { titulo, estado } = facultad;
 
-    const [error, setError] = useState(initError);
-
-    const updateState = (e) => {
-        setMensaje();
-        setFacultad({
-            ...facultad,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const updateError = (key, value) => {
-        setError(old => ({ ...old, [key]: value }));
-    }
+    const [error, setError, updateError] = ControlError(initError);
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -66,6 +44,9 @@ const FacultadForm = ({ init }) => {
             return;
         }
 
+        setError(initError);
+        setFacultad(initFacultad);
+
         if (init) {
             setMensaje(
                 <Alert severity="success">
@@ -75,8 +56,6 @@ const FacultadForm = ({ init }) => {
             return;
         }
 
-        setError(initError);
-        setFacultad(initFacultad);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
@@ -100,11 +79,9 @@ const FacultadForm = ({ init }) => {
                             if (e.target.value.length > 30) {
                                 return;
                             }
-
                             if (e.target.value.length >= 5) {
                                 updateError(e.target.name, false);
                             }
-
                             updateState(e);
                         }}
                     />
@@ -120,7 +97,9 @@ const FacultadForm = ({ init }) => {
                         error={error.estado}
                         helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
                         onChange={(e) => {
-                            updateError(e.target.name, false);
+                            if (typeof estado === "boolean") {
+                                updateError(e.target.name, false);
+                            }
                             updateState(e);
                         }}
                     >
