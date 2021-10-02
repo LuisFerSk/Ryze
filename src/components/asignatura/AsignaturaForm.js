@@ -3,8 +3,8 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
-import ControlMensaje from "../shared/Mensaje";
 import ControlError from "../shared/ControlError";
+import ControlMensaje from "../shared/ControlMensaje";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import { initAsignatura as init } from "../../_mocks_/asignatura";
 
