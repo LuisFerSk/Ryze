@@ -3,9 +3,9 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
-import ControlMensaje from "../shared/Mensaje";
 import facultades from '../../_mocks_/facultad';
 import ControlError from "../shared/ControlError";
+import ControlMensaje from "../shared/ControlMensaje";
 import { initPrograma as init } from "../../_mocks_/programa";
 import ControlObjectForm from "../shared/ControlObjectForm";
 
