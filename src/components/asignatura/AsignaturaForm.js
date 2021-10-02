@@ -1,11 +1,9 @@
-import { useState } from "react";
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
-import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
+import ControlMensaje from "../shared/Mensaje";
 import ControlError from "../shared/ControlError";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import { initAsignatura as init } from "../../_mocks_/asignatura";
@@ -15,16 +13,17 @@ const initAsignatura = init("");
 const initError = init(false);
 
 const AsignaturaForm = ({ init }) => {
-    const [mensaje, setMensaje] = useState();
+    const [mensaje, setMensaje] = ControlMensaje();
+
+    const [error, setError, updateError] = ControlError(initError);
 
     const [asignatura, setAsignatura, updateState] = ControlObjectForm(init ? init : initAsignatura, setMensaje);
 
     const { codigo, titulo, estado } = asignatura;
 
-    const [error, setError, updateError] = ControlError(initError);
-
     const submitForm = (e) => {
         e.preventDefault();
+        setMensaje();
 
         let error = false;
 
@@ -51,19 +50,11 @@ const AsignaturaForm = ({ init }) => {
         setAsignatura(initAsignatura);
 
         if (init) {
-            setMensaje(
-                <Alert severity="success">
-                    ¡Se ha actualizado el registro correctamente!
-                </Alert>,
-            )
+            setMensaje("success", "¡Se ha actualizado el registro correctamente!")
             return;
         }
 
-        setMensaje(
-            <Alert severity="success">
-                ¡Se ha guardado el registro correctamente!
-            </Alert>,
-        );
+        setMensaje("success", "¡Se ha guardado el registro correctamente!")
     };
 
     return (

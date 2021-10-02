@@ -10,7 +10,6 @@ const headLabel = [
     { id: 'codigo', label: 'Codigo', alignRight: false },
     { id: 'titulo', label: 'Nombre', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false },
-    { id: '' },
 ];
 
 const cells = (row) => {
