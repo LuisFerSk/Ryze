@@ -1,10 +1,8 @@
-import { useState } from "react";
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
-import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
+import ControlMensaje from "../shared/Mensaje";
 import profesores from '../../_mocks_/profesor';
 import ControlError from "../shared/ControlError";
 import asignaturas from '../../_mocks_/asignatura';
@@ -16,7 +14,7 @@ const initGrupo = init("");
 const initError = init(false);
 
 const GrupoForm = ({ init }) => {
-    const [mensaje, setMensaje] = useState();
+    const [mensaje, setMensaje] = ControlMensaje();
 
     const [grupo, setGrupo, updateState] = ControlObjectForm(init ? init : initGrupo, setMensaje);
 
@@ -26,6 +24,7 @@ const GrupoForm = ({ init }) => {
 
     const submitForm = (e) => {
         e.preventDefault();
+        setMensaje();
 
         let error = false;
 
@@ -39,7 +38,7 @@ const GrupoForm = ({ init }) => {
             error = true;
         }
 
-        if (numeroGrupo.trim() === "") {
+        if (numeroGrupo.trim() === "" || numeroGrupo < 1) {
             updateError("numeroGrupo", true);
             error = true;
         }
@@ -52,19 +51,11 @@ const GrupoForm = ({ init }) => {
         setError(initError);
 
         if (init) {
-            setMensaje(
-                <Alert severity="success">
-                    ¡Se ha actualizado el registro correctamente!
-                </Alert>,
-            )
+            setMensaje("success", "¡Se ha actualizado el registro correctamente!");
             return;
         }
 
-        setMensaje(
-            <Alert severity="success">
-                ¡Se ha guardado el registro correctamente!
-            </Alert>,
-        );
+        setMensaje("success", "¡Se ha guardado el registro correctamente!");
     };
 
     return (
@@ -133,15 +124,15 @@ const GrupoForm = ({ init }) => {
                         name="numeroGrupo"
                         value={numeroGrupo}
                         error={error.numeroGrupo}
-                        helperText={"Campo numerico maximo 2 digitos"}
+                        helperText={numeroGrupo < 1 ? "Número de dos digitos mayor que 0" : "Número de dos digitos"}
                         onChange={(e) => {
                             const { value, name } = e.target
 
-                            if (value > 99 || value.length > 2) {
+                            if (value.length > 2 || value < 0) {
                                 return;
                             }
 
-                            if (value.trim() !== "") {
+                            if (value.trim() !== "" && value > 0) {
                                 updateError(name, false);
                             }
 

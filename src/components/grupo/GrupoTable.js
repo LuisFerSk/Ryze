@@ -8,7 +8,6 @@ const headLabel = [
     { id: 'numero', label: 'Grupo', alignRight: false },
     { id: 'asignatura', label: 'Asignatura', alignRight: false },
     { id: 'profesor', label: 'Profesor', alignRight: false },
-    { id: '' }
 ];
 
 const cells = (row) => {
