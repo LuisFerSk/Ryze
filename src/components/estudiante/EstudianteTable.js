@@ -35,11 +35,11 @@ const cells = (row) => {
     );
 };
 
-const FacultadTable = () => {
+const EstudianteTable = () => {
 
     return (
-        <CustomTable cells={cells} headLabel={headLabel} data={estadiantes} selectBy="titulo" searchBy="titulo" />
+        <CustomTable cells={cells} headLabel={headLabel} data={estadiantes} selectBy="cedula" searchBy="cedula" />
     );
 };
 
-export default FacultadTable;
+export default EstudianteTable;

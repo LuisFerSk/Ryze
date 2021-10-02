@@ -3,11 +3,12 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
 import programas from '../../_mocks_/programa';
-import ControlMensaje from "../shared/Mensaje";
 import ControlError from "../shared/ControlError";
+import ControlMensaje from "../shared/ControlMensaje";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import { validarCorreos } from "../../utils/specialFunctions";
-import { initEstudiante as init, estados } from "../../_mocks_/estudiante";
+import { initEstudiante as init } from "../../_mocks_/estudiante";
+import { estadosUsuarios as estados } from '../../_mocks_/estados';
 
 const initEstudiante = init("");
 
@@ -15,6 +16,8 @@ const initError = init(false);
 
 const EstudianteForm = ({ init }) => {
     const [mensaje, setMensaje] = ControlMensaje();
+
+    const [error, setError, updateError] = ControlError(initError);
 
     const [estudiante, setEstudiante, updateState] = ControlObjectForm(init ? init : initEstudiante, setMensaje);
 
@@ -27,11 +30,8 @@ const EstudianteForm = ({ init }) => {
         apellidos,
     } = estudiante;
 
-    const [error, setError, updateError] = ControlError(initError);
-
     const submitForm = (e) => {
         e.preventDefault();
-
         setMensaje();
 
         let error = false;
