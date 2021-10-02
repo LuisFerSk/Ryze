@@ -9,8 +9,7 @@ import programas from '../../_mocks_/programa';
 const headLabel = [
     { id: 'titulo', label: 'Programa', alignRight: false },
     { id: 'facultad', label: 'Facultad', alignRight: false },
-    { id: 'estado', label: 'Estado', alignRight: false},
-    { id: '' }
+    { id: 'estado', label: 'Estado', alignRight: false },
 ];
 
 const cells = (row) => {
