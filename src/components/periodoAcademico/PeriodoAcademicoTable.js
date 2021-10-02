@@ -19,7 +19,6 @@ const headLabel = [
     { id: 'fechaInicio', label: 'Fecha de inicio', alignRight: false },
     { id: 'fechaFin', label: 'Fecha de finalización', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false, },
-    { id: '' }
 ];
 
 const cells = (row) => {

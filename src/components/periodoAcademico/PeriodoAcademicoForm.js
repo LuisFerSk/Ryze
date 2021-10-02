@@ -1,11 +1,9 @@
-import { useState } from "react";
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
-import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
+import ControlMensaje from "../shared/Mensaje";
 import ControlError from "../shared/ControlError";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import TituloPeriodoAcademico from "./PeriodoAcademicoTitulo";
@@ -16,7 +14,7 @@ const initPeriodoAcademico = init("");
 const initError = init(false);
 
 const PeriodoAcademicoForm = ({ init }) => {
-    const [mensaje, setMensaje] = useState();
+    const [mensaje, setMensaje] = ControlMensaje();
 
     const [periodoAcademico, setPeriodoAcademico, updateState] = ControlObjectForm(init ? init : initPeriodoAcademico, setMensaje);
 
@@ -26,7 +24,6 @@ const PeriodoAcademicoForm = ({ init }) => {
 
     const submitForm = (e) => {
         e.preventDefault();
-
         setMensaje();
 
         let error = false;
@@ -67,19 +64,11 @@ const PeriodoAcademicoForm = ({ init }) => {
         setPeriodoAcademico(initPeriodoAcademico);
 
         if (init) {
-            setMensaje(
-                <Alert severity="success">
-                    ¡Se ha actualizado el registro correctamente!
-                </Alert>,
-            )
+            setMensaje("success", "¡Se ha actualizado el registro correctamente!");
             return;
         }
 
-        setMensaje(
-            <Alert severity="success">
-                ¡Se ha guardado el registro correctamente!
-            </Alert>,
-        );
+        setMensaje("success", "¡Se ha guardado el registro correctamente!");
 
     };
 
