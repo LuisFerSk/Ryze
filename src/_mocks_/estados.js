@@ -3,4 +3,9 @@ const estado = [
     { label: "Cerrado", value: false },
 ];
 
+export const estadosUsuarios = [
+    { label: "Activo", value: true },
+    { label: "Inactivo", value: false }
+];
+
 export default estado;
