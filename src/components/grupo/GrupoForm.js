@@ -6,39 +6,50 @@ import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
 import profesores from '../../_mocks_/profesor';
+import ControlError from "../shared/ControlError";
 import asignaturas from '../../_mocks_/asignatura';
+import { initGrupo as init } from "../../_mocks_/grupo";
+import ControlObjectForm from "../shared/ControlObjectForm";
 
-const initGrupo = {
-    titulo: "",
-    estado: ""
-};
+const initGrupo = init("");
+
+const initError = init(false);
 
 const GrupoForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [grupo, setGrupo] = useState(init ? init.data : initGrupo);
+    const [grupo, setGrupo, updateState] = ControlObjectForm(init ? init : initGrupo, setMensaje);
 
-    const { numero, asignatura, profesor } = grupo;
+    const { numeroGrupo, asignatura, profesor } = grupo;
 
-    const updateState = (e) => {
-        setMensaje();
-        setGrupo({
-            ...grupo,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [error, setError, updateError] = ControlError(initError);
 
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (numero.trim() === "" || asignatura.trim() === "" || profesor.trim() === "") {
-            setMensaje(
-                <Alert severity="error">
-                    ¡Digite todos los campos antes de continuar!
-                </Alert>,
-            );
+        let error = false;
+
+        if (profesor.trim() === "") {
+            updateError("profesor", true);
+            error = true;
+        }
+
+        if (asignatura.trim() === "") {
+            updateError("asignatura", true);
+            error = true;
+        }
+
+        if (numeroGrupo.trim() === "") {
+            updateError("numeroGrupo", true);
+            error = true;
+        }
+
+        if (error) {
             return;
         }
+
+        setGrupo(initGrupo);
+        setError(initError);
 
         if (init) {
             setMensaje(
@@ -49,7 +60,6 @@ const GrupoForm = ({ init }) => {
             return;
         }
 
-        setGrupo(initGrupo);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
@@ -68,7 +78,17 @@ const GrupoForm = ({ init }) => {
                         label="Profesor"
                         value={profesor}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.profesor}
+                        helperText={profesor.trim() === "" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            const { value, name } = e.target
+
+                            if (value.trim() !== "") {
+                                updateError(name, false);
+                            }
+
+                            updateState(e);
+                        }}
                     >
                         {profesores.map((row, index) =>
                             <MenuItem key={index} value={row.cedula}>
@@ -85,7 +105,17 @@ const GrupoForm = ({ init }) => {
                         label="Asignatura"
                         value={asignatura}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.asignatura}
+                        helperText={asignatura.trim() === "" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            const { value, name } = e.target
+
+                            if (value.trim() !== "") {
+                                updateError(name, false);
+                            }
+
+                            updateState(e);
+                        }}
                     >
                         {asignaturas.map((row, index) =>
                             <MenuItem key={index} value={row.codigo}>
@@ -98,11 +128,25 @@ const GrupoForm = ({ init }) => {
                     <TextField
                         fullWidth
                         type="number"
-                        name="numero"
                         label="Grupo"
-                        value={numero}
                         variant="outlined"
-                        onChange={updateState}
+                        name="numeroGrupo"
+                        value={numeroGrupo}
+                        error={error.numeroGrupo}
+                        helperText={"Campo numerico maximo 2 digitos"}
+                        onChange={(e) => {
+                            const { value, name } = e.target
+
+                            if (value > 99 || value.length > 2) {
+                                return;
+                            }
+
+                            if (value.trim() !== "") {
+                                updateError(name, false);
+                            }
+
+                            updateState(e);
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12}>
