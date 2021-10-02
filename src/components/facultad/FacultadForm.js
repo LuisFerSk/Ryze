@@ -1,11 +1,9 @@
-import { useState } from "react";
-
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
-import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
+import ControlMensaje from "../shared/Mensaje";
 import ControlError from "../shared/ControlError";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import { initFacultad as init } from "../../_mocks_/facultad";
@@ -15,7 +13,7 @@ const initFacultad = init("");
 const initError = init(false);
 
 const FacultadForm = ({ init }) => {
-    const [mensaje, setMensaje] = useState();
+    const [mensaje, setMensaje] = ControlMensaje();
 
     const [facultad, setFacultad, updateState] = ControlObjectForm(init ? init.data : initFacultad, setMensaje);
 
@@ -25,7 +23,6 @@ const FacultadForm = ({ init }) => {
 
     const submitForm = (e) => {
         e.preventDefault();
-
         setMensaje();
 
         let error = false;
@@ -48,19 +45,11 @@ const FacultadForm = ({ init }) => {
         setFacultad(initFacultad);
 
         if (init) {
-            setMensaje(
-                <Alert severity="success">
-                    ¡Se ha actualizado el registro correctamente!
-                </Alert>,
-            )
+            setMensaje("success", "¡Se ha actualizado el registro correctamente!");
             return;
         }
 
-        setMensaje(
-            <Alert severity="success">
-                ¡Se ha guardado el registro correctamente!
-            </Alert>,
-        );
+        setMensaje("success", "¡Se ha guardado el registro correctamente!");
     };
 
     return (
