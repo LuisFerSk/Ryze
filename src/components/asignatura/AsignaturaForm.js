@@ -5,45 +5,50 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
-const initAsignatura = {
-    codigo: "",
-    titulo: "",
-    estado: "",
-    creditos: "",
-    horasSemanales: ""
-};
+import estados from "../../_mocks_/estados";
+import ControlError from "../shared/ControlError";
+import ControlObjectForm from "../shared/ControlObjectForm";
+import { initAsignatura as init } from "../../_mocks_/asignatura";
 
-const estados = [
-    { label: "Abierto", value: true },
-    { label: "Cerrado", value: false },
-]
+const initAsignatura = init("");
+
+const initError = init(false);
 
 const AsignaturaForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [asignatura, setAsignatura] = useState(init ? init.data : initAsignatura);
+    const [asignatura, setAsignatura, updateState] = ControlObjectForm(init ? init : initAsignatura, setMensaje);
 
-    const { codigo, titulo, estado, horasSemanales, creditos } = asignatura;
+    const { codigo, titulo, estado } = asignatura;
 
-    const updateState = (e) => {
-        setMensaje();
-        setAsignatura({
-            ...asignatura,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [error, setError, updateError] = ControlError(initError);
 
     const submitForm = (e) => {
         e.preventDefault();
 
-        if (codigo.trim() === "" || titulo.trim() === "" || estado.trim() === "" || horasSemanales.trim() === "" || creditos.trim() === "") {
-            setMensaje(
-                <Alert severity="error">
-                    ¡Digite todos los campos antes de continuar!
-                </Alert>,
-            );
+        let error = false;
+
+        if (codigo.length < 6) {
+            updateError("codigo", true);
+            error = true;
+        }
+
+        if (titulo.length < 3) {
+            updateError("titulo", true);
+            error = true;
+        }
+
+        if (typeof estado !== "boolean") {
+            updateError("estado", true);
+            error = true;
+        }
+
+        if (error) {
             return;
         }
+
+        setError(initError);
+        setAsignatura(initAsignatura);
 
         if (init) {
             setMensaje(
@@ -54,7 +59,6 @@ const AsignaturaForm = ({ init }) => {
             return;
         }
 
-        setAsignatura(initAsignatura);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
@@ -65,57 +69,66 @@ const AsignaturaForm = ({ init }) => {
     return (
         <form noValidate autoComplete="off" onSubmit={submitForm}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={4} lg={4}>
+                <Grid item xs={12} md={12} sm={12} lg={12}>
+                    <TextField
+                        fullWidth
+                        name="titulo"
+                        value={titulo}
+                        label="Asignatura"
+                        variant="outlined"
+                        error={error.titulo}
+                        helperText={titulo.length < 3 ? "Minimo 3 caracteres" : null}
+                        onChange={(e) => {
+                            if (e.target.value.length > 50) {
+                                return;
+                            }
+
+                            if (e.target.value.length >= 3) {
+                                updateError(e.target.name, false);
+                            }
+
+                            updateState(e);
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6} sm={8} lg={8}>
                     <TextField
                         fullWidth
                         name="codigo"
                         value={codigo}
                         label="Codigo"
                         variant="outlined"
-                        onChange={updateState}
+                        error={error.codigo}
+                        helperText={codigo.length !== 6 ? "Campo de 6 caracteres" : null}
+                        onChange={(e) => {
+                            if (e.target.value.length > 6) {
+                                return;
+                            }
+                            if (e.target.value.length === 6) {
+                                updateError(e.target.name, false);
+                            }
+                            updateState(e);
+                        }}
                     />
                 </Grid>
-                <Grid item xs={12} md={12} sm={8} lg={8}>
-                    <TextField
-                        fullWidth
-                        name="titulo"
-                        value={titulo}
-                        variant="outlined"
-                        label="Asignatura"
-                        onChange={updateState}
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} sm={5} lg={5}>
-                    <TextField
-                        fullWidth
-                        name="creditos"
-                        value={creditos}
-                        variant="outlined"
-                        onChange={updateState}
-                        label="Número de creditos"
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} sm={5} lg={5}>
-                    <TextField
-                        fullWidth
-                        type="number"
-                        variant="outlined"
-                        name="horasSemanales"
-                        value={horasSemanales}
-                        onChange={updateState}
-                        label="Horas semanales"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6} sm={2} lg={2}>
+
+                <Grid item xs={12} md={6} sm={4} lg={4}>
                     <TextField
                         select
                         fullWidth
-                        type="number"
                         name="estado"
                         label="Estado"
                         value={estado}
                         variant="outlined"
-                        onChange={(e) => updateState(e)}
+                        error={error.estado}
+                        helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
+                        onChange={(e) => {
+                            const { value, name } = e.target
+                            if (typeof value === "boolean") {
+                                updateError(name, false);
+                            }
+                            updateState(e);
+                        }}
                     >
                         {estados.map((row, index) =>
                             <MenuItem key={index} value={row.value}>
