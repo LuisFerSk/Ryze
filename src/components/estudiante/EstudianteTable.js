@@ -12,7 +12,6 @@ const headLabel = [
     { id: 'nombres', label: 'Nombres y apelldio', alignRight: false },
     { id: 'programa', label: 'Programa', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false },
-    { id: '' }
 ];
 
 const cells = (row) => {
