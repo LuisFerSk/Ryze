@@ -6,44 +6,23 @@ import Alert from "@material-ui/lab/Alert";
 import SaveIcon from "@material-ui/icons/Save";
 
 import facultades from '../../_mocks_/facultad';
+import estados from "../../_mocks_/estados";
+import ControlError from "../shared/ControlError";
+import { initPrograma as init } from "../../_mocks_/programa";
+import ControlObjectForm from "../shared/ControlObjectForm";
 
-const initPrograma = {
-    titulo: "",
-    estado: "",
-    facultad: ""
-};
+const initPrograma = init("");
 
-const initError = {
-    titulo: false,
-    estado: false,
-    facultad: false
-};
-
-const estados = [
-    { label: "Abierto", value: true },
-    { label: "Cerrado", value: false },
-]
+const initError = init(false);
 
 const ProgramaForm = ({ init }) => {
     const [mensaje, setMensaje] = useState();
 
-    const [programa, setPrograma] = useState(init ? init.data : initPrograma);
+    const [programa, setPrograma, updateState] = ControlObjectForm(init ? init.data : initPrograma, setMensaje);
 
     const { titulo, facultad, estado } = programa;
 
-    const [error, setError] = useState(initError);
-
-    const updateState = (e) => {
-        setMensaje();
-        setPrograma({
-            ...programa,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const updateError = (key, value) => {
-        setError(old => ({ ...old, [key]: value }));
-    }
+    const [error, setError, updateError] = ControlError(initError);
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -71,6 +50,9 @@ const ProgramaForm = ({ init }) => {
             return;
         }
 
+        setError(initError);
+        setPrograma(initPrograma);
+
         if (init) {
             setMensaje(
                 <Alert severity="success">
@@ -80,8 +62,6 @@ const ProgramaForm = ({ init }) => {
             return;
         }
 
-        setError(initError);
-        setPrograma(initPrograma);
         setMensaje(
             <Alert severity="success">
                 ¡Se ha guardado el registro correctamente!
@@ -103,15 +83,12 @@ const ProgramaForm = ({ init }) => {
                         helperText={titulo.length < 5 ? "Minimo 5 caracteres" : null}
                         onChange={(e) => {
                             const key = e.target.name;
-
                             if (e.target.value.length > 30) {
                                 return;
                             }
-
                             if (e.target.value.length >= 5) {
                                 updateError(key, false);
                             }
-
                             updateState(e);
                         }}
                     />

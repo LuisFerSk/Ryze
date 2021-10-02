@@ -4,4 +4,8 @@ const programa = [
   { titulo: "Ingienieria electronica", facultad: "Ingienieria y tecnologia", estado: false },
 ];
 
+export const initPrograma = (value) => {
+  return { titulo: value, facultad: value, estado: value }
+}
+
 export default programa;
