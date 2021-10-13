@@ -19,65 +19,67 @@ const headLabel = [
     { id: 'fechaInicio', label: 'Fecha de inicio', alignRight: false },
     { id: 'fechaFin', label: 'Fecha de finalización', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false, },
+    { id: "" }
 ];
 
-const cells = (row) => {
-    const { titulo, estado, fechaInicio, fechaFin } = row;
-
+const PeriodoAcademicoTable = () => {
     const [isOpen, openModal, closeModal, content, setContent] = UseModal(false);
+
+    const cells = (row) => {
+        const { titulo, estado, fechaInicio, fechaFin } = row;
+
+        return (
+            <>
+                <TableCell align="left">{titulo}</TableCell>
+                <TableCell align="left">{fechaInicio}</TableCell>
+                <TableCell align="left">{fechaFin}</TableCell>
+                <TableCell align="left">
+                    <Label
+                        variant="ghost"
+                        color={(estado === true && 'success') || 'error'}
+                    >
+                        {estado === true ? 'Abierto' : 'Cerrado'}
+                    </Label>
+                </TableCell>
+                <TableCell padding="checkbox">
+                    <TableMoreMenu>
+                        <MenuItem
+                            sx={{ color: 'text.secondary' }}
+                            onClick={() => {
+                                setContent(<PeriodoAcademicoDelete init={row} />);
+                                openModal();
+                            }}
+                        >
+                            <ListItemIcon>
+                                <Icon icon={trash2Outline} width={24} height={24} />
+                            </ListItemIcon>
+                            <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
+                        </MenuItem>
+                        <MenuItem
+                            sx={{ color: 'text.secondary' }}
+                            onClick={() => {
+                                setContent(<PeriodoAcademicoForm init={row} />);
+                                openModal();
+                            }}
+                        >
+                            <ListItemIcon>
+                                <Icon icon={editFill} width={24} height={24} />
+                            </ListItemIcon>
+                            <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
+                        </MenuItem>
+                    </TableMoreMenu>
+                </TableCell>
+            </>
+        );
+    };
 
     return (
         <>
-            <TableCell align="left">{titulo}</TableCell>
-            <TableCell align="left">{fechaInicio}</TableCell>
-            <TableCell align="left">{fechaFin}</TableCell>
-            <TableCell align="left">
-                <Label
-                    variant="ghost"
-                    color={(estado === true && 'success') || 'error'}
-                >
-                    {estado === true ? 'Abierto' : 'Cerrado'}
-                </Label>
-            </TableCell>
-            <TableCell padding="checkbox">
-                <TableMoreMenu>
-                    <MenuItem
-                        sx={{ color: 'text.secondary' }}
-                        onClick={() => {
-                            setContent(<PeriodoAcademicoDelete init={row} />);
-                            openModal();
-                        }}
-                    >
-                        <ListItemIcon>
-                            <Icon icon={trash2Outline} width={24} height={24} />
-                        </ListItemIcon>
-                        <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
-                    </MenuItem>
-                    <MenuItem
-                        sx={{ color: 'text.secondary' }}
-                        onClick={() => {
-                            setContent(<PeriodoAcademicoForm init={row} />);
-                            openModal();
-                        }}
-                    >
-                        <ListItemIcon>
-                            <Icon icon={editFill} width={24} height={24} />
-                        </ListItemIcon>
-                        <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
-                    </MenuItem>
-                </TableMoreMenu>
-            </TableCell>
+            <CustomTable cells={cells} headLabel={headLabel} data={data} selectBy="titulo" searchBy="titulo" />
             <Modal title="Actualizar periodo academico" isOpen={isOpen} closeModal={closeModal}>
                 {content}
             </Modal>
         </>
-    );
-};
-
-const PeriodoAcademicoTable = () => {
-
-    return (
-        <CustomTable cells={cells} headLabel={headLabel} data={data} selectBy="titulo" searchBy="titulo" />
     );
 };
 

@@ -69,13 +69,12 @@ const PeriodoAcademicoForm = ({ init }) => {
         }
 
         setMensaje("success", "¡Se ha guardado el registro correctamente!");
-
     };
 
     return (
         <form noValidate autoComplete="off" onSubmit={submitForm}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
                     <TextField
                         fullWidth
                         name="titulo"
@@ -102,7 +101,7 @@ const PeriodoAcademicoForm = ({ init }) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
                     <TextField
                         select
                         fullWidth
@@ -126,7 +125,7 @@ const PeriodoAcademicoForm = ({ init }) => {
                         )}
                     </TextField>
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
                     <TextField
                         fullWidth
                         type="date"
@@ -151,7 +150,7 @@ const PeriodoAcademicoForm = ({ init }) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} md={12} sm={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
                     <TextField
                         fullWidth
                         type="date"
