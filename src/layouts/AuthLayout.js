@@ -26,7 +26,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 const AuthLayout = ({ children }) => {
   return (
     <>
-      {getUID() && <Navigate to="/" />}
+      {getUID() && <Navigate to="/dashboard" />}
       <HeaderStyle>
         <Link to="/">
           <Logo />

@@ -20,7 +20,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 const LogoOnlyLayout = () => {
   return (
     <>
-      {getUID() && <Navigate to="/" />}
+      {getUID() && <Navigate to="/dashboard" />}
       <HeaderStyle>
         <Link to="/">
           <Logo />
