@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Alert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/core";
 
 const ControlMensaje = () => {
     const [mensaje, setMensaje] = useState();
