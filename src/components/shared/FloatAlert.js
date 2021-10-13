@@ -13,15 +13,11 @@ const FloatAlert = () => {
 		openState(false);
 	};
 
-	function Alert(props) {
-		return <MuiAlert elevation={6} variant="filled" {...props} />;
-	}
-
 	return (
 		<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-			<Alert onClose={handleClose} severity={severity}>
+			<MuiAlert elevation={6} variant="filled" onClose={handleClose} severity={severity}>
 				{content}
-			</Alert>
+			</MuiAlert>
 		</Snackbar>
 	);
 };

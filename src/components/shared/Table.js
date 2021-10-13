@@ -1,7 +1,6 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
 
-// material
 import {
     Table,
     Checkbox,
@@ -11,14 +10,11 @@ import {
     TableContainer,
     TablePagination
 } from '@material-ui/core';
-// components
 
 import Scrollbar from '../Scrollbar';
 import SearchNotFound from '../SearchNotFound';
 import TableListHead from "./table/TableListHead";
 import TableListToolbar from "./table/TableListToolbar";
-
-// ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -49,9 +45,7 @@ function applySortFilter(array, comparator, query, searchBy) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-// ----------------------------------------------------------------------
-
-export default function CustomTable({ headLabel, data, selectBy, cells, searchBy }) {
+const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState('asc');
     const [selected, setSelected] = useState([]);
@@ -109,10 +103,10 @@ export default function CustomTable({ headLabel, data, selectBy, cells, searchBy
 
     const filteredUsers = applySortFilter(data, getComparator(order, orderBy), filterName, searchBy);
 
-    const isUserNotFound = filteredUsers.length === 0;
+    const isNotFound = filteredUsers.length === 0;
 
     return (
-        <div>
+        <>
             <TableListToolbar
                 filterName={filterName}
                 numSelected={selected.length}
@@ -162,7 +156,7 @@ export default function CustomTable({ headLabel, data, selectBy, cells, searchBy
                                 </TableRow>
                             )}
                         </TableBody>
-                        {isUserNotFound && (
+                        {isNotFound && (
                             <TableBody>
                                 <TableRow>
                                     <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -183,6 +177,8 @@ export default function CustomTable({ headLabel, data, selectBy, cells, searchBy
                 rowsPerPageOptions={[5, 10, 25]}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </div>
+        </>
     );
 }
+
+export default CustomTable;

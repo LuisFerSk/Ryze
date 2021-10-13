@@ -2,10 +2,11 @@ import * as Yup from 'yup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
+
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-// material
+
 import { Stack, TextField, IconButton, InputAdornment } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 
@@ -17,7 +18,7 @@ export default function LoginForm() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Email must be a valid email address')
+      .email('El correo electrónico debe ser una dirección de correo electrónico válida')
       .required('El correo es requerido'),
     password: Yup.string().required('La contraseña es requerida')
   });
@@ -25,8 +26,7 @@ export default function LoginForm() {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
-      remember: true
+      password: ''
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   return (
     <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit} >
         <Stack spacing={3}>
           <TextField
             fullWidth
@@ -53,13 +53,14 @@ export default function LoginForm() {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-
           <TextField
             fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
             label="Contraseña"
             {...getFieldProps('password')}
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            helperText={touched.password && errors.password}
+            error={Boolean(touched.password && errors.password)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -69,8 +70,6 @@ export default function LoginForm() {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
           />
         </Stack>
         <LoadingButton

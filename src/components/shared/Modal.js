@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Card, Modal, IconButton, Grid, Typography } from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/Close";
@@ -48,5 +49,12 @@ const TransitionsModal = ({ children, title, isOpen, closeModal }) => {
 		</Grid>
 	);
 };
+
+TransitionsModal.prototype = {
+	children: PropTypes.element.isRequired,
+	title: PropTypes.string.isRequired,
+	isOpen: PropTypes.bool.isRequired,
+	closeModal: PropTypes.func.isRequired
+}
 
 export default TransitionsModal;
