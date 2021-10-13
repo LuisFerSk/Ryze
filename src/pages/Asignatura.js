@@ -1,16 +1,13 @@
-// material
-import { Card, Grid, Container } from '@material-ui/core';
-// components
-import Page from '../components/Page';
+import { Box, Card, Grid, Container } from '@material-ui/core';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
+import Page from '../components/Page';
 import { createAccordion } from "../utils/specialFunctions";
 import ControlledAccordions from "../components/shared/Accordion";
 import AsignaturaForm from "../components/asignatura/AsignaturaForm";
 import AsignaturaTable from "../components/asignatura/AsignaturaTable";
 
-// ----------------------------------------------------------------------
 
 const Accordions = [
   createAccordion(
@@ -31,9 +28,9 @@ export default function Facultad() {
             </Card>
           </Grid>
           <Grid item xs={12} md={12} sm={12} lg={12}>
-            <Card>
+            <Box>
               <AsignaturaTable />
-            </Card>
+            </Box>
           </Grid>
         </Grid>
       </Container>

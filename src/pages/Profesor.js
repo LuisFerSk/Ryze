@@ -1,5 +1,5 @@
 // material
-import { Card, Grid, Container } from '@material-ui/core';
+import { Box,Card, Grid, Container } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 
@@ -31,9 +31,9 @@ export default function Profesor() {
                         </Card>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
-                        <Card>
+                        <Box>
                             <ProfesorTable />
-                        </Card>
+                        </Box>
                     </Grid>
                 </Grid>
             </Container>
