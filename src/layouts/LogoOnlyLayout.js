@@ -1,10 +1,9 @@
-import { Link as RouterLink, Outlet } from 'react-router-dom';
-// material
 import { styled } from '@material-ui/core/styles';
-// components
-import Logo from '../components/Logo';
+import { Link, Outlet, Navigate } from 'react-router-dom';
 
-// ----------------------------------------------------------------------
+import Logo from '../components/Logo';
+import { getUID } from '../database/auth';
+
 
 const HeaderStyle = styled('header')(({ theme }) => ({
   top: 0,
@@ -18,17 +17,18 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   }
 }));
 
-// ----------------------------------------------------------------------
-
-export default function LogoOnlyLayout() {
+const LogoOnlyLayout = () => {
   return (
     <>
+      {getUID() && <Navigate to="/" />}
       <HeaderStyle>
-        <RouterLink to="/">
+        <Link to="/">
           <Logo />
-        </RouterLink>
+        </Link>
       </HeaderStyle>
       <Outlet />
     </>
   );
 }
+
+export default LogoOnlyLayout;

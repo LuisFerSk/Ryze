@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
-// material
-import { styled } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-// components
-import Logo from '../components/Logo';
-//
-import { MHidden } from '../components/@material-extend';
+import { Link, Navigate } from 'react-router-dom';
+import { styled } from '@material-ui/core/styles';
 
-// ----------------------------------------------------------------------
+import Logo from '../components/Logo';
+import { getUID } from '../database/auth';
+import { MHidden } from '../components/@material-extend';
 
 const HeaderStyle = styled('header')(({ theme }) => ({
   top: 0,
@@ -26,28 +23,31 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   }
 }));
 
-// ----------------------------------------------------------------------
+const AuthLayout = ({ children }) => {
+  return (
+    <>
+      {getUID() && <Navigate to="/" />}
+      <HeaderStyle>
+        <Link to="/">
+          <Logo />
+        </Link>
+        <MHidden width="smDown">
+          <Typography
+            variant="body2"
+            sx={{
+              mt: { md: -2 }
+            }}
+          >
+            {children}
+          </Typography>
+        </MHidden>
+      </HeaderStyle>
+    </>
+  );
+}
 
 AuthLayout.propTypes = {
   children: PropTypes.node
 };
 
-export default function AuthLayout({ children }) {
-  return (
-    <HeaderStyle>
-      <RouterLink to="/">
-        <Logo />
-      </RouterLink>
-      <MHidden width="smDown">
-        <Typography
-          variant="body2"
-          sx={{
-            mt: { md: -2 }
-          }}
-        >
-          {children}
-        </Typography>
-      </MHidden>
-    </HeaderStyle>
-  );
-}
+export default AuthLayout;
