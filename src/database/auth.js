@@ -1,23 +1,31 @@
-import fire from '../config/firebase';
-import "firebase/auth"
-import "firebase/firestore";
+import app from '../config/firebase';
+import {
+    signOut,
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+} from "firebase/auth";
 
+const auth = getAuth(app);
 
 export const authSignIn = async ({ email, password }) => {
-    return await fire.auth().signInWithEmailAndPassword(email, password)
-    .then(e => {
+    return await signInWithEmailAndPassword(auth, email, password)
+        .then((e) => ({ uid: e.user.uid, email: e.user.email }))
+        .catch((error) => error.a);
+}
 
-        const user = {
-            uid: e.user.uid,
-            email: e.user.email
-        }
-        return user;
-    })
-    .catch(function(error){
-        return error.a;
-    });
+export const createUser = async (email, password) => {
+    return await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => userCredential.user)
+        .catch((error) => error);
+}
+export const getUID = () => {
+    let uid;
+    onAuthStateChanged(auth, (user) => { if (user) { uid = user; } });
+    return uid;
 }
 
 export const authSignOut = () => {
-    fire.auth().signOut()
+    signOut(auth)
 }
