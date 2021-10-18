@@ -42,25 +42,21 @@ const sidebarConfig = [
   {
     title: 'grupos',
     path: '/dashboard/grupo',
-
     icon: getIcon(peopleFill)
   },
   {
     title: 'estudiantes',
     path: '/dashboard/estudiante',
-
     icon: getIcon(schoolIcon)
   },
   {
     title: 'profesores',
     path: '/dashboard/profesor',
-
     icon: getIcon(briefcaseFill)
   },
   {
     title: 'usuarios',
     path: '/dashboard/usuario',
-
     icon: getIcon(personFill)
   }
 ];

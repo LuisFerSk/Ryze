@@ -1,43 +1,39 @@
-import db from "../database/fire";
-
-const obj = {};
-
-const database = db();
+import database from "../database/fire";
 
 const collectionName = "periodo_academico";
 
-const periodoAcademico = () => {
-    obj.OnSnapshotAll = (set) => {
-        return database.OnSnapshotDocs(collectionName, set);
-    };
+const periodoAcademico = {
+    Add: async (data) => {
+        return await database.AddDoc(collectionName, data).then((get) => get);
+    },
 
-    obj.Add = async (data) => {
-        let result;
+    Get: async () => {
+        return await database.GetDocs(collectionName).then((get) => get)
+    }
 
-        await database.AddDoc(collectionName, data).then((get) => (result = get));
+    // OnSnapshotAll: (set) => {
+    //     return db.OnSnapshotDocs(collectionName, set);
+    // },
 
-        return result;
-    };
 
-    obj.Update = async (id, data) => {
-        let result;
 
-        await database
-            .UpdateDoc(collectionName, id, data)
-            .then((get) => (result = get));
+    // obj.Update = async (id, data) => {
+    //     let result;
 
-        return result;
-    };
+    //     await db
+    //         .UpdateDoc(collectionName, id, data)
+    //         .then((get) => (result = get));
 
-    obj.Delete = async (id) => {
-        let result;
+    //     return result;
+    // };
 
-        await database.DeleteDoc(collectionName, id).then((get) => (result = get));
+    // obj.Delete = async (id) => {
+    //     let result;
 
-        return result;
-    };
+    //     await db.DeleteDoc(collectionName, id).then((get) => (result = get));
 
-    return obj;
+    //     return result;
+    // };
 };
 
 export default periodoAcademico;

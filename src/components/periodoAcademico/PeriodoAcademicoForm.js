@@ -7,13 +7,14 @@ import ControlError from "../shared/ControlError";
 import ControlMensaje from "../shared/ControlMensaje";
 import ControlObjectForm from "../shared/ControlObjectForm";
 import TituloPeriodoAcademico from "./PeriodoAcademicoTitulo";
+import { periodoAcademicoServices } from "../../services";
 import { initPeriodoAcademico as init } from "../../_mocks_/periodoAcademico";
 
 const initPeriodoAcademico = init("");
 
 const initError = init(false);
 
-const PeriodoAcademicoForm = ({ init }) => {
+const PeriodoAcademicoForm = ({ init, setDocs }) => {
     const [mensaje, setMensaje] = ControlMensaje();
 
     const [periodoAcademico, setPeriodoAcademico, updateState] = ControlObjectForm(init ? init : initPeriodoAcademico, setMensaje);
@@ -60,15 +61,25 @@ const PeriodoAcademicoForm = ({ init }) => {
             return;
         }
 
-        setError(initError);
-        setPeriodoAcademico(initPeriodoAcademico);
-
         if (init) {
             setMensaje("success", "¡Se ha actualizado el registro correctamente!");
             return;
         }
 
-        setMensaje("success", "¡Se ha guardado el registro correctamente!");
+        periodoAcademicoServices.Add(periodoAcademico)
+            .then((result) => {
+                if (result) {
+                    setDocs((old) => [...old, periodoAcademico]);
+
+                    setError(initError);
+                    setPeriodoAcademico(initPeriodoAcademico);
+                    setMensaje("success", "¡Se ha guardado el registro correctamente!");
+                } else {
+                    console.log(result);
+                    setMensaje("error", "¡No se ha podido guardar el registro!");
+                }
+            });
+        ;
     };
 
     return (

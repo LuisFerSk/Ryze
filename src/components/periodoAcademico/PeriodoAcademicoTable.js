@@ -9,7 +9,6 @@ import { MenuItem, ListItemIcon, TableCell, ListItemText } from '@material-ui/co
 import Label from '../Label';
 import Modal from "../shared/Modal";
 import UseModal from "../shared/modal/useModal";
-import data from '../../_mocks_/periodoAcademico';
 import TableMoreMenu from "../shared/table/TableMoreMenu";
 import PeriodoAcademicoForm from "./PeriodoAcademicoForm";
 import PeriodoAcademicoDelete from "./PeriodoAcademicoDelete";
@@ -22,7 +21,7 @@ const headLabel = [
     { id: "" }
 ];
 
-const PeriodoAcademicoTable = () => {
+const PeriodoAcademicoTable = ({ docs }) => {
     const [isOpen, openModal, closeModal, content, setContent] = UseModal(false);
 
     const cells = (row) => {
@@ -75,7 +74,7 @@ const PeriodoAcademicoTable = () => {
 
     return (
         <>
-            <CustomTable cells={cells} headLabel={headLabel} data={data} selectBy="titulo" searchBy="titulo" />
+            <CustomTable cells={cells} headLabel={headLabel} data={docs.map(row => row.data)} selectBy="titulo" searchBy="titulo" />
             <Modal title="Actualizar periodo academico" isOpen={isOpen} closeModal={closeModal}>
                 {content}
             </Modal>
