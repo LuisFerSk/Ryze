@@ -24,7 +24,7 @@ export default function LoginForm() {
 		}
 	});
 
-	const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+	const { errors, touched, handleSubmit, getFieldProps } = formik;
 
 	const email = { ...getFieldProps('email') };
 	const password = { ...getFieldProps('password') };
