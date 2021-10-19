@@ -25,7 +25,7 @@ const Router = () => {
 	return useRoutes([
 		{
 			path: '/dashboard',
-			element: user === undefined ? <CircularIndeterminate /> : !user ? <Navigate to="/" replace /> : < DashboardLayout />,
+			element: user === undefined ? <CircularIndeterminate /> : !user ? <Navigate to="/" replace /> : <DashboardLayout />,
 			children: [
 				{ path: '/', element: <Navigate to="/dashboard/app" replace /> },
 				{ path: 'app', element: <DashboardApp /> },

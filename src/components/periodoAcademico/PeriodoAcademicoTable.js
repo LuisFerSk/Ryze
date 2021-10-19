@@ -21,11 +21,11 @@ const headLabel = [
     { id: "" }
 ];
 
-const PeriodoAcademicoTable = ({ docs }) => {
+const PeriodoAcademicoTable = ({ docs, setDocs }) => {
     const [isOpen, openModal, closeModal, content, setContent] = UseModal(false);
 
     const cells = (row) => {
-        const { titulo, estado, fechaInicio, fechaFin } = row;
+        const { id, titulo, estado, fechaInicio, fechaFin } = row;
 
         return (
             <>
@@ -45,7 +45,13 @@ const PeriodoAcademicoTable = ({ docs }) => {
                         <MenuItem
                             sx={{ color: 'text.secondary' }}
                             onClick={() => {
-                                setContent(<PeriodoAcademicoDelete init={row} />);
+                                setContent(
+                                    <PeriodoAcademicoDelete
+                                        init={row}
+                                        setDocs={setDocs}
+                                        closeModal={closeModal}
+                                    />
+                                );
                                 openModal();
                             }}
                         >
@@ -57,7 +63,13 @@ const PeriodoAcademicoTable = ({ docs }) => {
                         <MenuItem
                             sx={{ color: 'text.secondary' }}
                             onClick={() => {
-                                setContent(<PeriodoAcademicoForm init={row} />);
+                                setContent(
+                                    <PeriodoAcademicoForm
+                                        id={id}
+                                        setDocs={setDocs}
+                                        init={{ titulo, estado, fechaInicio, fechaFin }}
+                                    />
+                                );
                                 openModal();
                             }}
                         >
@@ -74,7 +86,7 @@ const PeriodoAcademicoTable = ({ docs }) => {
 
     return (
         <>
-            <CustomTable cells={cells} headLabel={headLabel} data={docs.map(row => row.data)} selectBy="titulo" searchBy="titulo" />
+            <CustomTable cells={cells} headLabel={headLabel} data={docs.map((row) => ({ ...row.data, id: row.id }))} selectBy="titulo" searchBy="titulo" />
             <Modal title="Actualizar periodo academico" isOpen={isOpen} closeModal={closeModal}>
                 {content}
             </Modal>

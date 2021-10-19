@@ -28,6 +28,7 @@ export default function PeriodoAcademico() {
 	useEffect(() => {
 		periodoAcademicoServices.Get().then((result) => setDocs(result))
 	}, [])
+
 	return (
 		<Page title="Periodo academico | Ryze">
 			<Container>
@@ -39,7 +40,7 @@ export default function PeriodoAcademico() {
 					</Grid>
 					<Grid item xs={12} md={12} sm={12} lg={12}>
 						<Box>
-							<PeriodoAcademicoTable docs={docs} />
+							<PeriodoAcademicoTable docs={docs} setDocs={setDocs} />
 						</Box>
 					</Grid>
 				</Grid>

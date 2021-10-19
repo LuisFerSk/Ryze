@@ -12,22 +12,20 @@ import { Stack, TextField, IconButton, InputAdornment } from '@material-ui/core'
 import { authSignIn } from '../../../database/auth';
 import { loginSchema, loginInitialValues } from '../../../schema';
 
-export default function LoginForm() {
+const LoginForm = () => {
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const formik = useFormik({
 		initialValues: loginInitialValues,
 		validationSchema: loginSchema,
-		onSubmit: () => {
-			authSignIn(email.value, password.value).then(result => result === 200 ? navigate('/dashboard', { replace: true }) : console.log(result));
+		onSubmit: (values) => {
+			authSignIn(values.email, values.password)
+				.then(result => result === 200 ? navigate('/dashboard', { replace: true }) : console.log(result));
 		}
 	});
 
 	const { errors, touched, handleSubmit, getFieldProps } = formik;
-
-	const email = { ...getFieldProps('email') };
-	const password = { ...getFieldProps('password') };
 
 	return (
 		<FormikProvider value={formik}>
@@ -35,17 +33,17 @@ export default function LoginForm() {
 				<Stack spacing={3}>
 					<TextField
 						fullWidth
-						{...email}
 						type="email"
 						autoComplete="username"
 						label="Correo electronico"
+						{...getFieldProps('email')}
 						helperText={touched.email && errors.email}
 						error={Boolean(touched.email && errors.email)}
 					/>
 					<TextField
 						fullWidth
-						{...password}
 						label="Contraseña"
+						{...getFieldProps('password')}
 						autoComplete="current-password"
 						type={showPassword ? 'text' : 'password'}
 						helperText={touched.password && errors.password}
@@ -73,3 +71,5 @@ export default function LoginForm() {
 		</FormikProvider>
 	);
 }
+
+export default LoginForm;
