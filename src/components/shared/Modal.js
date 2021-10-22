@@ -5,14 +5,14 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import useStyles from "../../theme/modal";
 
-const TransitionsModal = ({ children, title, isOpen, closeModal }) => {
+const TransitionsModal = ({ children, title, isOpen, close }) => {
 	const classes = useStyles();
 
 	return (
 		<Grid container spacing={3}>
 			<Modal
 				open={isOpen}
-				onClose={closeModal}
+				onClose={close}
 				className={classes.modal}
 				aria-labelledby="simple-modal-title"
 				aria-describedby="simple-modal-description"
@@ -25,8 +25,8 @@ const TransitionsModal = ({ children, title, isOpen, closeModal }) => {
 								<IconButton
 									left="40%"
 									color="error"
+									onClick={close}
 									aria-label="close"
-									onClick={closeModal}
 									className={classes.close}
 								>
 									<CloseIcon />

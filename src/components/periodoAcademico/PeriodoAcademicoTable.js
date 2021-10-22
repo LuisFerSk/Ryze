@@ -7,11 +7,14 @@ import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import { MenuItem, ListItemIcon, TableCell, ListItemText } from '@material-ui/core';
 
 import Label from '../Label';
+import { useFloat } from "../uses";
 import Modal from "../shared/Modal";
-import UseModal from "../shared/modal/useModal";
+import FloatAlert from "../shared/FloatAlert";
 import TableMoreMenu from "../shared/table/TableMoreMenu";
 import PeriodoAcademicoForm from "./PeriodoAcademicoForm";
 import PeriodoAcademicoDelete from "./PeriodoAcademicoDelete";
+import { getDataForTable, createOptions } from "../../utils/specialFunctions";
+
 
 const headLabel = [
     { id: 'titulo', label: 'Periodo', alignRight: false },
@@ -22,10 +25,41 @@ const headLabel = [
 ];
 
 const PeriodoAcademicoTable = ({ docs, setDocs }) => {
-    const [isOpen, openModal, closeModal, content, setContent] = UseModal(false);
+    const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false);
+
+    const [isOpenAlert, openAlert, closeAlert, contentAlert] = useFloat(
+        false,
+        "¡Se ha eliminado correctamente el periodo academico!"
+    );
 
     const cells = (row) => {
         const { id, titulo, estado, fechaInicio, fechaFin } = row;
+
+        const options = [
+            createOptions('Editar', editFill, () => {
+                setTitleModal('Actualizar periodo academico');
+                setContentModal(
+                    <PeriodoAcademicoForm
+                        id={id}
+                        setDocs={setDocs}
+                        init={{ titulo, estado, fechaInicio, fechaFin }}
+                    />
+                );
+                openModal();
+            }),
+            createOptions('Eliminar', trash2Outline, () => {
+                setTitleModal('Eliminar periodo academico');
+                setContentModal(
+                    <PeriodoAcademicoDelete
+                        init={row}
+                        setDocs={setDocs}
+                        openAlert={openAlert}
+                        closeModal={closeModal}
+                    />
+                );
+                openModal();
+            }),
+        ];
 
         return (
             <>
@@ -42,42 +76,18 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
                 </TableCell>
                 <TableCell padding="checkbox">
                     <TableMoreMenu>
-                        <MenuItem
-                            sx={{ color: 'text.secondary' }}
-                            onClick={() => {
-                                setContent(
-                                    <PeriodoAcademicoDelete
-                                        init={row}
-                                        setDocs={setDocs}
-                                        closeModal={closeModal}
-                                    />
-                                );
-                                openModal();
-                            }}
-                        >
-                            <ListItemIcon>
-                                <Icon icon={trash2Outline} width={24} height={24} />
-                            </ListItemIcon>
-                            <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
-                        </MenuItem>
-                        <MenuItem
-                            sx={{ color: 'text.secondary' }}
-                            onClick={() => {
-                                setContent(
-                                    <PeriodoAcademicoForm
-                                        id={id}
-                                        setDocs={setDocs}
-                                        init={{ titulo, estado, fechaInicio, fechaFin }}
-                                    />
-                                );
-                                openModal();
-                            }}
-                        >
-                            <ListItemIcon>
-                                <Icon icon={editFill} width={24} height={24} />
-                            </ListItemIcon>
-                            <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
-                        </MenuItem>
+                        {options.map((row, index) =>
+                            <MenuItem
+                                key={index}
+                                onClick={row.onClick}
+                                sx={{ color: 'text.secondary' }}
+                            >
+                                <ListItemIcon>
+                                    <Icon icon={row.icon} width={24} height={24} />
+                                </ListItemIcon>
+                                <ListItemText primary={row.label} primaryTypographyProps={{ variant: 'body2' }} />
+                            </MenuItem>
+                        )}
                     </TableMoreMenu>
                 </TableCell>
             </>
@@ -86,10 +96,13 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
 
     return (
         <>
-            <CustomTable cells={cells} headLabel={headLabel} data={docs.map((row) => ({ ...row.data, id: row.id }))} selectBy="titulo" searchBy="titulo" />
-            <Modal title="Actualizar periodo academico" isOpen={isOpen} closeModal={closeModal}>
-                {content}
+            <CustomTable cells={cells} headLabel={headLabel} data={getDataForTable(docs)} selectBy="titulo" searchBy="titulo" />
+            <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
+                {contentModal}
             </Modal>
+            <FloatAlert isOpen={isOpenAlert} close={closeAlert}>
+                {contentAlert}
+            </FloatAlert>
         </>
     );
 };

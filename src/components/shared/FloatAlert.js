@@ -1,24 +1,25 @@
-import { useContext } from "react";
-
+import PropTypes from 'prop-types';
 import { Snackbar, Alert } from "@material-ui/core";
 
-import floatAlertContext from "../provider/FloatAlert/floatAlertContext";
-
-const FloatAlert = () => {
-	const floatAlertesContext = useContext(floatAlertContext);
-	const { content, open, openState, severity } = floatAlertesContext;
-
-	const handleClose = () => {
-		openState(false);
-	};
-
+const FloatAlert = ({ children, isOpen, close, severity }) => {
 	return (
-		<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-			<Alert elevation={6} variant="filled" onClose={handleClose} severity={severity}>
-				{content}
+		<Snackbar
+			open={isOpen}
+			onClose={close}
+			autoHideDuration={3000}
+			anchorOrigin={{
+				vertical: "bottom",
+				horizontal: "center"
+			}}>
+			<Alert elevation={6} variant="filled" onClose={close} severity={severity}>
+				{children}
 			</Alert>
 		</Snackbar>
 	);
 };
+
+FloatAlert.prototype = {
+	children: PropTypes.element.isRequired,
+}
 
 export default FloatAlert;

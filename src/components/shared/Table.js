@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 import {
     Table,
-    Checkbox,
     TableRow,
     TableBody,
     TableCell,
@@ -68,24 +67,6 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-        setSelected(newSelected);
-    };
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -140,12 +121,6 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                                             selected={isItemSelected}
                                             aria-checked={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    onChange={(event) => handleClick(event, selectValue)}
-                                                />
-                                            </TableCell>
                                             {cells(row)}
                                         </TableRow>
                                     );

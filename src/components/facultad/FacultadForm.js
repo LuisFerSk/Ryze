@@ -1,119 +1,108 @@
+import { useFormik, Form, FormikProvider } from 'formik';
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import SaveIcon from "@material-ui/icons/Save";
 
+import { useMensaje } from "../uses";
 import estados from "../../_mocks_/estados";
-import ControlError from "../shared/ControlError";
-import ControlMensaje from "../shared/ControlMensaje";
-import ControlObjectForm from "../shared/ControlObjectForm";
-import { initFacultad as init } from "../../_mocks_/facultad";
+import { facultadServices } from "../../services";
+import { facultadSchema, facultadInitialValues } from '../../schema';
 
-const initFacultad = init("");
+const FacultadForm = ({ id, init, setDocs }) => {
+    const [mensaje, setMensaje] = useMensaje();
 
-const initError = init(false);
+    const formik = useFormik({
+        initialValues: id && init ? init : facultadInitialValues,
+        validationSchema: facultadSchema,
+        onSubmit: (values, { resetForm }) => {
+            setMensaje();
+            if (id) {
+                facultadServices.Update(id, values).then(result => {
+                    if (result === true) {
+                        setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }]);
+                        setMensaje("success", "¡Se ha actualizado el registro correctamente!");
+                    } else {
+                        console.log(result);
+                        setMensaje("error", "¡No se ha podido guardar el registro!");
+                    }
+                })
+                return;
+            }
+            facultadServices.Add(values)
+                .then(result => {
+                    if (typeof result === "object" && result.id) {
+                        setDocs(old => [...old, { id: result.id, data: values }]);
 
-const FacultadForm = ({ init }) => {
-    const [mensaje, setMensaje] = ControlMensaje();
-
-    const [facultad, setFacultad, updateState] = ControlObjectForm(init ? init.data : initFacultad, setMensaje);
-
-    const { titulo, estado } = facultad;
-
-    const [error, setError, updateError] = ControlError(initError);
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        setMensaje();
-
-        let error = false;
-
-        if (titulo.length < 5) {
-            updateError("titulo", true);
-            error = true;
+                        resetForm();
+                        setMensaje("success", "¡Se ha guardado el registro correctamente!");
+                    } else {
+                        console.log(result);
+                        setMensaje("error", "¡No se ha podido guardar el registro!");
+                    }
+                });
         }
+    });
 
-        if (typeof estado !== "boolean") {
-            updateError("estado", true);
-            error = true;
-        }
+    const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-        if (error) {
-            return;
-        }
-
-        setError(initError);
-        setFacultad(initFacultad);
-
-        if (init) {
-            setMensaje("success", "¡Se ha actualizado el registro correctamente!");
-            return;
-        }
-
-        setMensaje("success", "¡Se ha guardado el registro correctamente!");
-    };
+    const titulo = getFieldProps("titulo");
+    const estado = getFieldProps("estado");
 
     return (
-        <form noValidate autoComplete="off" onSubmit={submitForm}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={8} lg={8}>
-                    <TextField
-                        fullWidth
-                        name="titulo"
-                        value={titulo}
-                        label="Facultad"
-                        variant="outlined"
-                        error={error.titulo}
-                        helperText={titulo.length < 5 ? "Minimo 5 caracteres" : null}
-                        onChange={(e) => {
-                            if (e.target.value.length > 30) {
-                                return;
-                            }
-                            if (e.target.value.length >= 5) {
-                                updateError(e.target.name, false);
-                            }
-                            updateState(e);
-                        }}
-                    />
+        <FormikProvider value={formik} >
+            <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={12} sm={8} lg={8}>
+                        <TextField
+                            fullWidth
+                            {...titulo}
+                            label="Facultad"
+                            variant="outlined"
+                            helperText={touched.titulo && errors.titulo}
+                            error={Boolean(touched.titulo && errors.titulo)}
+                            onChange={(e) => {
+                                setMensaje();
+                                titulo.onChange(e);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={4} lg={4}>
+                        <TextField
+                            select
+                            fullWidth
+                            {...estado}
+                            label="Estado"
+                            variant="outlined"
+                            helperText={touched.estado && errors.estado}
+                            error={Boolean(touched.estado && errors.estado)}
+                            onChange={e => {
+                                setMensaje();
+                                estado.onChange(e);
+                            }}
+                        >
+                            {estados.map((row, index) =>
+                                <MenuItem key={index} value={row.value}>
+                                    {row.label}
+                                </MenuItem>
+                            )}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="outlined"
+                            startIcon={<SaveIcon />}
+                        >
+                            {init ? "Actualizar" : "Registrar"}
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        {mensaje}
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={12} sm={4} lg={4}>
-                    <TextField
-                        select
-                        fullWidth
-                        name="estado"
-                        label="Estado"
-                        value={estado}
-                        variant="outlined"
-                        error={error.estado}
-                        helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
-                        onChange={(e) => {
-                            if (typeof estado === "boolean") {
-                                updateError(e.target.name, false);
-                            }
-                            updateState(e);
-                        }}
-                    >
-                        {estados.map((row, index) =>
-                            <MenuItem key={index} value={row.value}>
-                                {row.label}
-                            </MenuItem>
-                        )}
-                    </TextField>
-                </Grid>
-                <Grid item xs={12} md={12} sm={12} lg={12}>
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="outlined"
-                        startIcon={<SaveIcon />}
-                    >
-                        {init ? "Actualizar" : "Registrar"}
-                    </Button>
-                </Grid>
-                <Grid item xs={12} md={12} sm={12} lg={12}>
-                    {mensaje}
-                </Grid>
-            </Grid>
-        </form>
+            </Form>
+        </FormikProvider>
     );
 };
 

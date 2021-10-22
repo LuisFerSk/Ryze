@@ -3,20 +3,22 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import SaveIcon from "@material-ui/icons/Save";
 
+import { useMensaje } from "../uses";
 import estados from "../../_mocks_/estados";
-import ControlMensaje from "../shared/ControlMensaje";
 import { periodoAcademicoServices } from "../../services";
 import TituloPeriodoAcademico from "./PeriodoAcademicoTitulo";
 import { peridoAcademicoSchema, peridoAcademicoInitialValues } from '../../schema';
 
 
 const PeriodoAcademicoForm = ({ id, init, setDocs }) => {
-    const [mensaje, setMensaje] = ControlMensaje();
+    const [mensaje, setMensaje] = useMensaje();
 
     const formik = useFormik({
         initialValues: id && init ? init : peridoAcademicoInitialValues,
         validationSchema: peridoAcademicoSchema,
         onSubmit: (values, { resetForm }) => {
+            setMensaje();
+
             if (id) {
                 periodoAcademicoServices.Update(id, values).then(result => {
                     if (result === true) {
@@ -69,7 +71,7 @@ const PeriodoAcademicoForm = ({ id, init, setDocs }) => {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            onChange={(e) => {
+                            onChange={e => {
                                 setMensaje();
                                 titulo.onChange(e);
                             }}
