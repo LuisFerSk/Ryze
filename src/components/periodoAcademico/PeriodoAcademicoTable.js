@@ -1,18 +1,17 @@
-import CustomTable from "../shared/Table"
-
-import { Icon } from '@iconify/react';
 import editFill from '@iconify/icons-eva/edit-fill';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 
-import { MenuItem, ListItemIcon, TableCell, ListItemText } from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
 
 import Label from '../Label';
 import { useFloat } from "../uses";
 import Modal from "../shared/Modal";
+import CustomTable from "../shared/Table"
 import FloatAlert from "../shared/FloatAlert";
 import TableMoreMenu from "../shared/table/TableMoreMenu";
 import PeriodoAcademicoForm from "./PeriodoAcademicoForm";
 import PeriodoAcademicoDelete from "./PeriodoAcademicoDelete";
+import { mappingMenuItem } from '../shared/table/TableFunctions';
 import { getDataForTable, createOptions } from "../../utils/specialFunctions";
 
 
@@ -76,18 +75,7 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
                 </TableCell>
                 <TableCell padding="checkbox">
                     <TableMoreMenu>
-                        {options.map((row, index) =>
-                            <MenuItem
-                                key={index}
-                                onClick={row.onClick}
-                                sx={{ color: 'text.secondary' }}
-                            >
-                                <ListItemIcon>
-                                    <Icon icon={row.icon} width={24} height={24} />
-                                </ListItemIcon>
-                                <ListItemText primary={row.label} primaryTypographyProps={{ variant: 'body2' }} />
-                            </MenuItem>
-                        )}
+                        {mappingMenuItem(options)}
                     </TableMoreMenu>
                 </TableCell>
             </>

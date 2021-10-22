@@ -3,21 +3,12 @@ import PropTypes from 'prop-types';
 import { visuallyHidden } from '@material-ui/utils';
 import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core';
 
-// ----------------------------------------------------------------------
-
-UserListHead.propTypes = {
-	order: PropTypes.oneOf(['asc', 'desc']),
-	orderBy: PropTypes.string,
-	headLabel: PropTypes.array,
-	onRequestSort: PropTypes.func,
-};
-
-export default function UserListHead({
+const UserListHead = ({
 	order,
 	orderBy,
 	headLabel,
 	onRequestSort,
-}) {
+}) => {
 	const createSortHandler = (property) => (event) => {
 		onRequestSort(event, property);
 	};
@@ -50,3 +41,12 @@ export default function UserListHead({
 		</TableHead>
 	);
 }
+
+UserListHead.propTypes = {
+	order: PropTypes.oneOf(['asc', 'desc']),
+	orderBy: PropTypes.string,
+	headLabel: PropTypes.array,
+	onRequestSort: PropTypes.func,
+};
+
+export default UserListHead;

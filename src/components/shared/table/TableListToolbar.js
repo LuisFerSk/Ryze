@@ -5,83 +5,79 @@ import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 // material
 import { styled } from '@material-ui/core/styles';
 import {
-  Box,
-  Toolbar,
-  Tooltip,
-  IconButton,
-  Typography,
-  OutlinedInput,
-  InputAdornment
+	Box,
+	Toolbar,
+	Tooltip,
+	IconButton,
+	Typography,
+	OutlinedInput,
+	InputAdornment
 } from '@material-ui/core';
 
-// ----------------------------------------------------------------------
-
 const RootStyle = styled(Toolbar)(({ theme }) => ({
-  height: 96,
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: theme.spacing(0, 1, 0, 3)
+	height: 96,
+	display: 'flex',
+	justifyContent: 'space-between',
+	padding: theme.spacing(0, 1, 0, 3)
 }));
 
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
-  width: 240,
-  transition: theme.transitions.create(['box-shadow', 'width'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter
-  }),
-  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
-  '& fieldset': {
-    borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`
-  }
+	width: 240,
+	transition: theme.transitions.create(['box-shadow', 'width'], {
+		easing: theme.transitions.easing.easeInOut,
+		duration: theme.transitions.duration.shorter
+	}),
+	'&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
+	'& fieldset': {
+		borderWidth: `1px !important`,
+		borderColor: `${theme.palette.grey[500_32]} !important`
+	}
 }));
 
-// ----------------------------------------------------------------------
+const plural = (numSelected) => numSelected > 1 ? "s" : "";
+
+const UserListToolbar = ({ numSelected, filterName, onFilterName }) => {
+	return (
+		<RootStyle
+			sx={{
+				...(numSelected > 0 && {
+					color: 'primary.main',
+					bgcolor: 'primary.lighter'
+				})
+			}}
+		>
+			{numSelected > 0 ? (
+				<Typography component="div" variant="subtitle1">
+					{`${numSelected} elemento${plural(numSelected)} selecionado${plural(numSelected)}`}
+				</Typography>
+			) : (
+				<SearchStyle
+					value={filterName}
+					onChange={onFilterName}
+					placeholder="Buscar"
+					startAdornment={
+						<InputAdornment position="start">
+							<Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
+						</InputAdornment>
+					}
+				/>
+			)}
+
+			{numSelected > 0 ? (
+				<Tooltip title="Eliminar">
+					<IconButton>
+						<Icon icon={trash2Fill} />
+					</IconButton>
+				</Tooltip>
+			) : (null)}
+		</RootStyle>
+	);
+}
 
 UserListToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func
+	numSelected: PropTypes.number,
+	filterName: PropTypes.string,
+	onFilterName: PropTypes.func
 };
 
-const plural = (numSelected) => {
-  return numSelected > 1 ? "s" : "";
-}
-
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
-  return (
-    <RootStyle
-      sx={{
-        ...(numSelected > 0 && {
-          color: 'primary.main',
-          bgcolor: 'primary.lighter'
-        })
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography component="div" variant="subtitle1">
-          {`${numSelected} elemento${plural(numSelected)} selecionado${plural(numSelected)}`}
-        </Typography>
-      ) : (
-        <SearchStyle
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Buscar"
-          startAdornment={
-            <InputAdornment position="start">
-              <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
-            </InputAdornment>
-          }
-        />
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Eliminar">
-          <IconButton>
-            <Icon icon={trash2Fill} />
-          </IconButton>
-        </Tooltip>
-      ) : (null)}
-    </RootStyle>
-  );
-}
+export default UserListToolbar;

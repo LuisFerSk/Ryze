@@ -1,148 +1,125 @@
+import { useFormik, Form, FormikProvider } from 'formik';
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import SaveIcon from "@material-ui/icons/Save";
 
+import { useMensaje } from "../uses";
 import estados from "../../_mocks_/estados";
-import ControlError from "../shared/ControlError";
-import ControlMensaje from "../shared/ControlMensaje";
-import ControlObjectForm from "../shared/ControlObjectForm";
-import { initAsignatura as init } from "../../_mocks_/asignatura";
+import { asignaturaServices } from "../../services";
+import { asignaturaSchema, asignaturaInitialValues } from '../../schema';
 
-const initAsignatura = init("");
+const AsignaturaForm = ({ id, init, setDocs }) => {
+    const [mensaje, setMensaje] = useMensaje();
 
-const initError = init(false);
+    const formik = useFormik({
+        initialValues: id && init ? init : asignaturaInitialValues,
+        validationSchema: asignaturaSchema,
+        onSubmit: (values, { resetForm }) => {
+            setMensaje();
 
-const AsignaturaForm = ({ init }) => {
-    const [mensaje, setMensaje] = ControlMensaje();
+            if (id) {
+                asignaturaServices.Update(id, values).then(result => {
+                    if (result === true) {
+                        setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }]);
+                        setMensaje("success", "¡Se ha actualizado el registro correctamente!");
+                    } else {
+                        console.log(result);
+                        setMensaje("error", "¡No se ha podido guardar el registro!");
+                    }
+                })
+                return;
+            }
+            asignaturaServices.Add(values)
+                .then(result => {
+                    if (typeof result === "object" && result.id) {
+                        setDocs(old => [...old, { id: result.id, data: values }]);
 
-    const [error, setError, updateError] = ControlError(initError);
-
-    const [asignatura, setAsignatura, updateState] = ControlObjectForm(init ? init : initAsignatura, setMensaje);
-
-    const { codigo, titulo, estado } = asignatura;
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        setMensaje();
-
-        let error = false;
-
-        if (codigo.length < 6) {
-            updateError("codigo", true);
-            error = true;
+                        resetForm();
+                        setMensaje("success", "¡Se ha guardado el registro correctamente!");
+                    } else {
+                        console.log(result);
+                        setMensaje("error", "¡No se ha podido guardar el registro!");
+                    }
+                });
         }
+    });
 
-        if (titulo.length < 3) {
-            updateError("titulo", true);
-            error = true;
-        }
+    const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-        if (typeof estado !== "boolean") {
-            updateError("estado", true);
-            error = true;
-        }
-
-        if (error) {
-            return;
-        }
-
-        setError(initError);
-        setAsignatura(initAsignatura);
-
-        if (init) {
-            setMensaje("success", "¡Se ha actualizado el registro correctamente!")
-            return;
-        }
-
-        setMensaje("success", "¡Se ha guardado el registro correctamente!")
-    };
+    const titulo = getFieldProps("titulo");
+    const estado = getFieldProps("estado");
+    const codigo = getFieldProps("codigo");
 
     return (
-        <form noValidate autoComplete="off" onSubmit={submitForm}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={12} sm={12} lg={12}>
-                    <TextField
-                        fullWidth
-                        name="titulo"
-                        value={titulo}
-                        label="Asignatura"
-                        variant="outlined"
-                        error={error.titulo}
-                        helperText={titulo.length < 3 ? "Minimo 3 caracteres" : null}
-                        onChange={(e) => {
-                            if (e.target.value.length > 50) {
-                                return;
-                            }
+        <FormikProvider value={formik}>
+            <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        <TextField
+                            fullWidth
+                            {...titulo}
+                            label="Asignatura"
+                            variant="outlined"
+                            helperText={touched.titulo && errors.titulo}
+                            error={Boolean(touched.titulo && errors.titulo)}
+                            onChange={e => {
+                                setMensaje();
+                                titulo.onChange(e);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6} sm={8} lg={8}>
+                        <TextField
+                            fullWidth
+                            {...codigo}
+                            label="Codigo"
+                            variant="outlined"
+                            helperText={touched.codigo && errors.codigo}
+                            error={Boolean(touched.codigo && errors.codigo)}
+                            onChange={e => {
+                                setMensaje();
+                                codigo.onChange(e);
+                            }}
+                        />
+                    </Grid>
 
-                            if (e.target.value.length >= 3) {
-                                updateError(e.target.name, false);
-                            }
-
-                            updateState(e);
-                        }}
-                    />
+                    <Grid item xs={12} md={6} sm={4} lg={4}>
+                        <TextField
+                            select
+                            fullWidth
+                            {...estado}
+                            label="Estado"
+                            variant="outlined"
+                            helperText={touched.estado && errors.estado}
+                            error={Boolean(touched.estado && errors.estado)}
+                            onChange={e => {
+                                setMensaje();
+                                estado.onChange(e);
+                            }}
+                        >
+                            {estados.map((row, index) =>
+                                <MenuItem key={index} value={row.value}>
+                                    {row.label}
+                                </MenuItem>
+                            )}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="outlined"
+                            startIcon={<SaveIcon />}
+                        >
+                            {init ? "Actualizar" : "Registrar"}
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        {mensaje}
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} sm={8} lg={8}>
-                    <TextField
-                        fullWidth
-                        name="codigo"
-                        value={codigo}
-                        label="Codigo"
-                        variant="outlined"
-                        error={error.codigo}
-                        helperText={codigo.length !== 6 ? "Campo de 6 caracteres" : null}
-                        onChange={(e) => {
-                            if (e.target.value.length > 6) {
-                                return;
-                            }
-                            if (e.target.value.length === 6) {
-                                updateError(e.target.name, false);
-                            }
-                            updateState(e);
-                        }}
-                    />
-                </Grid>
-
-                <Grid item xs={12} md={6} sm={4} lg={4}>
-                    <TextField
-                        select
-                        fullWidth
-                        name="estado"
-                        label="Estado"
-                        value={estado}
-                        variant="outlined"
-                        error={error.estado}
-                        helperText={typeof estado !== "boolean" ? "Seleccione una opción" : null}
-                        onChange={(e) => {
-                            const { value, name } = e.target
-                            if (typeof value === "boolean") {
-                                updateError(name, false);
-                            }
-                            updateState(e);
-                        }}
-                    >
-                        {estados.map((row, index) =>
-                            <MenuItem key={index} value={row.value}>
-                                {row.label}
-                            </MenuItem>
-                        )}
-                    </TextField>
-                </Grid>
-                <Grid item xs={12} md={12} sm={12} lg={12}>
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="outlined"
-                        startIcon={<SaveIcon />}
-                    >
-                        {init ? "Actualizar" : "Registrar"}
-                    </Button>
-                </Grid>
-                <Grid item xs={12} md={12} sm={12} lg={12}>
-                    {mensaje}
-                </Grid>
-            </Grid>
-        </form>
+            </Form>
+        </FormikProvider>
     );
 };
 

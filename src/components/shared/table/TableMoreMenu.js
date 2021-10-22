@@ -6,28 +6,30 @@ import { Menu, IconButton, } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu({ children }) {
-  const ref = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+const TableMoreMenu = ({ children }) => {
+	const ref = useRef(null);
+	const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
-        <Icon icon={moreVerticalFill} width={20} height={20} />
-      </IconButton>
+	return (
+		<>
+			<IconButton ref={ref} onClick={() => setIsOpen(true)}>
+				<Icon icon={moreVerticalFill} width={20} height={20} />
+			</IconButton>
 
-      <Menu
-        open={isOpen}
-        anchorEl={ref.current}
-        onClose={() => setIsOpen(false)}
-        PaperProps={{
-          sx: { width: 200, maxWidth: '100%' }
-        }}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        {children}
-      </Menu>
-    </>
-  );
+			<Menu
+				open={isOpen}
+				anchorEl={ref.current}
+				onClose={() => setIsOpen(false)}
+				PaperProps={{
+					sx: { width: 200, maxWidth: '100%' }
+				}}
+				anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+			>
+				{children}
+			</Menu>
+		</>
+	);
 }
+
+export default TableMoreMenu;
