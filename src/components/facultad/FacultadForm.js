@@ -60,7 +60,7 @@ const FacultadForm = ({ id, init, setDocs }) => {
                             variant="outlined"
                             helperText={touched.titulo && errors.titulo}
                             error={Boolean(touched.titulo && errors.titulo)}
-                            onChange={(e) => {
+                            onChange={e => {
                                 setMensaje();
                                 titulo.onChange(e);
                             }}

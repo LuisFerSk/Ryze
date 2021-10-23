@@ -2,9 +2,8 @@ import { object, string, date, boolean } from 'yup';
 
 export const peridoAcademicoSchema = object().shape({
     titulo: string()
-        .test('len', 'Verifique que el titulo cumpla con el formato Ej: 2020-20', val => val && val.replace(/\s+/g, '').length === 7)
-        .required('El titulo es requerido'),
-
+        .required('El titulo es requerido')
+        .test('len', 'Verifique que el titulo cumpla con el formato Ej: 2020-20', val => val && val.replace(/\s+/g, '').length === 7),
     estado: boolean()
         .required('El estado es requerido'),
 

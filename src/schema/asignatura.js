@@ -7,8 +7,8 @@ export const asignaturaSchema = object().shape({
         .required('El titulo es requerido'),
 
     codigo: string()
-        .test('len', 'el codigo debe ser de 6 caracteres sin espacios', val => val && val.trim().replace(/\s+/g, '').length === 6)
-        .required('El codigo es requerido'),
+        .required('El codigo es requerido')
+        .test('len', 'el codigo debe ser de 6 caracteres sin espacios', val => val && val.trim().replace(/\s+/g, '').length === 6),
 
     estado: boolean()
         .required('El estado es requerido'),

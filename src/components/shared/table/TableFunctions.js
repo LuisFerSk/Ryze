@@ -2,7 +2,7 @@ import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 import { MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
-export const mappingMenuItem = (options) =>
+export const mappingMenuItem = options =>
     options.map((row, index) =>
         <MenuItem
             key={index}
@@ -40,7 +40,7 @@ export const applySortFilter = (array, comparator, query, searchBy) => {
         return a[1] - b[1];
     });
     if (query) {
-        return filter(array, (_user) => _user[searchBy].toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        return filter(array, header => header[searchBy].toString().toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
-    return stabilizedThis.map((el) => el[0]);
+    return stabilizedThis.map(el => el[0]);
 }

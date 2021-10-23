@@ -1,10 +1,11 @@
-// material
-import { Box,Card, Grid, Container } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import { Box, Card, Grid, Container } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
+import { profesorServices } from '../services';
 import { createAccordion } from "../utils/specialFunctions";
 import ProfesorForm from '../components/profesor/ProfesorForm';
 import ProfesorTable from '../components/profesor/ProfesorTable';
@@ -12,15 +13,23 @@ import ControlledAccordions from "../components/shared/Accordion";
 
 // ----------------------------------------------------------------------
 
-const Accordions = [
-    createAccordion(
-        "Agregar registro",
-        <LibraryAddIcon color="primary" />,
-        <ProfesorForm />,
-    ),
-];
 
-export default function Profesor() {
+
+const Profesor = () => {
+    const [docs, setDocs] = useState([]);
+
+    const Accordions = [
+        createAccordion(
+            "Agregar registro",
+            <LibraryAddIcon color="primary" />,
+            <ProfesorForm setDocs={setDocs} />,
+        ),
+    ];
+
+    useEffect(() => {
+        profesorServices.Get().then((result) => setDocs(result))
+    }, [])
+
     return (
         <Page title="Profesores | Ryze">
             <Container>
@@ -32,7 +41,7 @@ export default function Profesor() {
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Box>
-                            <ProfesorTable />
+                            <ProfesorTable docs={docs} setDocs={setDocs} />
                         </Box>
                     </Grid>
                 </Grid>
@@ -40,3 +49,5 @@ export default function Profesor() {
         </Page>
     );
 }
+
+export default Profesor;
