@@ -1,16 +1,18 @@
 import { Box, Card, Grid, Container } from '@material-ui/core';
-import Page from '../components/Page';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
-import { useGetFacultad } from '../components/uses';
+
+import Page from '../components/Page';
+import { facultadServices } from '../services';
+import { useGetDocs } from '../components/uses';
 import { createAccordion } from "../utils/specialFunctions";
 import FacultadForm from "../components/facultad/FacultadForm";
 import FacultadTable from "../components/facultad/FacultadTable";
 import ControlledAccordions from "../components/shared/Accordion";
 
 const Facultad = () => {
-	const [docs, setDocs] = useGetFacultad();
+	const [docs, setDocs] = useGetDocs(facultadServices.Get());
 
 	const Accordions = [
 		createAccordion(

@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
 import { Box, Card, Grid, Container } from '@material-ui/core';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
 import Page from '../components/Page';
+import { useGetDocs } from '../components/uses';
 import { asignaturaServices } from '../services';
-
 import { createAccordion } from "../utils/specialFunctions";
 import ControlledAccordions from "../components/shared/Accordion";
 import AsignaturaForm from "../components/asignatura/AsignaturaForm";
 import AsignaturaTable from "../components/asignatura/AsignaturaTable";
 
 const Asignatura = () => {
-	const [docs, setDocs] = useState([]);
+	const [docs, setDocs] = useGetDocs(asignaturaServices.Get());
 
 	const Accordions = [
 		createAccordion(
@@ -22,9 +21,6 @@ const Asignatura = () => {
 		),
 	];
 
-	useEffect(() => {
-		asignaturaServices.Get().then((result) => setDocs(result))
-	}, [])
 	return (
 		<Page title="Asignatura | Ryze">
 			<Container>

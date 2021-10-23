@@ -4,14 +4,14 @@ import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
 import estados from "../../_mocks_/estados";
-import { programaServices } from "../../services";
-import { useMensaje, useGetFacultad } from "../uses";
+import { useMensaje, useGetDocs } from "../uses";
+import { programaServices, facultadServices } from "../../services";
 import { programaInitialValues, programaSchema } from '../../schema';
 
 const ProgramaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje] = useMensaje();
 
-    const [facultades] = useGetFacultad();
+    const [facultades] = useGetDocs(facultadServices);
 
     const formik = useFormik({
         initialValues: id && init ? init : programaInitialValues,

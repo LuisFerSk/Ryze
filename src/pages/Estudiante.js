@@ -5,22 +5,23 @@ import Page from '../components/Page';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
+import { useGetDocs } from '../components/uses';
+import { estudianteServices } from '../services';
 import { createAccordion } from "../utils/specialFunctions";
 import ControlledAccordions from "../components/shared/Accordion";
 import EstudianteForm from "../components/estudiante/EstudianteForm";
 import EstudianteTable from "../components/estudiante/EstudianteTable";
 
-// ----------------------------------------------------------------------
+const Estudiante = () => {
+    const [docs, setDocs] = useGetDocs(estudianteServices.Get());
 
-const Accordions = [
-    createAccordion(
-        "Agregar registro",
-        <LibraryAddIcon color="primary" />,
-        <EstudianteForm />,
-    ),
-];
-
-export default function Estudiante() {
+    const Accordions = [
+        createAccordion(
+            "Agregar registro",
+            <LibraryAddIcon color="primary" />,
+            <EstudianteForm setDocs={setDocs} />,
+        ),
+    ];
     return (
         <Page title="Estudiante | Ryze">
             <Container>
@@ -32,7 +33,7 @@ export default function Estudiante() {
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Box>
-                            <EstudianteTable />
+                            <EstudianteTable docs={docs} setDocs={setDocs} />
                         </Box>
                     </Grid>
                 </Grid>
@@ -40,3 +41,5 @@ export default function Estudiante() {
         </Page>
     );
 }
+
+export default Estudiante;

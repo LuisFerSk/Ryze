@@ -1,22 +1,17 @@
-import { useState, useEffect } from 'react';
 import { Box, Card, Grid, Container } from '@material-ui/core';
-// components
-import Page from '../components/Page';
 
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
+import Page from '../components/Page';
 import { profesorServices } from '../services';
+import { useGetDocs } from '../components/uses';
 import { createAccordion } from "../utils/specialFunctions";
 import ProfesorForm from '../components/profesor/ProfesorForm';
 import ProfesorTable from '../components/profesor/ProfesorTable';
 import ControlledAccordions from "../components/shared/Accordion";
 
-// ----------------------------------------------------------------------
-
-
-
 const Profesor = () => {
-    const [docs, setDocs] = useState([]);
+    const [docs, setDocs] = useGetDocs(profesorServices.Get());
 
     const Accordions = [
         createAccordion(
@@ -25,10 +20,6 @@ const Profesor = () => {
             <ProfesorForm setDocs={setDocs} />,
         ),
     ];
-
-    useEffect(() => {
-        profesorServices.Get().then((result) => setDocs(result))
-    }, [])
 
     return (
         <Page title="Profesores | Ryze">

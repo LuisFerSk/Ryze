@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Box, Card, Grid, Container } from '@material-ui/core';
 
 import Page from '../components/Page';
@@ -6,13 +5,14 @@ import Page from '../components/Page';
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 
 import { programaServices } from '../services';
+import { useGetDocs } from '../components/uses';
 import { createAccordion } from "../utils/specialFunctions";
 import ProgramaForm from "../components/programa/ProgramaForm";
 import ProgramaTable from "../components/programa/ProgramaTable";
 import ControlledAccordions from "../components/shared/Accordion";
 
 const Programa = () => {
-	const [docs, setDocs] = useState([]);
+	const [docs, setDocs] = useGetDocs(programaServices.Get());
 
 	const Accordions = [
 		createAccordion(
@@ -21,10 +21,6 @@ const Programa = () => {
 			<ProgramaForm setDocs={setDocs} />,
 		),
 	];
-
-	useEffect(() => {
-		programaServices.Get().then((result) => setDocs(result))
-	}, []);
 
 	return (
 		<Page title="Programa | Ryze">
