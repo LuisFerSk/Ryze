@@ -11,7 +11,7 @@ import { programaInitialValues, programaSchema } from '../../schema';
 const ProgramaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje] = useMensaje();
 
-    const [facultades] = useGetDocs(facultadServices);
+    const [facultades] = useGetDocs(facultadServices.Get());
 
     const formik = useFormik({
         initialValues: id && init ? init : programaInitialValues,

@@ -1,19 +1,19 @@
-import database from "../database/fire";
+import { addDoc, updateDoc, getDocs, deleteDoc } from "../database/fire";
 
 const collectionName = "programa";
 
 const programa = {
     Add: async data => {
-        return await database.AddDoc(collectionName, data).then(get => get);
+        return await addDoc(collectionName, data).then(get => get);
     },
 
     Update: async (id, data) => {
-        return await database.UpdateDoc(collectionName, id, data).then(get => get)
+        return await updateDoc(collectionName, id, data).then(get => get)
     },
 
-    Get: async () => await database.GetDocs(collectionName).then(get => get),
+    Get: async () => await getDocs(collectionName).then(get => get),
 
-    Delete: async id => await database.DeleteDoc(collectionName, id).then(get => get)
+    Delete: async id => await deleteDoc(collectionName, id).then(get => get)
 };
 
 export default programa;

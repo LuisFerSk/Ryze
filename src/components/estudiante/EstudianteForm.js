@@ -132,8 +132,8 @@ const EstudianteForm = ({ id, init, setDocs }) => {
                             }}
                         >
                             {programas.map((row, index) =>
-                                <MenuItem key={index} value={row.titulo}>
-                                    {row.titulo}
+                                <MenuItem key={index} value={row.data.titulo}>
+                                    {row.data.titulo}
                                 </MenuItem>
                             )}
                         </TextField>
