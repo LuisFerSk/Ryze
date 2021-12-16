@@ -4,7 +4,7 @@ const collectionName = "asignatura";
 
 const asignatura = {
     Add: async data => {
-        return await addDoc(collectionName, data).then(get => get);
+        return await addDoc(collectionName, data).then(get => get)
     },
 
     Update: async (id, data) => {

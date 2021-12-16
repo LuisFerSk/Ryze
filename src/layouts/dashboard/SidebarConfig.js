@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react';
-import schoolIcon from '@iconify/icons-mdi/school';
+// import schoolIcon from '@iconify/icons-mdi/school';
 import bookFill from '@iconify/icons-eva/book-fill';
 import clockFill from '@iconify/icons-eva/clock-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import personFill from '@iconify/icons-eva/person-fill';
-import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import openBookFill from '@iconify/icons-eva/book-open-fill';
-import briefcaseFill from '@iconify/icons-eva/briefcase-fill';
+// import fileTextFill from '@iconify/icons-eva/file-text-fill';
+// import openBookFill from '@iconify/icons-eva/book-open-fill';
+// import briefcaseFill from '@iconify/icons-eva/briefcase-fill';
 import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 
 // ----------------------------------------------------------------------
@@ -24,16 +24,16 @@ const sidebarConfig = [
     path: '/dashboard/periodo_academico',
     icon: getIcon(clockFill)
   },
-  {
-    title: 'facultades',
-    path: '/dashboard/facultad',
-    icon: getIcon(openBookFill)
-  },
-  {
-    title: 'programas',
-    path: '/dashboard/programa',
-    icon: getIcon(fileTextFill)
-  },
+  // {
+  //   title: 'facultades',
+  //   path: '/dashboard/facultad',
+  //   icon: getIcon(openBookFill)
+  // },
+  // {
+  //   title: 'programas',
+  //   path: '/dashboard/programa',
+  //   icon: getIcon(fileTextFill)
+  // },
   {
     title: 'asignaturas',
     path: '/dashboard/asignatura',
@@ -44,16 +44,16 @@ const sidebarConfig = [
     path: '/dashboard/grupo',
     icon: getIcon(peopleFill)
   },
-  {
-    title: 'estudiantes',
-    path: '/dashboard/estudiante',
-    icon: getIcon(schoolIcon)
-  },
-  {
-    title: 'profesores',
-    path: '/dashboard/profesor',
-    icon: getIcon(briefcaseFill)
-  },
+  // {
+  //   title: 'estudiantes',
+  //   path: '/dashboard/estudiante',
+  //   icon: getIcon(schoolIcon)
+  // },
+  // {
+  //   title: 'profesores',
+  //   path: '/dashboard/profesor',
+  //   icon: getIcon(briefcaseFill)
+  // },
   {
     title: 'usuarios',
     path: '/dashboard/usuario',
