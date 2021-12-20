@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles'
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +39,6 @@ const GlobalStyles = withStyles((theme) => ({
     a: { color: theme.palette.primary.main },
     img: { display: 'block', maxWidth: '100%' }
   }
-}))(() => null);
+}))(() => null)
 
 export default GlobalStyles;

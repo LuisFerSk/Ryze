@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 import {
     Table,
@@ -7,25 +7,25 @@ import {
     TableCell,
     TableContainer,
     TablePagination
-} from '@material-ui/core';
+} from '@material-ui/core'
 
-import Scrollbar from '../Scrollbar';
-import SearchNotFound from '../SearchNotFound';
-import TableListHead from "./table/TableListHead";
-import TableListToolbar from "./table/TableListToolbar";
-import { getComparator, applySortFilter } from './table/TableFunctions';
+import Scrollbar from '../Scrollbar'
+import SearchNotFound from '../SearchNotFound'
+import TableListHead from './table/TableListHead'
+import TableListToolbar from './table/TableListToolbar'
+import { getComparator, applySortFilter } from './table/TableFunctions'
 
 const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
-    const [page, setPage] = useState(0);
-    const [order, setOrder] = useState('asc');
-    const [selected, setSelected] = useState([]);
-    const [orderBy, setOrderBy] = useState(selectBy);
-    const [filterName, setFilterName] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0)
+    const [order, setOrder] = useState('asc')
+    const [selected, setSelected] = useState([])
+    const [orderBy, setOrderBy] = useState(selectBy)
+    const [filterName, setFilterName] = useState('')
+    const [rowsPerPage, setRowsPerPage] = useState(5)
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-    const filteredUsers = applySortFilter(data, getComparator(order, orderBy), filterName, searchBy);
+    const filteredUsers = applySortFilter(data, getComparator(order, orderBy), filterName, searchBy)
 
     return (
         <>
@@ -33,7 +33,7 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                 filterName={filterName}
                 numSelected={selected.length}
                 onFilterName={(event) => {
-                    setFilterName(event.target.value);
+                    setFilterName(event.target.value)
                 }}
             />
             <Scrollbar>
@@ -46,24 +46,24 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                             rowCount={data.length}
                             numSelected={selected.length}
                             onRequestSort={(event, property) => {
-                                const isAsc = orderBy === property && order === 'asc';
-                                setOrder(isAsc ? 'desc' : 'asc');
-                                setOrderBy(property);
+                                const isAsc = orderBy === property && order === 'asc'
+                                setOrder(isAsc ? 'desc' : 'asc')
+                                setOrderBy(property)
                             }}
                             onSelectAllClick={(event) => {
                                 if (event.target.checked) {
-                                    const newSelecteds = data.map((n) => n[selectBy]);
-                                    setSelected(newSelecteds);
+                                    const newSelecteds = data.map((n) => n[selectBy])
+                                    setSelected(newSelecteds)
                                     return;
                                 }
-                                setSelected([]);
+                                setSelected([])
                             }}
                         />
                         <TableBody>
                             {filteredUsers
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const selectValue = row[selectBy];
+                                    const selectValue = row[selectBy]
                                     const isItemSelected = selected.indexOf(selectValue) !== -1;
 
                                     return (
@@ -71,13 +71,13 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                                             hover
                                             key={index}
                                             tabIndex={-1}
-                                            role="checkbox"
+                                            role='checkbox'
                                             selected={isItemSelected}
                                             aria-checked={isItemSelected}
                                         >
                                             {cells(row)}
                                         </TableRow>
-                                    );
+                                    )
                                 })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 53 * emptyRows }}>
@@ -88,7 +88,7 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                         {filteredUsers.length === 0 && (
                             <TableBody>
                                 <TableRow>
-                                    <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                                    <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
                                         <SearchNotFound searchQuery={filterName} />
                                     </TableCell>
                                 </TableRow>
@@ -99,20 +99,20 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
             </Scrollbar>
             <TablePagination
                 page={page}
-                component="div"
+                component='div'
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 rowsPerPageOptions={[5, 10, 25]}
                 onRowsPerPageChange={(event) => {
-                    setRowsPerPage(parseInt(event.target.value, 10));
-                    setPage(0);
+                    setRowsPerPage(parseInt(event.target.value, 10))
+                    setPage(0)
                 }}
                 onPageChange={(event, newPage) => {
-                    setPage(newPage);
+                    setPage(newPage)
                 }}
             />
         </>
-    );
+    )
 }
 
 export default CustomTable;

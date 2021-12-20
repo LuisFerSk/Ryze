@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // material
-import { alpha, styled } from '@material-ui/core/styles';
+import { alpha, styled } from '@material-ui/core/styles'
 
 // ----------------------------------------------------------------------
 
@@ -10,18 +10,18 @@ const RootStyle = styled('span')(({ theme, styleProps }) => {
   const styleFilled = (color) => ({
     color: theme.palette[color].contrastText,
     backgroundColor: theme.palette[color].main
-  });
+  })
 
   const styleOutlined = (color) => ({
     color: theme.palette[color].main,
     backgroundColor: 'transparent',
     border: `1px solid ${theme.palette[color].main}`
-  });
+  })
 
   const styleGhost = (color) => ({
     color: theme.palette[color].dark,
     backgroundColor: alpha(theme.palette[color].main, 0.16)
-  });
+  })
 
   return {
     height: 22,
@@ -57,8 +57,8 @@ const RootStyle = styled('span')(({ theme, styleProps }) => {
             backgroundColor: theme.palette.grey[500_16]
           })
         })
-  };
-});
+  }
+})
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ export default function Label({ color = 'default', variant = 'ghost', children, 
     <RootStyle styleProps={{ color, variant }} {...other}>
       {children}
     </RootStyle>
-  );
+  )
 }
 
 Label.propTypes = {
@@ -82,4 +82,4 @@ Label.propTypes = {
     'error'
   ]),
   variant: PropTypes.oneOf(['filled', 'outlined', 'ghost'])
-};
+}

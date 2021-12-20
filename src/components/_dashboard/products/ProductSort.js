@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react';
-import { useState } from 'react';
-import chevronUpFill from '@iconify/icons-eva/chevron-up-fill';
-import chevronDownFill from '@iconify/icons-eva/chevron-down-fill';
+import { Icon } from '@iconify/react'
+import { useState } from 'react'
+import chevronUpFill from '@iconify/icons-eva/chevron-up-fill'
+import chevronDownFill from '@iconify/icons-eva/chevron-down-fill'
 // material
-import { Menu, Button, MenuItem, Typography } from '@material-ui/core';
+import { Menu, Button, MenuItem, Typography } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -12,29 +12,29 @@ const SORT_BY_OPTIONS = [
   { value: 'newest', label: 'Newest' },
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' }
-];
+]
 
 export default function ShopProductSort() {
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(null)
 
   const handleOpen = (event) => {
-    setOpen(event.currentTarget);
-  };
+    setOpen(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setOpen(null);
-  };
+    setOpen(null)
+  }
 
   return (
     <>
       <Button
-        color="inherit"
+        color='inherit'
         disableRipple
         onClick={handleOpen}
         endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
       >
         Sort By:&nbsp;
-        <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
+        <Typography component='span' variant='subtitle2' sx={{ color: 'text.secondary' }}>
           Newest
         </Typography>
       </Button>
@@ -58,5 +58,5 @@ export default function ShopProductSort() {
         ))}
       </Menu>
     </>
-  );
+  )
 }

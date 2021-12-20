@@ -1,5 +1,5 @@
-import { createStyles, makeStyles } from '@material-ui/styles';
-import { useTheme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/styles'
+import { useTheme } from '@material-ui/core/styles'
 
 // ----------------------------------------------------------------------
 
@@ -47,24 +47,24 @@ const useStyles = makeStyles((theme) =>
       }
     }
   })
-);
+)
 
 export default function BaseOptionChart() {
-  useStyles();
-  const theme = useTheme();
+  useStyles()
+  const theme = useTheme()
 
   const LABEL_TOTAL = {
     show: true,
     label: 'Total',
     color: theme.palette.text.secondary,
     ...theme.typography.subtitle2
-  };
+  }
 
   const LABEL_VALUE = {
     offsetY: 8,
     color: theme.palette.text.primary,
     ...theme.typography.h3
-  };
+  }
 
   return {
     // Colors
@@ -194,5 +194,5 @@ export default function BaseOptionChart() {
         }
       }
     }
-  };
+  }
 }

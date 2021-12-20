@@ -1,5 +1,5 @@
-import { useState } from "react";
-import PropTypes from 'prop-types';
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import {
 	Grid,
@@ -7,19 +7,19 @@ import {
 	Typography,
 	AccordionSummary,
 	AccordionDetails,
-} from "@material-ui/core";
+} from '@material-ui/core'
 
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import useStyles from "../../theme/accordion";
+import useStyles from '../../theme/accordion'
 
 const CustomAccordion = ({ accordions, indexOpen }) => {
-	const classes = useStyles();
-	const [expanded, setExpanded] = useState(indexOpen >= 0 ? indexOpen : false);
+	const classes = useStyles()
+	const [expanded, setExpanded] = useState(indexOpen >= 0 ? indexOpen : false)
 
 	const handleChange = (panel) => (event, isExpanded) => {
-		setExpanded(isExpanded ? panel : false);
-	};
+		setExpanded(isExpanded ? panel : false)
+	}
 
 	return (
 		<>
@@ -50,8 +50,8 @@ const CustomAccordion = ({ accordions, indexOpen }) => {
 				</Accordion>
 			))}
 		</>
-	);
-};
+	)
+}
 
 CustomAccordion.prototype = {
 	indexOpen: PropTypes.number,

@@ -5,7 +5,7 @@ export const varBounceOut = {
     scale: [0.9, 1.1, 0.3],
     opacity: [1, 1, 0]
   }
-};
+}
 
 export const varBounceOutUp = {
   animate: {
@@ -13,7 +13,7 @@ export const varBounceOutUp = {
     scaleY: [0.985, 0.9, 3],
     opacity: [1, 1, 0]
   }
-};
+}
 
 export const varBounceOutDown = {
   animate: {
@@ -21,7 +21,7 @@ export const varBounceOutDown = {
     scaleY: [0.985, 0.9, 3],
     opacity: [1, 1, 0]
   }
-};
+}
 
 export const varBounceOutLeft = {
   animate: {
@@ -29,7 +29,7 @@ export const varBounceOutLeft = {
     scaleX: [1, 0.9, 2],
     opacity: [1, 1, 0]
   }
-};
+}
 
 export const varBounceOutRight = {
   animate: {
@@ -37,4 +37,4 @@ export const varBounceOutRight = {
     scaleX: [1, 0.9, 2],
     opacity: [1, 1, 0]
   }
-};
+}

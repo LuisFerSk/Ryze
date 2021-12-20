@@ -1,21 +1,21 @@
-import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import PropTypes from 'prop-types'
+import { useMemo } from 'react'
 // material
-import { CssBaseline } from '@material-ui/core';
-import { ThemeProvider, createTheme, StyledEngineProvider } from '@material-ui/core/styles';
+import { CssBaseline } from '@material-ui/core'
+import { ThemeProvider, createTheme, StyledEngineProvider } from '@material-ui/core/styles'
 //
-import shape from './shape';
-import palette from './palette';
-import typography from './typography';
-import GlobalStyles from './globalStyles';
-import componentsOverride from './overrides';
-import shadows, { customShadows } from './shadows';
+import shape from './shape'
+import palette from './palette'
+import typography from './typography'
+import GlobalStyles from './globalStyles'
+import componentsOverride from './overrides'
+import shadows, { customShadows } from './shadows'
 
 // ----------------------------------------------------------------------
 
 ThemeConfig.propTypes = {
   children: PropTypes.node
-};
+}
 
 export default function ThemeConfig({ children }) {
   const themeOptions = useMemo(
@@ -27,10 +27,10 @@ export default function ThemeConfig({ children }) {
       customShadows
     }),
     []
-  );
+  )
 
-  const theme = createTheme(themeOptions);
-  theme.components = componentsOverride(theme);
+  const theme = createTheme(themeOptions)
+  theme.components = componentsOverride(theme)
 
   return (
     <StyledEngineProvider injectFirst>
@@ -40,5 +40,5 @@ export default function ThemeConfig({ children }) {
         {children}
       </ThemeProvider>
     </StyledEngineProvider>
-  );
+  )
 }

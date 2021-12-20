@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // material
-import { visuallyHidden } from '@material-ui/utils';
-import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core';
+import { visuallyHidden } from '@material-ui/utils'
+import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core'
 
 const UserListHead = ({
 	order,
@@ -10,8 +10,8 @@ const UserListHead = ({
 	onRequestSort,
 }) => {
 	const createSortHandler = (property) => (event) => {
-		onRequestSort(event, property);
-	};
+		onRequestSort(event, property)
+	}
 
 	return (
 		<TableHead>
@@ -39,7 +39,7 @@ const UserListHead = ({
 				))}
 			</TableRow>
 		</TableHead>
-	);
+	)
 }
 
 UserListHead.propTypes = {
@@ -47,6 +47,6 @@ UserListHead.propTypes = {
 	orderBy: PropTypes.string,
 	headLabel: PropTypes.array,
 	onRequestSort: PropTypes.func,
-};
+}
 
 export default UserListHead;

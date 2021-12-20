@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from 'react'
 // material
-import { alpha } from '@material-ui/core/styles';
-import { Box, MenuItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles'
+import { Box, MenuItem, ListItemIcon, ListItemText, IconButton } from '@material-ui/core'
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from '../../components/MenuPopover'
 
 // ----------------------------------------------------------------------
 
@@ -23,21 +23,21 @@ const LANGS = [
     label: 'French',
     icon: '/static/icons/ic_flag_fr.svg'
   }
-];
+]
 
 // ----------------------------------------------------------------------
 
 export default function LanguagePopover() {
-  const anchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null)
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -66,7 +66,7 @@ export default function LanguagePopover() {
               sx={{ py: 1, px: 2.5 }}
             >
               <ListItemIcon>
-                <Box component="img" alt={option.label} src={option.icon} />
+                <Box component='img' alt={option.label} src={option.icon} />
               </ListItemIcon>
               <ListItemText primaryTypographyProps={{ variant: 'body2' }}>
                 {option.label}
@@ -76,5 +76,5 @@ export default function LanguagePopover() {
         </Box>
       </MenuPopover>
     </>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import searchFill from '@iconify/icons-eva/search-fill';
+import PropTypes from 'prop-types'
+import { Icon } from '@iconify/react'
+import searchFill from '@iconify/icons-eva/search-fill'
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, TextField, Autocomplete, InputAdornment } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles'
+import { Box, TextField, Autocomplete, InputAdornment } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -32,19 +32,19 @@ const RootStyle = styled('div')(({ theme }) => ({
       borderBottom: `solid 1px ${theme.palette.divider}`
     }
   }
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 BlogPostsSearch.propTypes = {
   posts: PropTypes.array.isRequired
-};
+}
 
 export default function BlogPostsSearch({ posts }) {
   return (
     <RootStyle>
       <Autocomplete
-        size="small"
+        size='small'
         disablePortal
         popupIcon={null}
         options={posts}
@@ -52,12 +52,12 @@ export default function BlogPostsSearch({ posts }) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Search post..."
+            placeholder='Search post...'
             InputProps={{
               ...params.InputProps,
               startAdornment: (
                 <>
-                  <InputAdornment position="start">
+                  <InputAdornment position='start'>
                     <Box
                       component={Icon}
                       icon={searchFill}
@@ -77,5 +77,5 @@ export default function BlogPostsSearch({ posts }) {
         )}
       />
     </RootStyle>
-  );
+  )
 }

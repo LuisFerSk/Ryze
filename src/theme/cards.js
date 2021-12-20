@@ -1,5 +1,5 @@
-import { alpha, styled } from '@material-ui/core/styles';
-import { Card } from '@material-ui/core';
+import { alpha, styled } from '@material-ui/core/styles'
+import { Card } from '@material-ui/core'
 
 export const CustomCard = (color) =>
   styled(Card)(({ theme }) => ({
@@ -8,7 +8,7 @@ export const CustomCard = (color) =>
     padding: theme.spacing(5, 0),
     color: theme.palette[color].darker,
     backgroundColor: theme.palette[color].lighter
-  }));
+  }))
 
 export const IconWrapper = (color) =>
   styled('div')(({ theme }) => ({
@@ -25,4 +25,4 @@ export const IconWrapper = (color) =>
       theme.palette[color].dark,
       0.24
     )} 100%)`
-  }));
+  }))

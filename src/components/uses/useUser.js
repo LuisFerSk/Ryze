@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState } from 'react'
+import { onAuthStateChanged } from 'firebase/auth'
 
-import { auth } from "../../database/auth";
+import { auth } from '../../database/auth'
 
 const useUser = (init) => {
-    const [user, setUser] = useState(init);
+    const [user, setUser] = useState(init)
 
     onAuthStateChanged(auth, (result) => {
-        setUser(result);
-    });
+        setUser(result)
+    })
 
     return user;
 }

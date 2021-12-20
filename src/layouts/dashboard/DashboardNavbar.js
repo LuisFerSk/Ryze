@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import menu2Fill from '@iconify/icons-eva/menu-2-fill';
+import PropTypes from 'prop-types'
+import { Icon } from '@iconify/react'
+import menu2Fill from '@iconify/icons-eva/menu-2-fill'
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@material-ui/core';
+import { alpha, styled } from '@material-ui/core/styles'
+import { Box, Stack, AppBar, Toolbar, IconButton } from '@material-ui/core'
 // components
-import { MHidden } from '../../components/@material-extend';
+import { MHidden } from '../../components/@material-extend'
 //
-import Searchbar from './Searchbar';
-import AccountPopover from './AccountPopover';
+import Searchbar from './Searchbar'
+import AccountPopover from './AccountPopover'
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     width: `calc(100% - ${DRAWER_WIDTH + 1}px)`
   }
-}));
+}))
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
@@ -32,19 +32,19 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
     minHeight: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5)
   }
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
-};
+}
 
 export default function DashboardNavbar({ onOpenSidebar }) {
   return (
     <RootStyle>
       <ToolbarStyle>
-        <MHidden width="lgUp">
+        <MHidden width='lgUp'>
           <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
             <Icon icon={menu2Fill} />
           </IconButton>
@@ -53,10 +53,10 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
-        <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+        <Stack direction='row' alignItems='center' spacing={{ xs: 0.5, sm: 1.5 }}>
           <AccountPopover />
         </Stack>
       </ToolbarStyle>
     </RootStyle>
-  );
+  )
 }

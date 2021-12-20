@@ -1,9 +1,9 @@
-import { merge } from 'lodash';
-import ReactApexChart from 'react-apexcharts';
+import { merge } from 'lodash'
+import ReactApexChart from 'react-apexcharts'
 // material
-import { Card, CardHeader, Box } from '@material-ui/core';
+import { Card, CardHeader, Box } from '@material-ui/core'
 //
-import { BaseOptionChart } from '../../charts';
+import { BaseOptionChart } from '../../charts'
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ const CHART_DATA = [
     type: 'line',
     data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
   }
-];
+]
 
 export default function AppWebsiteVisits() {
   const chartOptions = merge(BaseOptionChart(), {
@@ -50,20 +50,20 @@ export default function AppWebsiteVisits() {
       y: {
         formatter: (y) => {
           if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} visits`;
+            return `${y.toFixed(0)} visits`
           }
           return y;
         }
       }
     }
-  });
+  })
 
   return (
     <Card>
-      <CardHeader title="Website Visits" subheader="(+43%) than last year" />
-      <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <ReactApexChart type="line" series={CHART_DATA} options={chartOptions} height={364} />
+      <CardHeader title='Website Visits' subheader='(+43%) than last year' />
+      <Box sx={{ p: 3, pb: 1 }} dir='ltr'>
+        <ReactApexChart type='line' series={CHART_DATA} options={chartOptions} height={364} />
       </Box>
     </Card>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react';
-import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill';
+import { Icon } from '@iconify/react'
+import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill'
 // material
-import { styled } from '@material-ui/core/styles';
-import { Badge } from '@material-ui/core';
+import { styled } from '@material-ui/core/styles'
+import { Badge } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -25,16 +25,16 @@ const RootStyle = styled('div')(({ theme }) => ({
   borderBottomLeftRadius: theme.shape.borderRadiusMd,
   transition: theme.transitions.create('opacity'),
   '&:hover': { opacity: 0.72 }
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 export default function CartWidget() {
   return (
     <RootStyle>
-      <Badge showZero badgeContent={0} color="error" max={99}>
+      <Badge showZero badgeContent={0} color='error' max={99}>
         <Icon icon={shoppingCartFill} width={24} height={24} />
       </Badge>
     </RootStyle>
-  );
+  )
 }

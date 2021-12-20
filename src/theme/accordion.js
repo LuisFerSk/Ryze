@@ -1,12 +1,12 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: "100%"
+		width: '100%'
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
-		flexBasis: "33.33%",
+		flexBasis: '33.33%',
 		flexShrink: 0,
 		paddingLeft: theme.spacing(2),
 	},
@@ -14,6 +14,6 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: theme.typography.pxToRem(15),
 		color: theme.palette.text.secondary,
 	},
-}));
+}))
 
 export default useStyles;

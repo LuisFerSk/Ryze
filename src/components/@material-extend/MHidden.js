@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // material
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -18,13 +18,13 @@ MHidden.propTypes = {
     'lgUp',
     'xlUp'
   ]).isRequired
-};
+}
 
 export default function MHidden({ width, children }) {
-  const breakpoint = width.substring(0, 2);
+  const breakpoint = width.substring(0, 2)
 
-  const hiddenUp = useMediaQuery((theme) => theme.breakpoints.up(breakpoint));
-  const hiddenDown = useMediaQuery((theme) => theme.breakpoints.down(breakpoint));
+  const hiddenUp = useMediaQuery((theme) => theme.breakpoints.up(breakpoint))
+  const hiddenDown = useMediaQuery((theme) => theme.breakpoints.down(breakpoint))
 
   if (width.includes('Down')) {
     return hiddenDown ? null : children;

@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import { Card, Modal, IconButton, Grid, Typography } from "@material-ui/core";
+import PropTypes from 'prop-types'
+import { Card, Modal, IconButton, Grid, Typography } from '@material-ui/core'
 
-import CloseIcon from "@material-ui/icons/Close";
+import CloseIcon from '@material-ui/icons/Close'
 
-import useStyles from "../../theme/modal";
+import useStyles from '../../theme/modal'
 
 const TransitionsModal = ({ children, title, isOpen, close }) => {
-	const classes = useStyles();
+	const classes = useStyles()
 
 	return (
 		<Grid container spacing={3}>
@@ -14,19 +14,19 @@ const TransitionsModal = ({ children, title, isOpen, close }) => {
 				open={isOpen}
 				onClose={close}
 				className={classes.modal}
-				aria-labelledby="simple-modal-title"
-				aria-describedby="simple-modal-description"
+				aria-labelledby='simple-modal-title'
+				aria-describedby='simple-modal-description'
 			>
 				<Grid item xs={11} md={11} sm={10} lg={10}>
 					<Card className={classes.paper}>
-						<div id="simple-modal-title">
-							<Typography variant="h6">
+						<div id='simple-modal-title'>
+							<Typography variant='h6'>
 								{title}
 								<IconButton
-									left="40%"
-									color="error"
+									left='40%'
+									color='error'
 									onClick={close}
-									aria-label="close"
+									aria-label='close'
 									className={classes.close}
 								>
 									<CloseIcon />
@@ -39,7 +39,7 @@ const TransitionsModal = ({ children, title, isOpen, close }) => {
 							md={12}
 							sm={12}
 							lg={12}
-							id="simple-modal-description"
+							id='simple-modal-description'
 						>
 							{children}
 						</Grid>
@@ -47,8 +47,8 @@ const TransitionsModal = ({ children, title, isOpen, close }) => {
 				</Grid>
 			</Modal>
 		</Grid>
-	);
-};
+	)
+}
 
 TransitionsModal.prototype = {
 	children: PropTypes.element.isRequired,

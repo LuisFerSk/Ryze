@@ -1,41 +1,34 @@
-import fire from "../config/firebase";
-import "firebase/storage";
-import { v4 } from "uuid";
+import fire from '../firebaseConfig'
 
-const stg = () => {
-	const obj = {};
+import 'firebase/storage'
+import { v4 } from 'uuid'
 
-	obj.putFile = async (File, folder) => {
-		let result;
+export const putFile = async (File, folder) => {
+	let result;
 
-		const filePATH = `${folder}/${v4()}#${File.name}`;
+	const filePATH = `${folder}/${v4()}#${File.name}`
 
-		const reference = fire.storage().ref(filePATH);
+	const reference = fire.storage().ref(filePATH)
 
-		const promises = [
-			await reference.put(File),
-			await reference.getDownloadURL().then((get) => (result = get)),
-		];
+	const promises = [
+		await reference.put(File),
+		await reference.getDownloadURL().then((get) => (result = get)),
+	]
 
-		await Promise.all(promises);
+	await Promise.all(promises)
 
-		return result;
-	};
+	return result;
+}
 
-	obj.deleteFile = async (fielPATH) => {
-		const reference = fire.storage().refFromURL(fielPATH);
+export const deleteFile = async (fielPATH) => {
+	const reference = fire.storage().refFromURL(fielPATH)
 
-		return await reference
-			.delete()
-			.then(() => {
-				return true;
-			})
-			.catch((error) => {
-				return error.a;
-			});
-	};
-
-	return obj;
-};
-
-export default stg;
+	return await reference
+		.delete()
+		.then(() => {
+			return true;
+		})
+		.catch((error) => {
+			return error.a;
+		})
+}

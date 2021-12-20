@@ -1,14 +1,14 @@
-import { Icon } from '@iconify/react';
-import { useRef, useState } from 'react';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+import { Icon } from '@iconify/react'
+import { useRef, useState } from 'react'
+import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill'
 // material
-import { Menu, IconButton, } from '@material-ui/core';
+import { Menu, IconButton, } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
 const TableMoreMenu = ({ children }) => {
-	const ref = useRef(null);
-	const [isOpen, setIsOpen] = useState(false);
+	const ref = useRef(null)
+	const [isOpen, setIsOpen] = useState(false)
 
 	return (
 		<>
@@ -29,7 +29,7 @@ const TableMoreMenu = ({ children }) => {
 				{children}
 			</Menu>
 		</>
-	);
+	)
 }
 
 export default TableMoreMenu;

@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import searchFill from '@iconify/icons-eva/search-fill';
-import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import PropTypes from 'prop-types'
+import { Icon } from '@iconify/react'
+import searchFill from '@iconify/icons-eva/search-fill'
+import trash2Fill from '@iconify/icons-eva/trash-2-fill'
+import roundFilterList from '@iconify/icons-ic/round-filter-list'
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles'
 import {
   Box,
   Toolbar,
@@ -13,7 +13,7 @@ import {
   Typography,
   OutlinedInput,
   InputAdornment
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ const RootStyle = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1, 0, 3)
-}));
+}))
 
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   width: 240,
@@ -35,7 +35,7 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
     borderWidth: `1px !important`,
     borderColor: `${theme.palette.grey[500_32]} !important`
   }
-}));
+}))
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ UserListToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func
-};
+}
 
 export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
   return (
@@ -56,16 +56,16 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
       }}
     >
       {numSelected > 0 ? (
-        <Typography component="div" variant="subtitle1">
+        <Typography component='div' variant='subtitle1'>
           {numSelected} selected
         </Typography>
       ) : (
         <SearchStyle
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search user..."
+          placeholder='Search user...'
           startAdornment={
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
             </InputAdornment>
           }
@@ -73,18 +73,18 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title='Delete'>
           <IconButton>
             <Icon icon={trash2Fill} />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
+        <Tooltip title='Filter list'>
           <IconButton>
             <Icon icon={roundFilterList} />
           </IconButton>
         </Tooltip>
       )}
     </RootStyle>
-  );
+  )
 }

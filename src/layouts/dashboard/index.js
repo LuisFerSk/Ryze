@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles'
 
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'
 
-import DashboardNavbar from './DashboardNavbar';
-import DashboardSidebar from './DashboardSidebar';
+import DashboardNavbar from './DashboardNavbar'
+import DashboardSidebar from './DashboardSidebar'
 
 const RootStyle = styled('div')({
 	display: 'flex',
 	minHeight: '100%',
 	overflow: 'hidden'
-});
+})
 
 const MainStyle = styled('div')(({ theme }) => ({
 	flexGrow: 1,
@@ -24,11 +24,11 @@ const MainStyle = styled('div')(({ theme }) => ({
 		paddingLeft: theme.spacing(2),
 		paddingRight: theme.spacing(2)
 	}
-}));
+}))
 
 
 const DashboardLayout = () => {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false)
 
 	return (
 		<RootStyle>
@@ -38,7 +38,7 @@ const DashboardLayout = () => {
 				<Outlet />
 			</MainStyle>
 		</RootStyle>
-	);
+	)
 }
 
 export default DashboardLayout;

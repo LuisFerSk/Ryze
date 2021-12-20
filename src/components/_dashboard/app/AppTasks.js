@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import { Form, FormikProvider, useFormik } from 'formik';
+import PropTypes from 'prop-types'
+import { Form, FormikProvider, useFormik } from 'formik'
 // material
 import {
   Box,
@@ -9,7 +9,7 @@ import {
   Typography,
   FormControlLabel,
   Stack
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ const TASKS = [
   'Stakeholder Meeting',
   'Scoping & Estimations',
   'Sprint Showcase'
-];
+]
 
 // ----------------------------------------------------------------------
 
@@ -27,20 +27,20 @@ TaskItem.propTypes = {
   task: PropTypes.string,
   checked: PropTypes.bool,
   formik: PropTypes.object
-};
+}
 
 function TaskItem({ task, checked, formik, ...other }) {
   const { getFieldProps } = formik;
 
   return (
-    <Stack direction="row" justifyContent="space-between" sx={{ py: 0.75 }}>
+    <Stack direction='row' justifyContent='space-between' sx={{ py: 0.75 }}>
       <FormControlLabel
         control={
           <Checkbox {...getFieldProps('checked')} value={task} checked={checked} {...other} />
         }
         label={
           <Typography
-            variant="body2"
+            variant='body2'
             sx={{
               ...(checked && {
                 color: 'text.disabled',
@@ -53,7 +53,7 @@ function TaskItem({ task, checked, formik, ...other }) {
         }
       />
     </Stack>
-  );
+  )
 }
 
 export default function AppTasks() {
@@ -62,18 +62,18 @@ export default function AppTasks() {
       checked: [TASKS[2]]
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values)
     }
-  });
+  })
 
   const { values, handleSubmit } = formik;
 
   return (
     <Card>
-      <CardHeader title="Tasks" />
+      <CardHeader title='Tasks' />
       <Box sx={{ px: 3, py: 1 }}>
         <FormikProvider value={formik}>
-          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
             {TASKS.map((task) => (
               <TaskItem
                 key={task}
@@ -86,5 +86,5 @@ export default function AppTasks() {
         </FormikProvider>
       </Box>
     </Card>
-  );
+  )
 }

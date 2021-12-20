@@ -1,16 +1,16 @@
-import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import homeFill from '@iconify/icons-eva/home-fill';
-import personFill from '@iconify/icons-eva/person-fill';
-import settings2Fill from '@iconify/icons-eva/settings-2-fill';
+import { Icon } from '@iconify/react'
+import { Link } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import homeFill from '@iconify/icons-eva/home-fill'
+import personFill from '@iconify/icons-eva/person-fill'
+import settings2Fill from '@iconify/icons-eva/settings-2-fill'
 
-import { alpha } from '@material-ui/core/styles';
-import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles'
+import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core'
 
-import { authSignOut } from "../../database/auth";
-import MenuPopover from '../../components/MenuPopover';
-import ControlUser from '../../components/shared/ControlUser';
+import { authSignOut } from '../../database/auth'
+import MenuPopover from '../../components/MenuPopover'
+import useUser from '../../components/uses/useUser'
 
 // ----------------------------------------------------------------------
 
@@ -30,22 +30,22 @@ const MENU_OPTIONS = [
 		icon: settings2Fill,
 		linkTo: '#'
 	}
-];
+]
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-	const anchorRef = useRef(null);
-	const [open, setOpen] = useState(false);
+	const anchorRef = useRef(null)
+	const [open, setOpen] = useState(false)
 
-	const user = ControlUser({});
+	const user = useUser({})
 
 	const handleOpen = () => {
-		setOpen(true);
-	};
+		setOpen(true)
+	}
 	const handleClose = () => {
-		setOpen(false);
-	};
+		setOpen(false)
+	}
 
 	return (
 		<>
@@ -59,7 +59,7 @@ export default function AccountPopover() {
 					...(open && {
 						'&:before': {
 							zIndex: 1,
-							content: "''",
+							content: '""',
 							width: '100%',
 							height: '100%',
 							borderRadius: '50%',
@@ -69,7 +69,7 @@ export default function AccountPopover() {
 					})
 				}}
 			>
-				<Avatar src={user.photoURL} alt="photoURL" />
+				<Avatar src={user.photoURL} alt='photoURL' />
 			</IconButton>
 			<MenuPopover
 				open={open}
@@ -78,10 +78,10 @@ export default function AccountPopover() {
 				sx={{ width: 220 }}
 			>
 				<Box sx={{ my: 1.5, px: 2.5 }}>
-					<Typography variant="subtitle1" noWrap>
+					<Typography variant='subtitle1' noWrap>
 						{user.displayName}
 					</Typography>
-					<Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+					<Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
 						{user.email}
 					</Typography>
 				</Box>
@@ -111,11 +111,11 @@ export default function AccountPopover() {
 				))}
 
 				<Box sx={{ p: 2, pt: 1.5 }}>
-					<Button fullWidth color="inherit" variant="outlined" onClick={() => authSignOut()}>
+					<Button fullWidth color='inherit' variant='outlined' onClick={() => authSignOut()}>
 						Cerrar sesion
 					</Button>
 				</Box>
 			</MenuPopover>
 		</>
-	);
+	)
 }

@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { object, string } from 'yup'
 
 export const loginSchema = object().shape({
     email: string()
@@ -7,7 +7,7 @@ export const loginSchema = object().shape({
 
     password: string()
         .required('La contraseña es requerida')
-});
+})
 
 export const loginInitialValues = {
     email: '',

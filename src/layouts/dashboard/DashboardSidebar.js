@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { styled } from '@material-ui/core/styles';
-import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core';
+import PropTypes from 'prop-types'
+import { useEffect } from 'react'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { styled } from '@material-ui/core/styles'
+import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core'
 
-import Logo from '../../components/Logo';
-import sidebarConfig from './SidebarConfig';
-import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-import { MHidden } from '../../components/@material-extend';
-import ControlUser from "../../components/shared/ControlUser";
+import Logo from '../../components/Logo'
+import sidebarConfig from './SidebarConfig'
+import Scrollbar from '../../components/Scrollbar'
+import NavSection from '../../components/NavSection'
+import { MHidden } from '../../components/@material-extend'
+import useUser from '../../components/uses/useUser'
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 		flexShrink: 0,
 		width: DRAWER_WIDTH
 	}
-}));
+}))
 
 const AccountStyle = styled('div')(({ theme }) => ({
 	display: 'flex',
@@ -28,26 +28,26 @@ const AccountStyle = styled('div')(({ theme }) => ({
 	padding: theme.spacing(2, 2.5),
 	borderRadius: theme.shape.borderRadiusSm,
 	backgroundColor: theme.palette.grey[200]
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 DashboardSidebar.propTypes = {
 	isOpenSidebar: PropTypes.bool,
 	onCloseSidebar: PropTypes.func
-};
+}
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
-	const { pathname } = useLocation();
+	const { pathname } = useLocation()
 
-	const user = ControlUser({});
+	const user = useUser({})
 
 	useEffect(() => {
 		if (isOpenSidebar) {
-			onCloseSidebar();
+			onCloseSidebar()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname]);
+	}, [pathname])
 
 	const renderContent = (
 		<Scrollbar
@@ -57,19 +57,19 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 			}}
 		>
 			<Box sx={{ px: 2.5, py: 3 }}>
-				<Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+				<Box component={RouterLink} to='/' sx={{ display: 'inline-flex' }}>
 					<Logo />
 				</Box>
 			</Box>
 			<Box sx={{ mb: 5, mx: 2.5 }}>
-				<Link underline="none" component={RouterLink} to="#">
+				<Link underline='none' component={RouterLink} to='#'>
 					<AccountStyle>
-						<Avatar src={user.photoURL} alt="photoURL" />
+						<Avatar src={user.photoURL} alt='photoURL' />
 						<Box sx={{ ml: 2 }}>
-							<Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+							<Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
 								{user.displayName}
 							</Typography>
-							<Typography variant="body2" sx={{ color: 'text.secondary' }}>
+							<Typography variant='body2' sx={{ color: 'text.secondary' }}>
 								{user.role}
 							</Typography>
 						</Box>
@@ -79,11 +79,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 			<NavSection navConfig={sidebarConfig} />
 			<Box sx={{ flexGrow: 1 }} />
 		</Scrollbar>
-	);
+	)
 
 	return (
 		<RootStyle>
-			<MHidden width="lgUp">
+			<MHidden width='lgUp'>
 				<Drawer
 					open={isOpenSidebar}
 					onClose={onCloseSidebar}
@@ -95,10 +95,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 				</Drawer>
 			</MHidden>
 
-			<MHidden width="lgDown">
+			<MHidden width='lgDown'>
 				<Drawer
 					open
-					variant="persistent"
+					variant='persistent'
 					PaperProps={{
 						sx: {
 							width: DRAWER_WIDTH,
@@ -110,5 +110,5 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 				</Drawer>
 			</MHidden>
 		</RootStyle>
-	);
+	)
 }

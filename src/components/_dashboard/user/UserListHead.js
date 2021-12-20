@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // material
-import { visuallyHidden } from '@material-ui/utils';
-import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core';
+import { visuallyHidden } from '@material-ui/utils'
+import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core'
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ UserListHead.propTypes = {
   numSelected: PropTypes.number,
   onRequestSort: PropTypes.func,
   onSelectAllClick: PropTypes.func
-};
+}
 
 export default function UserListHead({
   order,
@@ -25,13 +25,13 @@ export default function UserListHead({
   onSelectAllClick
 }) {
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+    onRequestSort(event, property)
+  }
 
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        <TableCell padding='checkbox'>
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -61,5 +61,5 @@ export default function UserListHead({
         ))}
       </TableRow>
     </TableHead>
-  );
+  )
 }

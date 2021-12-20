@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import { Snackbar, Alert } from "@material-ui/core";
+import PropTypes from 'prop-types'
+import { Snackbar, Alert } from '@material-ui/core'
 
 const FloatAlert = ({ children, isOpen, close, severity }) => {
 	return (
@@ -8,15 +8,15 @@ const FloatAlert = ({ children, isOpen, close, severity }) => {
 			onClose={close}
 			autoHideDuration={3000}
 			anchorOrigin={{
-				vertical: "bottom",
-				horizontal: "center"
+				vertical: 'bottom',
+				horizontal: 'center'
 			}}>
-			<Alert elevation={6} variant="filled" onClose={close} severity={severity}>
+			<Alert elevation={6} variant='filled' onClose={close} severity={severity}>
 				{children}
 			</Alert>
 		</Snackbar>
-	);
-};
+	)
+}
 
 FloatAlert.prototype = {
 	children: PropTypes.element.isRequired,

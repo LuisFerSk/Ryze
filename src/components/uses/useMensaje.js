@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Alert } from "@material-ui/core";
+import { Alert } from '@material-ui/core'
 
 const useMensaje = () => {
-    const [mensaje, setMensaje] = useState();
+    const [mensaje, setMensaje] = useState()
 
     const updateMensaje = (severity, label) => {
-        if (severity && label) {
-            setMensaje(
-                <Alert severity={severity}>
-                    {label}
-                </Alert>
-            )
+        if (!severity || !label) {
+            setMensaje()
             return;
         }
-        setMensaje();
+        setMensaje(
+            <Alert severity={severity}>
+                {label}
+            </Alert>
+        )
     }
 
-    return [mensaje, updateMensaje];
+    return [mensaje, updateMensaje]
 }
 
 export default useMensaje;

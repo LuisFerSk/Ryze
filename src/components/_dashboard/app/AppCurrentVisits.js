@@ -1,12 +1,12 @@
-import { merge } from 'lodash';
-import ReactApexChart from 'react-apexcharts';
+import { merge } from 'lodash'
+import ReactApexChart from 'react-apexcharts'
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
-import { Card, CardHeader } from '@material-ui/core';
+import { useTheme, styled } from '@material-ui/core/styles'
+import { Card, CardHeader } from '@material-ui/core'
 // utils
-import { fNumber } from '../../../utils/formatNumber';
+import { fNumber } from '../../../utils/formatNumber'
 //
-import { BaseOptionChart } from '../../charts';
+import { BaseOptionChart } from '../../charts'
 
 // ----------------------------------------------------------------------
 
@@ -27,14 +27,14 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
     borderTop: `solid 1px ${theme.palette.divider}`,
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`
   }
-}));
+}))
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [4344, 5435, 1443, 4443];
+const CHART_DATA = [4344, 5435, 1443, 4443]
 
 export default function AppCurrentVisits() {
-  const theme = useTheme();
+  const theme = useTheme()
 
   const chartOptions = merge(BaseOptionChart(), {
     colors: [
@@ -59,14 +59,14 @@ export default function AppCurrentVisits() {
     plotOptions: {
       pie: { donut: { labels: { show: false } } }
     }
-  });
+  })
 
   return (
     <Card>
-      <CardHeader title="Current Visits" />
-      <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+      <CardHeader title='Current Visits' />
+      <ChartWrapperStyle dir='ltr'>
+        <ReactApexChart type='pie' series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>
     </Card>
-  );
+  )
 }

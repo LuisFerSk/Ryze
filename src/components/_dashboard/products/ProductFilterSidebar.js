@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import { Form, FormikProvider } from 'formik';
-import closeFill from '@iconify/icons-eva/close-fill';
-import roundClearAll from '@iconify/icons-ic/round-clear-all';
-import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import PropTypes from 'prop-types'
+import { Icon } from '@iconify/react'
+import { Form, FormikProvider } from 'formik'
+import closeFill from '@iconify/icons-eva/close-fill'
+import roundClearAll from '@iconify/icons-ic/round-clear-all'
+import roundFilterList from '@iconify/icons-ic/round-filter-list'
 // material
 import {
   Box,
@@ -19,10 +19,10 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel
-} from '@material-ui/core';
+} from '@material-ui/core'
 //
-import Scrollbar from '../../Scrollbar';
-import ColorManyPicker from '../../ColorManyPicker';
+import Scrollbar from '../../Scrollbar'
+import ColorManyPicker from '../../ColorManyPicker'
 
 // ----------------------------------------------------------------------
 
@@ -31,15 +31,15 @@ export const SORT_BY_OPTIONS = [
   { value: 'newest', label: 'Newest' },
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' }
-];
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
-export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
+]
+export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids']
+export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories']
+export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star']
 export const FILTER_PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
   { value: 'between', label: 'Between $25 - $75' },
   { value: 'above', label: 'Above $75' }
-];
+]
 export const FILTER_COLOR_OPTIONS = [
   '#00AB55',
   '#000000',
@@ -49,7 +49,7 @@ export const FILTER_COLOR_OPTIONS = [
   '#1890FF',
   '#94D82D',
   '#FFC107'
-];
+]
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ ShopFilterSidebar.propTypes = {
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
   formik: PropTypes.object
-};
+}
 
 export default function ShopFilterSidebar({
   isOpenFilter,
@@ -74,7 +74,7 @@ export default function ShopFilterSidebar({
     <>
       <Button
         disableRipple
-        color="inherit"
+        color='inherit'
         endIcon={<Icon icon={roundFilterList} />}
         onClick={onOpenFilter}
       >
@@ -82,9 +82,9 @@ export default function ShopFilterSidebar({
       </Button>
 
       <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate>
+        <Form autoComplete='off' noValidate>
           <Drawer
-            anchor="right"
+            anchor='right'
             open={isOpenFilter}
             onClose={onCloseFilter}
             PaperProps={{
@@ -92,12 +92,12 @@ export default function ShopFilterSidebar({
             }}
           >
             <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
+              direction='row'
+              alignItems='center'
+              justifyContent='space-between'
               sx={{ px: 1, py: 2 }}
             >
-              <Typography variant="subtitle1" sx={{ ml: 1 }}>
+              <Typography variant='subtitle1' sx={{ ml: 1 }}>
                 Filters
               </Typography>
               <IconButton onClick={onCloseFilter}>
@@ -110,7 +110,7 @@ export default function ShopFilterSidebar({
             <Scrollbar>
               <Stack spacing={3} sx={{ p: 3 }}>
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant='subtitle1' gutterBottom>
                     Gender
                   </Typography>
                   <FormGroup>
@@ -131,7 +131,7 @@ export default function ShopFilterSidebar({
                 </div>
 
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant='subtitle1' gutterBottom>
                     Category
                   </Typography>
                   <RadioGroup {...getFieldProps('category')}>
@@ -142,11 +142,11 @@ export default function ShopFilterSidebar({
                 </div>
 
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant='subtitle1' gutterBottom>
                     Colour
                   </Typography>
                   <ColorManyPicker
-                    name="colors"
+                    name='colors'
                     colors={FILTER_COLOR_OPTIONS}
                     onChange={handleChange}
                     onChecked={(color) => values.colors.includes(color)}
@@ -155,7 +155,7 @@ export default function ShopFilterSidebar({
                 </div>
 
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant='subtitle1' gutterBottom>
                     Price
                   </Typography>
                   <RadioGroup {...getFieldProps('priceRange')}>
@@ -171,7 +171,7 @@ export default function ShopFilterSidebar({
                 </div>
 
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography variant='subtitle1' gutterBottom>
                     Rating
                   </Typography>
                   <RadioGroup {...getFieldProps('rating')}>
@@ -182,12 +182,12 @@ export default function ShopFilterSidebar({
                         control={
                           <Radio
                             disableRipple
-                            color="default"
+                            color='default'
                             icon={<Rating readOnly value={4 - index} />}
                             checkedIcon={<Rating readOnly value={4 - index} />}
                           />
                         }
-                        label="& Up"
+                        label='& Up'
                         sx={{
                           my: 0.5,
                           borderRadius: 1,
@@ -210,10 +210,10 @@ export default function ShopFilterSidebar({
             <Box sx={{ p: 3 }}>
               <Button
                 fullWidth
-                size="large"
-                type="submit"
-                color="inherit"
-                variant="outlined"
+                size='large'
+                type='submit'
+                color='inherit'
+                variant='outlined'
                 onClick={onResetFilter}
                 startIcon={<Icon icon={roundClearAll} />}
               >
@@ -224,5 +224,5 @@ export default function ShopFilterSidebar({
         </Form>
       </FormikProvider>
     </>
-  );
+  )
 }

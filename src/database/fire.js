@@ -1,5 +1,4 @@
-import { db } from "../config/firebase";
-
+import { db } from '../firebaseConfig'
 import {
 	doc,
 	collection,
@@ -8,7 +7,7 @@ import {
 	getDocs as getDocsFire,
 	deleteDoc as deleteDocFire,
 	updateDoc as updateDocFire,
-} from "firebase/firestore";
+} from 'firebase/firestore'
 
 export const addDoc = async (collectionName, data) =>
 	await addDocFire(collection(db, collectionName), data)
@@ -16,12 +15,12 @@ export const addDoc = async (collectionName, data) =>
 		.catch(error => error)
 
 export const getDocs = async collectionName => {
-	const result = [];
+	const result = []
 	await getDocsFire(collection(db, collectionName)).then(snapshot =>
 		snapshot.forEach(doc =>
 			result.push({ id: doc.id, data: doc.data() }),
 		),
-	);
+	)
 	return result;
 }
 
@@ -37,9 +36,9 @@ export const deleteDoc = async (collectionName, id) =>
 
 export const transaction = async (handler) => {
 	try {
-		await runTransaction(db, handler);
-		console.log("Transaction successfully committed!");
+		await runTransaction(db, handler)
+		console.log('Transaction successfully committed!')
 	} catch (e) {
-		console.log("Transaction failed: ", e);
+		console.log('Transaction failed: ', e)
 	}
 }

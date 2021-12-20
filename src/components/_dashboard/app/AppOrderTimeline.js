@@ -1,7 +1,7 @@
-import faker from 'faker';
-import PropTypes from 'prop-types';
+import faker from 'faker'
+import PropTypes from 'prop-types'
 // material
-import { Card, Typography, CardHeader, CardContent } from '@material-ui/core';
+import { Card, Typography, CardHeader, CardContent } from '@material-ui/core'
 import {
   Timeline,
   TimelineItem,
@@ -9,9 +9,9 @@ import {
   TimelineConnector,
   TimelineSeparator,
   TimelineDot
-} from '@material-ui/lab';
+} from '@material-ui/lab'
 // utils
-import { fDateTime } from '../../../utils/formatTime';
+import { fDateTime } from '../../../utils/formatTime'
 
 // ----------------------------------------------------------------------
 
@@ -41,14 +41,14 @@ const TIMELINES = [
     time: faker.date.past(),
     type: 'order5'
   }
-];
+]
 
 // ----------------------------------------------------------------------
 
 OrderItem.propTypes = {
   item: PropTypes.object,
   isLast: PropTypes.bool
-};
+}
 
 function OrderItem({ item, isLast }) {
   const { type, title, time } = item;
@@ -68,13 +68,13 @@ function OrderItem({ item, isLast }) {
         {isLast ? null : <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent>
-        <Typography variant="subtitle2">{title}</Typography>
-        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+        <Typography variant='subtitle2'>{title}</Typography>
+        <Typography variant='caption' sx={{ color: 'text.secondary' }}>
           {fDateTime(time)}
         </Typography>
       </TimelineContent>
     </TimelineItem>
-  );
+  )
 }
 
 export default function AppOrderTimeline() {
@@ -86,7 +86,7 @@ export default function AppOrderTimeline() {
         }
       }}
     >
-      <CardHeader title="Order Timeline" />
+      <CardHeader title='Order Timeline' />
       <CardContent>
         <Timeline>
           {TIMELINES.map((item, index) => (
@@ -95,5 +95,5 @@ export default function AppOrderTimeline() {
         </Timeline>
       </CardContent>
     </Card>
-  );
+  )
 }

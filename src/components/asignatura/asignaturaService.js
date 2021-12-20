@@ -1,11 +1,10 @@
-import { addDoc, updateDoc, getDocs, deleteDoc } from "../database/fire";
+import { addDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
 
-const collectionName = "users";
+const collectionName = 'asignatura'
 
-const profesor = {
+const asignaturaService = {
     Add: async data => {
-
-        return addDoc(collectionName, data).then(get => get);
+        return await addDoc(collectionName, data).then(get => get)
     },
 
     Update: async (id, data) => {
@@ -15,6 +14,6 @@ const profesor = {
     Get: async () => await getDocs(collectionName).then(get => get),
 
     Delete: async id => await deleteDoc(collectionName, id).then(get => get)
-};
+}
 
-export default profesor;
+export default asignaturaService;
