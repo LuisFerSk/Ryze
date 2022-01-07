@@ -13,63 +13,66 @@ import { authSignIn } from '../../../database/auth'
 import { loginSchema, loginInitialValues } from './loginSchema'
 
 const LoginForm = () => {
-	const navigate = useNavigate()
-	const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
 
-	const formik = useFormik({
-		initialValues: loginInitialValues,
-		validationSchema: loginSchema,
-		onSubmit: (values) => {
-			authSignIn(values.email, values.password)
-				.then(result => result === 200 ? navigate('/dashboard', { replace: true }) : console.log(result))
-		}
-	})
+    const formik = useFormik({
+        initialValues: loginInitialValues,
+        validationSchema: loginSchema,
+        onSubmit: values => {
+            authSignIn(values.email, values.password).then(
+                result => typeof result === 'object' && result.status === 200
+                    ? navigate('/dashboard', { replace: true })
+                    : console.log(result)
+            )
+        }
+    })
 
-	const { errors, touched, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-	return (
-		<FormikProvider value={formik}>
-			<Form autoComplete='off' noValidate onSubmit={handleSubmit} >
-				<Stack spacing={3}>
-					<TextField
-						fullWidth
-						type='email'
-						autoComplete='username'
-						label='Correo electronico'
-						{...getFieldProps('email')}
-						helperText={touched.email && errors.email}
-						error={Boolean(touched.email && errors.email)}
-					/>
-					<TextField
-						fullWidth
-						label='Contraseña'
-						{...getFieldProps('password')}
-						autoComplete='current-password'
-						type={showPassword ? 'text' : 'password'}
-						helperText={touched.password && errors.password}
-						error={Boolean(touched.password && errors.password)}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position='end'>
-									<IconButton onClick={(e) => setShowPassword((show) => !show)} edge='end'>
-										<Icon icon={showPassword ? eyeFill : eyeOffFill} />
-									</IconButton>
-								</InputAdornment>
-							)
-						}}
-					/>
-				</Stack>
-				<LoadingButton
-					fullWidth
-					size='large'
-					type='submit'
-					variant='contained'
-				>
-					Iniciar seción
-				</LoadingButton>
-			</Form>
-		</FormikProvider>
-	)
+    return (
+        <FormikProvider value={formik}>
+            <Form autoComplete='off' noValidate onSubmit={handleSubmit} >
+                <Stack spacing={3}>
+                    <TextField
+                        fullWidth
+                        type='email'
+                        autoComplete='username'
+                        label='Correo electronico'
+                        {...getFieldProps('email')}
+                        helperText={touched.email && errors.email}
+                        error={Boolean(touched.email && errors.email)}
+                    />
+                    <TextField
+                        fullWidth
+                        label='Contraseña'
+                        {...getFieldProps('password')}
+                        autoComplete='current-password'
+                        type={showPassword ? 'text' : 'password'}
+                        helperText={touched.password && errors.password}
+                        error={Boolean(touched.password && errors.password)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton onClick={event => setShowPassword(show => !show)} edge='end'>
+                                        <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <LoadingButton
+                        fullWidth
+                        size='large'
+                        type='submit'
+                        variant='contained'
+                    >
+                        Iniciar sesión
+                    </LoadingButton>
+                </Stack>
+            </Form>
+        </FormikProvider>
+    )
 }
 
 export default LoginForm;

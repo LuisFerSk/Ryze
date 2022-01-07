@@ -32,13 +32,13 @@ const peridoAcademicoInitialValues = {
 }
 
 const Schema = ({ id, init, setDocs }) => {
-	const [mensaje, setMensaje] = useMensaje()
+	const [mensaje, setMensaje, mensajeLoader] = useMensaje()
 
 	const formik = useFormik({
 		initialValues: id && init ? init : peridoAcademicoInitialValues,
 		validationSchema: peridoAcademicoSchema,
 		onSubmit: (values, { resetForm }) => {
-			setMensaje()
+			mensajeLoader()
 
 			if (id) {
 				periodoAcademicoService.Update(id, values).then(result => {

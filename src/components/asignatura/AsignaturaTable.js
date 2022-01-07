@@ -28,7 +28,7 @@ const FacultadTable = ({ docs, setDocs }) => {
         '¡Se ha eliminado correctamente el periodo academico!'
     )
 
-    const cells = (row) => {
+    const cells = row => {
         const { id, codigo, titulo, estado } = row;
 
         const options = [

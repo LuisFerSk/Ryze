@@ -1,8 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom'
-// layouts
 import DashboardLayout from './layouts/dashboard'
 import LogoOnlyLayout from './layouts/LogoOnlyLayout'
-//
+
 import Login from './pages/Login'
 import Grupo from './components/grupo'
 import Usuario from './components/usuario'
@@ -15,10 +14,9 @@ import CircularIndeterminate from './components/shared/Progress'
 
 import useUser from './components/uses/useUser'
 
-// ----------------------------------------------------------------------
-
 const Router = () => {
 	const user = useUser()
+
 	return useRoutes([
 		{
 			path: '/dashboard',

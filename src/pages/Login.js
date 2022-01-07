@@ -8,9 +8,6 @@ import AuthLayout from '../layouts/AuthLayout'
 import Page from '../components/Page'
 import { MHidden } from '../components/@material-extend'
 import { LoginForm } from '../components/authentication/login'
-import AuthSocial from '../components/authentication/AuthSocial'
-
-// ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
 	[theme.breakpoints.up('md')]: {
@@ -37,44 +34,38 @@ const ContentStyle = styled('div')(({ theme }) => ({
 	padding: theme.spacing(12, 0)
 }))
 
-// ----------------------------------------------------------------------
-
-export default function Login() {
+const Login = () => {
 	return (
 		<RootStyle title='Login | Minimal-UI'>
 			<AuthLayout>
-				Don’t have an account? &nbsp;
+				¿No tienes cuenta? &nbsp;
 				<Link underline='none' variant='subtitle2' component={RouterLink} to='/register'>
-					Get started
+					¡Registrate aqui!
 				</Link>
 			</AuthLayout>
 
 			<MHidden width='mdDown'>
 				<SectionStyle>
 					<Typography variant='h3' sx={{ px: 5, mt: 10, mb: 5 }}>
-						Hi, Welcome Back
+						Hola, bienvenido de nuevo
 					</Typography>
 					<img src='/static/illustrations/illustration_login.png' alt='login' />
 				</SectionStyle>
 			</MHidden>
-
 			<Container maxWidth='sm'>
 				<ContentStyle>
 					<Stack sx={{ mb: 5 }}>
 						<Typography variant='h4' gutterBottom>
-							Sign in to Minimal
+							Iniciar sesión
 						</Typography>
-						<Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+						<Typography sx={{ color: 'text.secondary' }}>Ingrese sus datos a continuación.</Typography>
 					</Stack>
-					<AuthSocial />
-
 					<LoginForm />
-
 					<MHidden width='smUp'>
 						<Typography variant='body2' align='center' sx={{ mt: 3 }}>
-							Don’t have an account?&nbsp;
+							¿No tienes cuenta? &nbsp;
 							<Link variant='subtitle2' component={RouterLink} to='register'>
-								Get started
+								¡Registrate aqui!
 							</Link>
 						</Typography>
 					</MHidden>
@@ -83,3 +74,5 @@ export default function Login() {
 		</RootStyle>
 	)
 }
+
+export default Login;

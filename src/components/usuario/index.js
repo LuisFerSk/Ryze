@@ -3,7 +3,7 @@ import { Box, Card, Grid, Container } from '@material-ui/core'
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd'
 
 import Page from '../Page'
-import usuarioService from './usuarioService'
+import { usuarioGet } from './usuarioService'
 import { useGetDocs } from '../uses'
 import { createAccordion } from '../../utils/specialFunctions'
 import UsuarioForm from './UsuarioForm'
@@ -11,7 +11,7 @@ import UsuarioTable from './UsuarioTable'
 import ControlledAccordions from '../shared/Accordion'
 
 const Usuario = () => {
-    const [docs, setDocs] = useGetDocs(usuarioService.Get())
+    const [docs, setDocs] = useGetDocs(usuarioGet())
 
     const Accordions = [
         createAccordion(

@@ -32,7 +32,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
     )
 
     const cells = (row) => {
-        const { id, cedula, email, nombres, apellidos, estado } = row;
+        const { id, cedula, email, nombres, apellidos, estado, roles } = row;
 
         const options = [
             createOptions('Editar', editFill, () => {
@@ -41,7 +41,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                     <UsuarioForm
                         id={id}
                         setDocs={setDocs}
-                        init={{ cedula, email, nombres, apellidos, estado }}
+                        init={{ cedula, email, nombres, apellidos, estado, roles }}
                     />
                 )
                 openModal()

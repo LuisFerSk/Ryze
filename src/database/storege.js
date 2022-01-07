@@ -12,7 +12,7 @@ export const putFile = async (File, folder) => {
 
 	const promises = [
 		await reference.put(File),
-		await reference.getDownloadURL().then((get) => (result = get)),
+		await reference.getDownloadURL().then(get => result = get),
 	]
 
 	await Promise.all(promises)
@@ -25,10 +25,6 @@ export const deleteFile = async (fielPATH) => {
 
 	return await reference
 		.delete()
-		.then(() => {
-			return true;
-		})
-		.catch((error) => {
-			return error.a;
-		})
+		.then(() => true)
+		.catch(error => error.a)
 }

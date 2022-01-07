@@ -3,7 +3,7 @@ const facultad = [
   { titulo: 'Ingienieria y tecnologia', estado: true },
 ]
 
-export const initFacultad = (value) => {
+export const initFacultad = value => {
   return { titulo: value, estado: value }
 }
 

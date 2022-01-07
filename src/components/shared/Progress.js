@@ -11,7 +11,7 @@ const CircularIndeterminate = ({ label }) => {
             style={{ minHeight: '100vh' }}
         >
             <CircularProgress color='success' />
-            {label}
+            {label && label}
         </Grid>
     )
 }

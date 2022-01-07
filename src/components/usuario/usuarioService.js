@@ -1,19 +1,34 @@
-import { addDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
+import { authCreateUser } from '../../database/auth'
+import { response } from '../../utils/specialFunctions'
+import { setDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
 
 const collectionName = 'users'
 
-const usuario = {
-	Add: async data => {
-		return addDoc(collectionName, data).then(get => get)
-	},
-
-	Update: async (id, data) => {
-		return await updateDoc(collectionName, id, data).then(get => get)
-	},
-
-	Get: async () => await getDocs(collectionName).then(get => get),
-
-	Delete: async id => await deleteDoc(collectionName, id).then(get => get)
+export const usuarioUpdate = async (id, data) => {
+    return await updateDoc(collectionName, id, data).then(get => get)
 }
 
-export default usuario;
+export const usuarioAdd = async data => {
+    if (typeof data !== 'object') {
+        return response(400, 'Se esperaba un JSON')
+    }
+
+    const { email, cedula } = data;
+
+    let result;
+
+    Promise.all([
+        await authCreateUser(email, cedula)
+            .then(userData => result = userData)
+            .catch(error => error.a),
+        await setDoc(collectionName, result.uid, data)
+            .then(userData => result = userData)
+            .catch(error => error.a)
+    ])
+
+    return result;
+}
+
+export const usuarioGet = async () => await getDocs(collectionName).then(get => get)
+
+export const usuarioDelete = async id => await deleteDoc(collectionName, id).then(get => get)

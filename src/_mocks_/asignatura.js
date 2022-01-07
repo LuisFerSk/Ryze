@@ -3,7 +3,7 @@ const asignatura = [
   { titulo: 'Asignatura 2', codigo: 'MT-200', estado: false },
 ]
 
-export const initAsignatura = (value) => {
+export const initAsignatura = value => {
   return {
     codigo: value,
     titulo: value,

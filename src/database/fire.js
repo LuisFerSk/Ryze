@@ -1,44 +1,50 @@
 import { db } from '../firebaseConfig'
 import {
-	doc,
-	collection,
-	runTransaction,
-	addDoc as addDocFire,
-	getDocs as getDocsFire,
-	deleteDoc as deleteDocFire,
-	updateDoc as updateDocFire,
+    doc,
+    collection,
+    runTransaction,
+    setDoc as setDocFire,
+    addDoc as addDocFire,
+    getDocs as getDocsFire,
+    deleteDoc as deleteDocFire,
+    updateDoc as updateDocFire,
 } from 'firebase/firestore'
 
 export const addDoc = async (collectionName, data) =>
-	await addDocFire(collection(db, collectionName), data)
-		.then(result => result)
-		.catch(error => error)
+    await addDocFire(collection(db, collectionName), data)
+        .then(result => result)
+        .catch(error => error)
+
+export const setDoc = async (collectionName, id, data) =>
+    await setDocFire(doc(db, collectionName, id), data)
+        .then(() => ({ id, data }))
+        .catch(error => error)
 
 export const getDocs = async collectionName => {
-	const result = []
-	await getDocsFire(collection(db, collectionName)).then(snapshot =>
-		snapshot.forEach(doc =>
-			result.push({ id: doc.id, data: doc.data() }),
-		),
-	)
-	return result;
+    const result = []
+    await getDocsFire(collection(db, collectionName)).then(snapshot =>
+        snapshot.forEach(doc =>
+            result.push({ id: doc.id, data: doc.data() }),
+        ),
+    )
+    return result;
 }
 
 export const updateDoc = async (collectionName, id, data) =>
-	await updateDocFire(doc(db, collectionName, id), data)
-		.then(() => true)
-		.catch(error => error)
+    await updateDocFire(doc(db, collectionName, id), data)
+        .then(() => true)
+        .catch(error => error)
 
 export const deleteDoc = async (collectionName, id) =>
-	await deleteDocFire(doc(db, collectionName, id))
-		.then(() => true)
-		.catch(error => error)
+    await deleteDocFire(doc(db, collectionName, id))
+        .then(() => true)
+        .catch(error => error)
 
 export const transaction = async (handler) => {
-	try {
-		await runTransaction(db, handler)
-		console.log('Transaction successfully committed!')
-	} catch (e) {
-		console.log('Transaction failed: ', e)
-	}
+    try {
+        await runTransaction(db, handler)
+        console.log('Transaction successfully committed!')
+    } catch (e) {
+        console.log('Transaction failed: ', e)
+    }
 }

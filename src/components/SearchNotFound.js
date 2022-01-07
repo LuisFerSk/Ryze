@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-
 import { Paper, Typography } from '@material-ui/core'
 
 const SearchNotFound = ({ searchQuery = '', ...other }) => {

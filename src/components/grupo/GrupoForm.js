@@ -19,7 +19,6 @@ const GrupoForm = ({ init }) => {
                         name='profesor'
                         label='Usuario'
                         variant='outlined'
-
                     >
                         {usuarios.map((row, index) =>
                             <MenuItem key={index} value={row.cedula}>
@@ -35,7 +34,6 @@ const GrupoForm = ({ init }) => {
                         name='asignatura'
                         label='Asignatura'
                         variant='outlined'
-
                     >
                         {asignaturas.map((row, index) =>
                             <MenuItem key={index} value={row.codigo}>
@@ -51,7 +49,6 @@ const GrupoForm = ({ init }) => {
                         label='Grupo'
                         variant='outlined'
                         name='numeroGrupo'
-
                     />
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12}>

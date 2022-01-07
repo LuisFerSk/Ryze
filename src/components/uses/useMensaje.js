@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-import { Alert } from '@material-ui/core'
+import { Alert, CircularProgress } from '@material-ui/core'
 
 const useMensaje = () => {
     const [mensaje, setMensaje] = useState()
@@ -11,13 +10,17 @@ const useMensaje = () => {
             return;
         }
         setMensaje(
-            <Alert severity={severity}>
+            <Alert severity={severity} >
                 {label}
             </Alert>
         )
     }
 
-    return [mensaje, updateMensaje]
+    const mensajeLoader = () => {
+        setMensaje(<CircularProgress color='success' />)
+    }
+
+    return [mensaje, updateMensaje, mensajeLoader]
 }
 
 export default useMensaje;

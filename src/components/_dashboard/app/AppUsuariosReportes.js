@@ -1,16 +1,13 @@
 import { Icon } from '@iconify/react'
-import briefcaseFill from '@iconify/icons-eva/briefcase-fill'
-// material
 import { Typography } from '@material-ui/core'
-// utils
+import briefcaseFill from '@iconify/icons-eva/briefcase-fill'
+
 import { fShortenNumber } from '../../../utils/formatNumber'
 import { CustomCard, IconWrapper } from '../../../theme/cards'
 
-// ----------------------------------------------------------------------
-
 const TOTAL = 1723315;
 
-const colorCard = 'info'
+const colorCard = 'success'
 
 const Card = CustomCard(colorCard)
 

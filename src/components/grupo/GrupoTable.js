@@ -10,7 +10,7 @@ const headLabel = [
     { id: 'profesor', label: 'Usuario', alignRight: false },
 ]
 
-const cells = (row) => {
+const cells = row => {
     const { numero, asignatura, profesor } = row;
 
     return (
