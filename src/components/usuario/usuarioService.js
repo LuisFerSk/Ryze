@@ -1,6 +1,6 @@
 import { authCreateUser } from '../../database/auth'
 import { response } from '../../utils/specialFunctions'
-import { setDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
+import { setDoc, updateDoc, getDocs, getDoc } from '../../database/fire'
 
 const collectionName = 'users'
 
@@ -31,4 +31,7 @@ export const usuarioAdd = async data => {
 
 export const usuarioGet = async () => await getDocs(collectionName).then(get => get)
 
-export const usuarioDelete = async id => await deleteDoc(collectionName, id).then(get => get)
+export const usuarioGetByID = async id => await getDoc(collectionName, id).then(get => get)
+
+
+

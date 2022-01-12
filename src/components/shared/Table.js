@@ -15,7 +15,7 @@ import TableListHead from './table/TableListHead'
 import TableListToolbar from './table/TableListToolbar'
 import { getComparator, applySortFilter } from './table/TableFunctions'
 
-const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
+const CustomTable = ({ headLabel, data, selectBy, createTableCells, searchBy }) => {
     const [page, setPage] = useState(0)
     const [order, setOrder] = useState('asc')
     const [selected, setSelected] = useState([])
@@ -75,7 +75,7 @@ const CustomTable = ({ headLabel, data, selectBy, cells, searchBy }) => {
                                             selected={isItemSelected}
                                             aria-checked={isItemSelected}
                                         >
-                                            {cells(row)}
+                                            {createTableCells(row)}
                                         </TableRow>
                                     )
                                 })}

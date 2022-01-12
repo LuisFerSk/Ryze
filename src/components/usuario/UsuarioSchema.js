@@ -1,4 +1,5 @@
 import { object, string, boolean, number, array } from 'yup'
+import { ESTUDIANTE, PROFESOR } from '../../_mocks_/roles'
 
 export const usuarioSchema = object().shape({
     nombres: string()
@@ -27,7 +28,7 @@ export const usuarioSchema = object().shape({
     roles: array()
         .min(1, 'Debe selecionar al menos un rol')
         .max(3, 'No se permite más de 3 roles')
-        .test('len', 'No se ha seleccionado un rol valido', value => value && value.find(elements => elements === 'estudiante' || elements === 'profesor' || elements === 'administrador'))
+        .test('len', 'No se ha seleccionado un rol valido', value => value && value.find(elements => elements === ESTUDIANTE || elements === PROFESOR))
         .required('Este campo es requerido'),
 
 })

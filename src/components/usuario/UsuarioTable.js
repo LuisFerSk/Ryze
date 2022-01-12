@@ -1,15 +1,13 @@
 import editFill from '@iconify/icons-eva/edit-fill'
-import trash2Outline from '@iconify/icons-eva/trash-2-outline'
 
 import { TableCell } from '@material-ui/core'
 
 import Label from '../Label'
 import { useFloat } from '../uses'
 import Modal from '../shared/Modal'
-import CustomTable from '../shared/Table'
 import UsuarioForm from './UsuarioForm'
-import UsuarioDelete from './UsuarioDelete'
-import FloatAlert from '../shared/FloatAlert'
+import CustomTable from '../shared/Table'
+import { ADMINISTRADOR } from '../../_mocks_/roles'
 import TableMoreMenu from '../shared/table/TableMoreMenu'
 import { mappingMenuItem } from '../shared/table/TableFunctions'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
@@ -19,6 +17,7 @@ const headLabel = [
     { id: 'email', label: 'Email', alignRight: false },
     { id: 'nombres', label: 'Nombres', alignRight: false },
     { id: 'apellidos', label: 'Apellidos', alignRight: false },
+    { id: 'roles', label: 'Roles', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false },
     { id: '' },
 ]
@@ -26,16 +25,11 @@ const headLabel = [
 const UsuarioTable = ({ docs, setDocs }) => {
     const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false)
 
-    const [isOpenAlert, openAlert, closeAlert, contentAlert] = useFloat(
-        false,
-        '¡Se ha eliminado correctamente el usuario!'
-    )
-
-    const cells = (row) => {
+    const createTableCells = (row) => {
         const { id, cedula, email, nombres, apellidos, estado, roles } = row;
 
-        const options = [
-            createOptions('Editar', editFill, () => {
+        const optionUpdateUser = createOptions('Editar', editFill,
+            () => {
                 setTitleModal('Actualizar periodo academico')
                 setContentModal(
                     <UsuarioForm
@@ -45,20 +39,10 @@ const UsuarioTable = ({ docs, setDocs }) => {
                     />
                 )
                 openModal()
-            }),
-            createOptions('Eliminar', trash2Outline, () => {
-                setTitleModal('Eliminar periodo academico')
-                setContentModal(
-                    <UsuarioDelete
-                        init={row}
-                        setDocs={setDocs}
-                        openAlert={openAlert}
-                        closeModal={closeModal}
-                    />
-                )
-                openModal()
-            }),
-        ]
+            }
+        )
+
+        const options = [optionUpdateUser]
 
         return (
             <>
@@ -66,6 +50,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                 <TableCell align='left'>{email}</TableCell>
                 <TableCell align='left'>{nombres}</TableCell>
                 <TableCell align='left'>{apellidos}</TableCell>
+                <TableCell align='left'>{roles.map(row => <ul>{row}</ul>)}</TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'
@@ -83,15 +68,14 @@ const UsuarioTable = ({ docs, setDocs }) => {
         )
     }
 
+    const FilteredData = getDataForTable(docs).filter(row => !row.roles.find(element => element === ADMINISTRADOR))
+
     return (
         <>
-            <CustomTable cells={cells} headLabel={headLabel} data={getDataForTable(docs)} selectBy='cedula' searchBy='cedula' />
+            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={FilteredData} selectBy='cedula' searchBy='cedula' />
             <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
                 {contentModal}
             </Modal>
-            <FloatAlert isOpen={isOpenAlert} close={closeAlert}>
-                {contentAlert}
-            </FloatAlert>
         </>
     )
 }

@@ -5,6 +5,7 @@ import {
     runTransaction,
     setDoc as setDocFire,
     addDoc as addDocFire,
+    getDoc as getDocFire,
     getDocs as getDocsFire,
     deleteDoc as deleteDocFire,
     updateDoc as updateDocFire,
@@ -19,6 +20,9 @@ export const setDoc = async (collectionName, id, data) =>
     await setDocFire(doc(db, collectionName, id), data)
         .then(() => ({ id, data }))
         .catch(error => error)
+
+export const getDoc = async (collection, id) =>
+    await getDocFire(doc(db, collection, id)).then(doc => ({ id: doc.id, data: doc.data() }))
 
 export const getDocs = async collectionName => {
     const result = []

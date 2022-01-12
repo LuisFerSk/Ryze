@@ -31,7 +31,7 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
         '¡Se ha eliminado correctamente el periodo academico!'
     )
 
-    const cells = (row) => {
+    const createTableCells = (row) => {
         const { id, titulo, estado, fechaInicio, fechaFin } = row;
 
         const options = [
@@ -84,7 +84,7 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
 
     return (
         <>
-            <CustomTable cells={cells} headLabel={headLabel} data={getDataForTable(docs)} selectBy='titulo' searchBy='titulo' />
+            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={getDataForTable(docs)} selectBy='titulo' searchBy='titulo' />
             <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
                 {contentModal}
             </Modal>

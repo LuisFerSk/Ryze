@@ -10,7 +10,7 @@ const headLabel = [
     { id: 'profesor', label: 'Usuario', alignRight: false },
 ]
 
-const cells = row => {
+const createTableCells = row => {
     const { numero, asignatura, profesor } = row;
 
     return (
@@ -25,7 +25,7 @@ const cells = row => {
 const GrupoTable = () => {
 
     return (
-        <CustomTable cells={cells} headLabel={headLabel} data={grupos} selectBy='numero' searchBy='numero' />
+        <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={grupos} selectBy='numero' searchBy='numero' />
     )
 }
 

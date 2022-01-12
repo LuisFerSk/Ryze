@@ -1,4 +1,4 @@
-import { Form, FormikProvider } from 'formik'
+import { Form, FormikProvider, useFormik } from 'formik'
 import {
     Grid,
     Button,
@@ -8,9 +8,9 @@ import {
     FormLabel,
     FormGroup,
     FormControl,
+    FormHelperText,
     FormControlLabel,
 } from '@material-ui/core'
-import { useFormik } from 'formik'
 import SaveIcon from '@material-ui/icons/Save'
 
 import { useMensaje } from '../uses'
@@ -19,7 +19,7 @@ import { usuarioInitialValues, usuarioSchema } from './UsuarioSchema'
 
 import { estadosUsuarios as estados } from '../../_mocks_/estados'
 
-import { PROFESOR, ADMINISTRADOR, ESTUDIANTE } from '../../_mocks_/roles'
+import { PROFESOR, ESTUDIANTE } from '../../_mocks_/roles'
 
 const UsuarioForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -137,8 +137,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                         <TextField
                             select
                             fullWidth
-                            label='Estado'
                             {...estado}
+                            label='Estado'
                             variant='outlined'
                             helperText={touched.estado && errors.estado}
                             error={Boolean(touched.estado && errors.estado)}
@@ -155,7 +155,7 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
-                        <FormControl component='fieldset'>
+                        <FormControl component='fieldset' error={Boolean(touched.roles && errors.roles)}>
                             <FormLabel component='legend'>Roles</FormLabel>
                             <FormGroup>
                                 <FormControlLabel
@@ -174,15 +174,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                                     onChange={event => onChangeRoles(event)}
                                     checked={Boolean(roles.value.find(element => element === PROFESOR))}
                                 />
-                                <FormControlLabel
-                                    {...roles}
-                                    value={ADMINISTRADOR}
-                                    label='Administrador'
-                                    control={<Checkbox />}
-                                    onChange={event => onChangeRoles(event)}
-                                    checked={Boolean(roles.value.find(element => element === ADMINISTRADOR))}
-                                />
                             </FormGroup>
+                            <FormHelperText>{touched.roles && errors.roles}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>

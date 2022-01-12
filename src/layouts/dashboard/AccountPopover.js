@@ -1,121 +1,114 @@
+import { useRef, useState } from 'react'
+
 import { Icon } from '@iconify/react'
 import { Link } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { alpha } from '@material-ui/core/styles'
 import homeFill from '@iconify/icons-eva/home-fill'
 import personFill from '@iconify/icons-eva/person-fill'
 import settings2Fill from '@iconify/icons-eva/settings-2-fill'
-
-import { alpha } from '@material-ui/core/styles'
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core'
 
 import { authSignOut } from '../../database/auth'
 import MenuPopover from '../../components/MenuPopover'
-import useUser from '../../components/uses/useUser'
-
-// ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
-	{
-		label: 'Inicio',
-		icon: homeFill,
-		linkTo: '/'
-	},
-	{
-		label: 'Perfil',
-		icon: personFill,
-		linkTo: '#'
-	},
-	{
-		label: 'Configuraciones',
-		icon: settings2Fill,
-		linkTo: '#'
-	}
+    {
+        label: 'Inicio',
+        icon: homeFill,
+        linkTo: '/'
+    },
+    {
+        label: 'Perfil',
+        icon: personFill,
+        linkTo: '#'
+    },
+    {
+        label: 'Configuraciones',
+        icon: settings2Fill,
+        linkTo: '#'
+    }
 ]
 
-// ----------------------------------------------------------------------
+const user = {}
 
-export default function AccountPopover() {
-	const anchorRef = useRef(null)
-	const [open, setOpen] = useState(false)
+const AccountPopover = () => {
+    const anchorRef = useRef(null)
+    const [open, setOpen] = useState(false)
 
-	const user = useUser({})
+    const handleOpen = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+    }
 
-	const handleOpen = () => {
-		setOpen(true)
-	}
-	const handleClose = () => {
-		setOpen(false)
-	}
-
-	return (
-		<>
-			<IconButton
-				ref={anchorRef}
-				onClick={handleOpen}
-				sx={{
-					padding: 0,
-					width: 44,
-					height: 44,
-					...(open && {
-						'&:before': {
-							zIndex: 1,
-							content: '""',
-							width: '100%',
-							height: '100%',
-							borderRadius: '50%',
-							position: 'absolute',
-							bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-						}
-					})
-				}}
-			>
-				<Avatar src={user.photoURL} alt='photoURL' />
-			</IconButton>
-			<MenuPopover
-				open={open}
-				onClose={handleClose}
-				anchorEl={anchorRef.current}
-				sx={{ width: 220 }}
-			>
-				<Box sx={{ my: 1.5, px: 2.5 }}>
-					<Typography variant='subtitle1' noWrap>
-						{user.displayName}
-					</Typography>
-					<Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
-						{user.email}
-					</Typography>
-				</Box>
-
-				<Divider sx={{ my: 1 }} />
-
-				{MENU_OPTIONS.map((option) => (
-					<MenuItem
-						key={option.label}
-						to={option.linkTo}
-						component={Link}
-						onClick={handleClose}
-						sx={{ typography: 'body2', py: 1, px: 2.5 }}
-					>
-						<Box
-							component={Icon}
-							icon={option.icon}
-							sx={{
-								mr: 2,
-								width: 24,
-								height: 24
-							}}
-						/>
-
-						{option.label}
-					</MenuItem>
-				))}
-
-				<Box sx={{ p: 2, pt: 1.5 }}>
-					<Button fullWidth color='inherit' variant='outlined' onClick={() => authSignOut()}>
-						Cerrar sesion
-					</Button>
-				</Box>
-			</MenuPopover>
-		</>
-	)
+    return (
+        <>
+            <IconButton
+                ref={anchorRef}
+                onClick={handleOpen}
+                sx={{
+                    padding: 0,
+                    width: 44,
+                    height: 44,
+                    ...(open && {
+                        '&:before': {
+                            zIndex: 1,
+                            content: '""',
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '50%',
+                            position: 'absolute',
+                            bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
+                        }
+                    })
+                }}
+            >
+                <Avatar src={user.photoURL} alt='photoURL' />
+            </IconButton>
+            <MenuPopover
+                open={open}
+                onClose={handleClose}
+                anchorEl={anchorRef.current}
+                sx={{ width: 220 }}
+            >
+                <Box sx={{ my: 1.5, px: 2.5 }}>
+                    <Typography variant='subtitle1' noWrap>
+                        {user.nombres}
+                    </Typography>
+                    <Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
+                        {user.email}
+                    </Typography>
+                </Box>
+                <Divider sx={{ my: 1 }} />
+                {MENU_OPTIONS.map((option) => (
+                    <MenuItem
+                        key={option.label}
+                        to={option.linkTo}
+                        component={Link}
+                        onClick={handleClose}
+                        sx={{ typography: 'body2', py: 1, px: 2.5 }}
+                    >
+                        <Box
+                            component={Icon}
+                            icon={option.icon}
+                            sx={{
+                                mr: 2,
+                                width: 24,
+                                height: 24
+                            }}
+                        />
+                        {option.label}
+                    </MenuItem>
+                ))}
+                <Box sx={{ p: 2, pt: 1.5 }}>
+                    <Button fullWidth color='inherit' variant='outlined' onClick={() => authSignOut()}>
+                        Cerrar sesion
+                    </Button>
+                </Box>
+            </MenuPopover>
+        </>
+    )
 }
+
+export default AccountPopover;
