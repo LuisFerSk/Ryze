@@ -7,22 +7,16 @@ import { usuarioGetByID } from '../usuario/usuarioService'
 const useUser = (init) => {
     const [user, setUser] = useState(init)
 
-    const [result, setResult] = useState()
+    const [result, setResult] = useState(init)
 
     onAuthStateChanged(auth, result => setResult(result))
 
     useEffect(() => {
-        if (!result) {
-            setUser(result)
-            return
-        }
-
-        if (typeof result === 'object' && result.uid) {
+        if (result && typeof result === 'object' && result.uid) {
             usuarioGetByID(result.uid).then(result => setUser(result))
-            return
+            return;
         }
-
-        setUser(null)
+        setUser(result)
     }, [result])
 
     return user;
