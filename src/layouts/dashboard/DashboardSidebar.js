@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { styled } from '@material-ui/core/styles'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core'
 
 import Logo from '../../components/Logo'
 import sidebarConfig from './SidebarConfig'
 import Scrollbar from '../../components/Scrollbar'
+import useUser from '../../components/uses/useUser'
 import NavSection from '../../components/NavSection'
 import { MHidden } from '../../components/@material-extend'
-import useUser from '../../components/uses/useUser'
 
 
 const DRAWER_WIDTH = 280;
@@ -32,9 +32,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
 const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
     const { pathname } = useLocation()
 
-    const user = useUser({})
-
-    console.log(user)
+    const user = useUser()
 
     useEffect(() => {
         if (isOpenSidebar) {
