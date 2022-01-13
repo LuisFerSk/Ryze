@@ -12,9 +12,11 @@ const useUser = (init) => {
     onAuthStateChanged(auth, result => setResult(result))
 
     useEffect(() => {
-        if (typeof result === 'object' && result.uid) {
+        if (result && typeof result === 'object' && result.uid) {
             usuarioGetByID(result.uid).then(result => setUser(result))
+            return
         }
+        setUser(result)
     }, [result])
 
     return user;
