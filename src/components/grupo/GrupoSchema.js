@@ -6,7 +6,7 @@ export const grupoSchema = object().shape({
     asignatura: string()
         .required('Este campo es requerido'),
     grupo: number()
-    .min()
+        .max(2, 'Maximo 2 digitos')
         .required('Este campo es requerido'),
 })
 

@@ -13,7 +13,7 @@ const PeriodoAcademicoService = {
 
     Get: async () => await getDocs(collectionName).then(get => get),
 
-    Delete: async id => await deleteDoc(collectionName, id).then(get => get)
+    Delete: async id => await deleteDoc(collectionName, id).then(get => get),
 }
 
 export default PeriodoAcademicoService;

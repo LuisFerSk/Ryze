@@ -7,8 +7,9 @@ import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core'
 import Logo from '../../components/Logo'
 import sidebarConfig from './SidebarConfig'
 import Scrollbar from '../../components/Scrollbar'
-import useUser from '../../components/uses/useUser'
+import { useContextUser } from '../../components/uses'
 import NavSection from '../../components/NavSection'
+import { isObject } from '../../utils/specialFunctions'
 import { MHidden } from '../../components/@material-extend'
 
 
@@ -32,7 +33,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
 const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
     const { pathname } = useLocation()
 
-    const user = useUser()
+    const user = useContextUser()
 
     useEffect(() => {
         if (isOpenSidebar) {
@@ -56,13 +57,13 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
             <Box sx={{ mb: 5, mx: 2.5 }}>
                 <Link underline='none' component={RouterLink} to='#'>
                     <AccountStyle>
-                        <Avatar src={user.photoURL} alt='photoURL' />
+                        <Avatar src={isObject(user) && user.data.photoURL} alt='photoURL' />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-                                {user.displayName}
+                                {isObject(user) && user.data.nombres}
                             </Typography>
                             <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-                                {user.role}
+                                {isObject(user) && user.data.email}
                             </Typography>
                         </Box>
                     </AccountStyle>

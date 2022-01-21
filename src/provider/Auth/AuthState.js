@@ -14,7 +14,7 @@ const AuthState = ({ children }) => {
         user: undefined,
     }
 
-    const [state, dispatch] = useReducer(authReducer, initialState);
+    const [state, dispatch] = useReducer(authReducer, initialState)
 
     const [result, setResult] = useState()
 
@@ -34,7 +34,7 @@ const AuthState = ({ children }) => {
     useEffect(() => {
         if (result === null) {
             updateUser(result)
-            return
+            return;
         }
 
         if (result && typeof result === 'object' && result.uid) {
@@ -51,11 +51,11 @@ const AuthState = ({ children }) => {
         >
             {children}
         </authContext.Provider>
-    );
-};
+    )
+}
 
 AuthState.propTypes = {
     children: PropTypes.node,
-};
+}
 
 export default AuthState;

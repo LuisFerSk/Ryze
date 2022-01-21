@@ -6,6 +6,7 @@ export const loginSchema = object().shape({
         .required('El correo es requerido'),
 
     password: string()
+        .test('len', 'La contraseña tiene un maximo de 250 caracteres', val => val && val.replace(/\s+/g, '').length === 250)
         .required('La contraseña es requerida')
 })
 

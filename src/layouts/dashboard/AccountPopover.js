@@ -9,7 +9,9 @@ import settings2Fill from '@iconify/icons-eva/settings-2-fill'
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core'
 
 import { authSignOut } from '../../database/auth'
+import { useContextUser } from '../../components/uses'
 import MenuPopover from '../../components/MenuPopover'
+import { isObject } from '../../utils/specialFunctions'
 
 const MENU_OPTIONS = [
     {
@@ -29,8 +31,6 @@ const MENU_OPTIONS = [
     }
 ]
 
-const user = {}
-
 const AccountPopover = () => {
     const anchorRef = useRef(null)
     const [open, setOpen] = useState(false)
@@ -41,6 +41,8 @@ const AccountPopover = () => {
     const handleClose = () => {
         setOpen(false)
     }
+
+    const user = useContextUser()
 
     return (
         <>
@@ -64,7 +66,7 @@ const AccountPopover = () => {
                     })
                 }}
             >
-                <Avatar src={user.photoURL} alt='photoURL' />
+                <Avatar src={isObject(user) && user.data.photoURL} alt='photoURL' />
             </IconButton>
             <MenuPopover
                 open={open}
@@ -74,10 +76,10 @@ const AccountPopover = () => {
             >
                 <Box sx={{ my: 1.5, px: 2.5 }}>
                     <Typography variant='subtitle1' noWrap>
-                        {user.nombres}
+                        {isObject(user) && user.data.nombres}
                     </Typography>
                     <Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
-                        {user.email}
+                        {isObject(user) && user.data.email}
                     </Typography>
                 </Box>
                 <Divider sx={{ my: 1 }} />

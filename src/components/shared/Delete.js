@@ -10,7 +10,7 @@ const Delete = ({ children, onSubmitFormik, label, mensajeError, value }) => {
         initialValues: { value: '' },
         onSubmit: () => onSubmitFormik(),
         validationSchema: Yup.object().shape({
-            value: Yup.string().test('len', mensajeError, confi => confi === value)
+            value: Yup.string().test('len', mensajeError, confirmacion => confirmacion === value)
         }),
 
     })

@@ -1,4 +1,5 @@
 import { Navigate, useRoutes } from 'react-router-dom'
+
 import DashboardLayout from './layouts/dashboard'
 import LogoOnlyLayout from './layouts/LogoOnlyLayout'
 
@@ -12,36 +13,36 @@ import DashboardApp from './pages/DashboardApp'
 import PeriodoAcademico from './components/periodoAcademico'
 import CircularIndeterminate from './components/shared/Progress'
 
-import useUser from './components/uses/useUser'
+import { useContextUser } from './components/uses'
 
 const Router = () => {
-	const user = useUser()
+    const user = useContextUser()
 
-	return useRoutes([
-		{
-			path: '/dashboard',
-			element: user === undefined ? <CircularIndeterminate label='Cargando' /> : !user ? <Navigate to='/' replace /> : <DashboardLayout />,
-			children: [
-				{ path: '/', element: <Navigate to='/dashboard/app' replace /> },
-				{ path: 'app', element: <DashboardApp /> },
-				{ path: 'periodo_academico', element: <PeriodoAcademico /> },
-				{ path: 'asignatura', element: <Asignatura /> },
-				{ path: 'grupo', element: <Grupo /> },
-				{ path: 'usuario', element: <Usuario /> },
-			]
-		},
-		{
-			path: '/',
-			element: user === undefined ? <CircularIndeterminate label='Cargando' /> : user ? <Navigate to='/dashboard' replace /> : <LogoOnlyLayout />,
-			children: [
-				{ path: '*', element: <NotFound /> },
-				{ path: 'login', element: <Login /> },
-				{ path: 'register', element: <Register /> },
-				{ path: '/', element: <Navigate to='/login' replace /> }
-			]
-		},
-		{ path: '*', element: <NotFound /> }
-	])
+    return useRoutes([
+        {
+            path: '/dashboard',
+            element: user === undefined ? <CircularIndeterminate label='Cargando' /> : !user ? <Navigate to='/' replace /> : <DashboardLayout />,
+            children: [
+                { path: '/', element: <Navigate to='/dashboard/app' replace /> },
+                { path: 'app', element: <DashboardApp /> },
+                { path: 'periodo_academico', element: <PeriodoAcademico /> },
+                { path: 'asignatura', element: <Asignatura /> },
+                { path: 'grupo', element: <Grupo /> },
+                { path: 'usuario', element: <Usuario /> },
+            ]
+        },
+        {
+            path: '/',
+            element: user === undefined ? <CircularIndeterminate label='Cargando' /> : user ? <Navigate to='/dashboard' replace /> : <LogoOnlyLayout />,
+            children: [
+                { path: '*', element: <NotFound /> },
+                { path: 'login', element: <Login /> },
+                { path: 'register', element: <Register /> },
+                { path: '/', element: <Navigate to='/login' replace /> }
+            ]
+        },
+        { path: '*', element: <NotFound /> },
+    ])
 }
 
 export default Router;
