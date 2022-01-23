@@ -1,11 +1,11 @@
 import Delete from '../shared/Delete'
-import periodoAcademicoService from './periodoAcademicoService'
+import { periodoAcademicoDelete } from './periodoAcademicoService'
 
 const PeriodoAcademicoDelete = ({ init, setDocs, closeModal, openAlert }) => {
     const { id, titulo } = init;
 
     const onSubmit = () => {
-        periodoAcademicoService.Delete(id).then(result => {
+        periodoAcademicoDelete(id).then(result => {
             if (result === true) {
                 setDocs(old => old.filter(row => row.id !== id))
                 openAlert()

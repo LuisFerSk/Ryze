@@ -14,7 +14,6 @@ import PeriodoAcademicoDelete from './PeriodoAcademicoDelete'
 import { mappingMenuItem } from '../shared/table/TableFunctions'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
-
 const headLabel = [
     { id: 'titulo', label: 'Periodo', alignRight: false },
     { id: 'fechaInicio', label: 'Fecha de inicio', alignRight: false },

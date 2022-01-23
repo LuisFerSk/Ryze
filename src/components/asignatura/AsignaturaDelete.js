@@ -1,5 +1,5 @@
 import Delete from '../shared/Delete'
-import asignaturaService from './asignaturaService'
+import { asignaturaDelete } from './asignaturaService'
 
 const AsignaturaDelete = ({ init, setDocs, closeModal, openAlert }) => {
     const { id, codigo } = init;
@@ -9,7 +9,7 @@ const AsignaturaDelete = ({ init, setDocs, closeModal, openAlert }) => {
             label='Asignatura'
             mensajeError={`Digite el codigo de la asignatura: ${codigo}`}
             onSubmitFormik={() => {
-                asignaturaService.Delete(id).then(result => {
+                asignaturaDelete(id).then(result => {
                     if (result === true) {
                         setDocs(old => old.filter(row => row.id !== id))
                         openAlert()

@@ -17,7 +17,7 @@ const headLabel = [
     { id: 'email', label: 'Email', alignRight: false },
     { id: 'nombres', label: 'Nombres', alignRight: false },
     { id: 'apellidos', label: 'Apellidos', alignRight: false },
-    { id: 'roles', label: 'Roles', alignRight: false },
+    { id: 'roles', label: 'Tipo de usuario', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false },
     { id: '' },
 ]
@@ -30,7 +30,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
 
         const optionUpdateUser = createOptions('Editar', editFill,
             () => {
-                setTitleModal('Actualizar periodo academico')
+                setTitleModal('Actualizar usuario')
                 setContentModal(
                     <UsuarioForm
                         id={id}
@@ -50,7 +50,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                 <TableCell align='left'>{email}</TableCell>
                 <TableCell align='left'>{nombres}</TableCell>
                 <TableCell align='left'>{apellidos}</TableCell>
-                <TableCell align='left'>{roles.map(row => <ul>{row}</ul>)}</TableCell>
+                <TableCell align='left'>{roles}</TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'

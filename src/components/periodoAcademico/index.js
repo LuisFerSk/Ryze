@@ -8,11 +8,10 @@ import ControlledAccordions from '../shared/Accordion'
 import PeriodoAcademicoForm from './PeriodoAcademicoForm'
 import PeriodoAcademicoTable from './PeriodoAcademicoTable'
 import { createAccordion } from '../../utils/specialFunctions'
-import periodoAcademicoService from './periodoAcademicoService'
-
+import { periodoAcademicoGetAll } from './periodoAcademicoService'
 
 const PeriodoAcademico = () => {
-    const [docs, setDocs] = useGetDocs(periodoAcademicoService.Get())
+    const [docs, setDocs] = useGetDocs(periodoAcademicoGetAll())
 
     const Accordions = [
         createAccordion(

@@ -2,18 +2,14 @@ import { addDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
 
 const collectionName = 'periodo_academico'
 
-const PeriodoAcademicoService = {
-    Add: async data => {
-        return await addDoc(collectionName, data).then(get => get)
-    },
-
-    Update: async (id, data) => {
-        return await updateDoc(collectionName, id, data).then(get => get)
-    },
-
-    Get: async () => await getDocs(collectionName).then(get => get),
-
-    Delete: async id => await deleteDoc(collectionName, id).then(get => get),
+export const periodoAcademicoAdd = async data => {
+    return await addDoc(collectionName, data).then(get => get)
 }
 
-export default PeriodoAcademicoService;
+export const periodoAcademicoUpdate = async (id, data) => {
+    return await updateDoc(collectionName, id, data).then(get => get)
+}
+
+export const periodoAcademicoGetAll = async () => await getDocs(collectionName).then(get => get)
+
+export const periodoAcademicoDelete = async id => await deleteDoc(collectionName, id).then(get => get)

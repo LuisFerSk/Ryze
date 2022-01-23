@@ -5,11 +5,11 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout'
 
 import Login from './pages/Login'
 import Grupo from './components/grupo'
-import Usuario from './components/usuario'
 import NotFound from './pages/Page404'
 import Register from './pages/Register'
-import Asignatura from './components/asignatura'
+import Usuario from './components/usuario'
 import DashboardApp from './pages/DashboardApp'
+import Asignatura from './components/asignatura'
 import PeriodoAcademico from './components/periodoAcademico'
 import CircularIndeterminate from './components/shared/Progress'
 

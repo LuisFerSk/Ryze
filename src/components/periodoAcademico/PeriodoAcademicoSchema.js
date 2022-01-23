@@ -3,7 +3,7 @@ import { useMensaje } from '../uses'
 import { object, string, date, boolean } from 'yup'
 
 import { isObject } from '../../utils/specialFunctions'
-import periodoAcademicoService from './periodoAcademicoService'
+import { periodoAcademicoAdd, periodoAcademicoUpdate } from './periodoAcademicoService'
 
 const peridoAcademicoSchema = object().shape({
     titulo: string()
@@ -43,7 +43,7 @@ const Schema = ({ id, init, setDocs }) => {
             mensajeLoader()
 
             if (id) {
-                periodoAcademicoService.Update(id, values).then(result => {
+                periodoAcademicoUpdate(id, values).then(result => {
                     if (result === true) {
                         setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }])
                         setMensaje('success', '¡Se ha actualizado el registro correctamente!')
@@ -55,7 +55,7 @@ const Schema = ({ id, init, setDocs }) => {
                 return;
             }
 
-            periodoAcademicoService.Add(values)
+            periodoAcademicoAdd(values)
                 .then(result => {
                     if (isObject(result) && result.id) {
                         setDocs(old => [...old, { id: result.id, data: values }])

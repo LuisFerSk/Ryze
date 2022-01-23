@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import { useMensaje } from '../uses'
-import asignaturaService from './asignaturaService'
+import {asignaturaUpdate,asignaturaAdd} from './asignaturaService'
 import { object, string, boolean } from 'yup'
 
 const asignaturaSchema = object().shape({
@@ -33,7 +33,7 @@ const Schema = ({ id, init, setDocs }) => {
             setMensaje()
 
             if (id) {
-                asignaturaService.Update(id, values).then(result => {
+                asignaturaUpdate(id, values).then(result => {
                     if (result === true) {
                         setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }])
                         setMensaje('success', '¡Se ha actualizado el registro correctamente!')
@@ -44,7 +44,7 @@ const Schema = ({ id, init, setDocs }) => {
                 })
                 return;
             }
-            asignaturaService.Add(values)
+            asignaturaAdd(values)
                 .then(result => {
                     if (typeof result === 'object' && result.id) {
                         setDocs(old => [...old, { id: result.id, data: values }])
