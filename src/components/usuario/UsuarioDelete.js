@@ -2,7 +2,7 @@ import Delete from '../shared/Delete'
 // import { periodoAcademicoServices } from '../../services'
 
 const UsuarioDelete = ({ init, setDocs, closeModal, openAlert }) => {
-    const { nombres, apellidos, cedula } = init;
+    const { nombres, apellidos, identificacion } = init;
 
     const onSubmit = () => {
 
@@ -10,12 +10,12 @@ const UsuarioDelete = ({ init, setDocs, closeModal, openAlert }) => {
 
     return (
         <Delete
-            value={cedula}
-            label='Cedula usuario'
+            value={identificacion}
+            label='Identificación usuario'
             onSubmitFormik={onSubmit}
-            mensajeError={`Digite la cedula del usuario: ${cedula}`}
+            mensajeError={`Digite la identificacion del usuario: ${identificacion}`}
         >
-            Esta seguro de desea eliminar al usuario <strong>{`${nombres} ${apellidos}`}</strong> de cedula: <strong>{cedula}</strong>, si es así escriba la cedula del usuario abajo
+            Esta seguro de desea eliminar al usuario <strong>{`${nombres} ${apellidos}`}</strong> de identificacion: <strong>{identificacion}</strong>, si es así escriba la identificacion del usuario abajo
         </Delete>
     )
 }

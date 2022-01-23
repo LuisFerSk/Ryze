@@ -3,13 +3,7 @@ import {
     Grid,
     Button,
     MenuItem,
-    Checkbox,
     TextField,
-    FormLabel,
-    FormGroup,
-    FormControl,
-    FormHelperText,
-    FormControlLabel,
 } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
 
@@ -20,6 +14,8 @@ import { usuarioInitialValues, usuarioSchema } from './UsuarioSchema'
 import { estadosUsuarios as estados } from '../../_mocks_/estados'
 
 import { PROFESOR, ESTUDIANTE } from '../../_mocks_/roles'
+
+const tipos = [PROFESOR, ESTUDIANTE]
 
 const UsuarioForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -60,16 +56,12 @@ const UsuarioForm = ({ id, init, setDocs }) => {
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
     const email = getFieldProps('email')
-    const roles = getFieldProps('roles')
-    const cedula = getFieldProps('cedula')
+    const tipo = getFieldProps('tipo')
+    const identificacion = getFieldProps('identificacion')
     const estado = getFieldProps('estado')
     const nombres = getFieldProps('nombres')
     const apellidos = getFieldProps('apellidos')
 
-    const onChangeRoles = event => {
-        setMensaje()
-        roles.onChange(event)
-    }
 
     return (
         <FormikProvider value={formik}>
@@ -118,22 +110,43 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             }}
                         />
                     </Grid>}
-                    <Grid item xs={12} md={12} sm={8} lg={8}>
+                    <Grid item xs={12} md={12} sm={6} lg={6}>
                         <TextField
                             fullWidth
-                            {...cedula}
+                            {...identificacion}
                             type='number'
                             variant='outlined'
                             label='Número de identificación'
-                            helperText={touched.cedula && errors.cedula}
-                            error={Boolean(touched.cedula && errors.cedula)}
+                            helperText={touched.identificacion && errors.identificacion}
+                            error={Boolean(touched.identificacion && errors.identificacion)}
                             onChange={event => {
                                 setMensaje()
-                                cedula.onChange(event)
+                                identificacion.onChange(event)
                             }}
                         />
                     </Grid>
                     <Grid item xs={12} md={12} sm={4} lg={4}>
+                        <TextField
+                            select
+                            fullWidth
+                            {...tipo}
+                            variant='outlined'
+                            label='Tipo de usuario'
+                            helperText={touched.tipo && errors.tipo}
+                            error={Boolean(touched.tipo && errors.tipo)}
+                            onChange={event => {
+                                setMensaje()
+                                tipo.onChange(event)
+                            }}
+                        >
+                            {tipos.map((row, index) =>
+                                <MenuItem key={index} value={row}>
+                                    {row}
+                                </MenuItem>
+                            )}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={2} lg={2}>
                         <TextField
                             select
                             fullWidth
@@ -153,30 +166,6 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                                 </MenuItem>
                             )}
                         </TextField>
-                    </Grid>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
-                        <FormControl component='fieldset' error={Boolean(touched.roles && errors.roles)}>
-                            <FormLabel component='legend'>Roles</FormLabel>
-                            <FormGroup>
-                                <FormControlLabel
-                                    {...roles}
-                                    value={ESTUDIANTE}
-                                    label='Estudiante'
-                                    control={<Checkbox />}
-                                    onChange={event => onChangeRoles(event)}
-                                    checked={Boolean(roles.value.find(element => element === ESTUDIANTE))}
-                                />
-                                <FormControlLabel
-                                    {...roles}
-                                    value={PROFESOR}
-                                    label='Profesor'
-                                    control={<Checkbox />}
-                                    onChange={event => onChangeRoles(event)}
-                                    checked={Boolean(roles.value.find(element => element === PROFESOR))}
-                                />
-                            </FormGroup>
-                            <FormHelperText>{touched.roles && errors.roles}</FormHelperText>
-                        </FormControl>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Button

@@ -13,12 +13,12 @@ export const usuarioAdd = async data => {
         return response(400, 'Se esperaba un JSON')
     }
 
-    const { email, cedula } = data;
+    const { email, identificacion } = data;
 
     let result;
 
     Promise.all([
-        await authCreateUser(email, cedula)
+        await authCreateUser(email, identificacion)
             .then(userData => result = userData)
             .catch(error => error.a),
         await setDoc(collectionName, result.uid, data)

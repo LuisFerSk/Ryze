@@ -13,7 +13,7 @@ import { mappingMenuItem } from '../shared/table/TableFunctions'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
 const headLabel = [
-    { id: 'cedula', label: 'Número de identificación', alignRight: false },
+    { id: 'identificacion', label: 'Número de identificación', alignRight: false },
     { id: 'email', label: 'Email', alignRight: false },
     { id: 'nombres', label: 'Nombres', alignRight: false },
     { id: 'apellidos', label: 'Apellidos', alignRight: false },
@@ -26,7 +26,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
     const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false)
 
     const createTableCells = (row) => {
-        const { id, cedula, email, nombres, apellidos, estado, roles } = row;
+        const { id, identificacion, email, nombres, apellidos, estado, roles } = row;
 
         const optionUpdateUser = createOptions('Editar', editFill,
             () => {
@@ -35,7 +35,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                     <UsuarioForm
                         id={id}
                         setDocs={setDocs}
-                        init={{ cedula, email, nombres, apellidos, estado, roles }}
+                        init={{ identificacion, email, nombres, apellidos, estado, roles }}
                     />
                 )
                 openModal()
@@ -46,7 +46,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{cedula}</TableCell>
+                <TableCell align='left'>{identificacion}</TableCell>
                 <TableCell align='left'>{email}</TableCell>
                 <TableCell align='left'>{nombres}</TableCell>
                 <TableCell align='left'>{apellidos}</TableCell>
@@ -72,7 +72,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
 
     return (
         <>
-            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={FilteredData} selectBy='cedula' searchBy='cedula' />
+            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={FilteredData} selectBy='identificacion' searchBy='identificacion' />
             <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
                 {contentModal}
             </Modal>

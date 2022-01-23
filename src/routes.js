@@ -23,12 +23,12 @@ const Router = () => {
             path: '/dashboard',
             element: user === undefined ? <CircularIndeterminate label='Cargando' /> : !user ? <Navigate to='/' replace /> : <DashboardLayout />,
             children: [
-                { path: '/', element: <Navigate to='/dashboard/app' replace /> },
-                { path: 'app', element: <DashboardApp /> },
-                { path: 'periodo_academico', element: <PeriodoAcademico /> },
-                { path: 'asignatura', element: <Asignatura /> },
-                { path: 'grupo', element: <Grupo /> },
-                { path: 'usuario', element: <Usuario /> },
+                { path: '/dashboard/', element: <Navigate to='/dashboard/app' replace /> },
+                { path: '/dashboard/app', element: <DashboardApp /> },
+                { path: '/dashboard/periodo_academico', element: <PeriodoAcademico /> },
+                { path: '/dashboard/asignatura', element: <Asignatura /> },
+                { path: '/dashboard/grupo', element: <Grupo /> },
+                { path: '/dashboard/usuario', element: <Usuario /> },
             ]
         },
         {
@@ -36,8 +36,8 @@ const Router = () => {
             element: user === undefined ? <CircularIndeterminate label='Cargando' /> : user ? <Navigate to='/dashboard' replace /> : <LogoOnlyLayout />,
             children: [
                 { path: '*', element: <NotFound /> },
-                { path: 'login', element: <Login /> },
-                { path: 'register', element: <Register /> },
+                { path: '/login', element: <Login /> },
+                { path: '/register', element: <Register /> },
                 { path: '/', element: <Navigate to='/login' replace /> }
             ]
         },

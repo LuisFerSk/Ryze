@@ -44,8 +44,8 @@ const GrupoForm = ({ id, init, setDocss }) => {
                             }}
                         >
                             {usuarios.map((row, index) =>
-                                <MenuItem key={index} value={row.cedula}>
-                                    {`${row.cedula} - ${row.nombres} ${row.apellidos}`}
+                                <MenuItem key={index} value={row.identificacion}>
+                                    {`${row.identificacion} - ${row.nombres} ${row.apellidos}`}
                                 </MenuItem>
                             )}
                         </TextField>

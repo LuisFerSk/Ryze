@@ -1,4 +1,4 @@
-import { object, string, boolean, number, array } from 'yup'
+import { object, string, boolean, number } from 'yup'
 import { ESTUDIANTE, PROFESOR } from '../../_mocks_/roles'
 
 export const usuarioSchema = object().shape({
@@ -16,7 +16,7 @@ export const usuarioSchema = object().shape({
         .email('El correo electrónico debe ser una dirección de correo electrónico válida')
         .required('El correo es requerido'),
 
-    cedula: number()
+    identificacion: number()
         .positive('Tiene que ser un valor positivo')
         .integer('No puede ser un valor decimal')
         .required('Este campo es requerido')
@@ -25,19 +25,16 @@ export const usuarioSchema = object().shape({
     estado: boolean()
         .required('El estado es requerido'),
 
-    roles: array()
-        .min(1, 'Debe selecionar al menos un rol')
-        .max(3, 'No se permite más de 3 roles')
-        .test('len', 'No se ha seleccionado un rol valido', value => value && value.find(elements => elements === ESTUDIANTE || elements === PROFESOR))
-        .required('Este campo es requerido'),
+    tipo: string()
+        .test('len', 'No se ha seleccionado una opción', value => value && (value === ESTUDIANTE || value === PROFESOR))
 
 })
 
 export const usuarioInitialValues = {
+    tipo: '',
     email: '',
-    roles: [],
-    cedula: '',
     estado: '',
     nombres: '',
     apellidos: '',
+    identificacion: '',
 }
