@@ -1,6 +1,8 @@
 import { db } from '../firebaseConfig'
 import {
     doc,
+    query,
+    where,
     collection,
     runTransaction,
     setDoc as setDocFire,
@@ -27,6 +29,16 @@ export const getDoc = async (collection, id) =>
 export const getDocs = async collectionName => {
     const result = []
     await getDocsFire(collection(db, collectionName)).then(snapshot =>
+        snapshot.forEach(doc =>
+            result.push({ id: doc.id, data: doc.data() }),
+        ),
+    )
+    return result;
+}
+
+export const getDocWhere = async (collectionName, field, condition, value) => {
+    const result = []
+    await getDocsFire(query(collection(db, collectionName), where(field, condition, value))).then(snapshot =>
         snapshot.forEach(doc =>
             result.push({ id: doc.id, data: doc.data() }),
         ),

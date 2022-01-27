@@ -26,7 +26,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
     const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false)
 
     const createTableCells = (row) => {
-        const { id, identificacion, email, nombres, apellidos, estado, roles } = row;
+        const { id, identificacion, email, nombres, apellidos, estado, tipo } = row;
 
         const optionUpdateUser = createOptions('Editar', editFill,
             () => {
@@ -35,7 +35,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                     <UsuarioForm
                         id={id}
                         setDocs={setDocs}
-                        init={{ identificacion, email, nombres, apellidos, estado, roles }}
+                        init={{ identificacion, email, nombres, apellidos, estado, tipo }}
                     />
                 )
                 openModal()
@@ -50,7 +50,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                 <TableCell align='left'>{email}</TableCell>
                 <TableCell align='left'>{nombres}</TableCell>
                 <TableCell align='left'>{apellidos}</TableCell>
-                <TableCell align='left'>{roles}</TableCell>
+                <TableCell align='left'>{tipo}</TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'

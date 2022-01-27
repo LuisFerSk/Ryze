@@ -3,12 +3,12 @@ import { Box, Card, Grid, Container } from '@material-ui/core'
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd'
 
 import Page from '../Page'
-import { usuarioGetAll } from './usuarioService'
 import { useGetDocs } from '../uses'
-import { createAccordion } from '../../utils/specialFunctions'
 import UsuarioForm from './UsuarioForm'
 import UsuarioTable from './UsuarioTable'
+import { usuarioGetAll } from './usuarioService'
 import ControlledAccordions from '../shared/Accordion'
+import { createAccordion } from '../../utils/specialFunctions'
 
 const Usuario = () => {
     const [docs, setDocs] = useGetDocs(usuarioGetAll())

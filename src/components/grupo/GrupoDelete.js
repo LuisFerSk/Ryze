@@ -1,12 +1,12 @@
 import Delete from '../shared/Delete'
-import { periodoAcademicoDelete } from './periodoAcademicoService'
+import { grupoDelete } from './grupoService'
 import { deleteDataInDocumentArray } from '../../utils/specialFunctions'
 
-const PeriodoAcademicoDelete = ({ init, setDocs, closeModal, openAlert }) => {
+const GrupoDelete = ({ init, setDocs, closeModal, openAlert }) => {
     const { id, titulo } = init;
 
     const onSubmit = () => {
-        periodoAcademicoDelete(id).then(result => {
+        grupoDelete(id).then(result => {
             if (result === true) {
                 setDocs(old => deleteDataInDocumentArray(old))
                 openAlert()
@@ -29,4 +29,4 @@ const PeriodoAcademicoDelete = ({ init, setDocs, closeModal, openAlert }) => {
     )
 }
 
-export default PeriodoAcademicoDelete;
+export default GrupoDelete;

@@ -17,3 +17,9 @@ export const createOptions = (label, icon, onClick) => ({ label, icon, onClick }
 export const response = (status, result) => ({ status, result })
 
 export const isObject = (value) => value && typeof value === 'object'
+
+export const updateDataInDocumentArray = (arrayDocs, id, newData) => [...arrayDocs.filter(row => row.id !== id), { id, data: newData }]
+
+export const addDataInDocumentArray = (arrayDocs, data) => [...arrayDocs, data]
+
+export const deleteDataInDocumentArray = (arrayDocs, id) => arrayDocs.filter(row => row.id !== id)

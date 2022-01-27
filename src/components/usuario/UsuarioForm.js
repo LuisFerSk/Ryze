@@ -14,6 +14,7 @@ import { usuarioInitialValues, usuarioSchema } from './UsuarioSchema'
 import { estadosUsuarios as estados } from '../../_mocks_/estados'
 
 import { PROFESOR, ESTUDIANTE } from '../../_mocks_/roles'
+import { addDataInDocumentArray, updateDataInDocumentArray, isObject } from '../../utils/specialFunctions'
 
 const tipos = [PROFESOR, ESTUDIANTE]
 
@@ -29,7 +30,7 @@ const UsuarioForm = ({ id, init, setDocs }) => {
             if (id) {
                 usuarioUpdate(id, values).then(result => {
                     if (result === true) {
-                        setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }])
+                        setDocs(old => updateDataInDocumentArray(old, id, values))
                         setMensaje('success', '¡Se ha actualizado el registro correctamente!')
                         return;
                     }
@@ -40,8 +41,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
             }
 
             usuarioAdd(values).then(result => {
-                if (typeof result === 'object' && result.id) {
-                    setDocs(old => [...old, { id: result.id, data: values }])
+                if (isObject(result) && result.id) {
+                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data: values }))
                     resetForm()
                     setMensaje('success', '¡Se ha guardado el registro correctamente!')
                     return;
@@ -55,12 +56,12 @@ const UsuarioForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-    const email = getFieldProps('email')
     const tipo = getFieldProps('tipo')
-    const identificacion = getFieldProps('identificacion')
+    const email = getFieldProps('email')
     const estado = getFieldProps('estado')
     const nombres = getFieldProps('nombres')
     const apellidos = getFieldProps('apellidos')
+    const identificacion = getFieldProps('identificacion')
 
 
     return (

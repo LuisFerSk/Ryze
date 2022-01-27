@@ -1,6 +1,7 @@
 import { authCreateUser } from '../../database/auth'
+import { ESTUDIANTE, PROFESOR } from '../../_mocks_/roles'
 import { response, isObject } from '../../utils/specialFunctions'
-import { setDoc, updateDoc, getDocs, getDoc } from '../../database/fire'
+import { setDoc, updateDoc, getDoc, getDocWhere } from '../../database/fire'
 
 const collectionName = 'users'
 
@@ -16,9 +17,8 @@ export const usuarioAdd = async data => {
     const { email, identificacion } = data;
 
     if (!email) {
-        return response(400, '')
+        return response(400, 'email')
     }
-
 
     let result;
 
@@ -34,6 +34,28 @@ export const usuarioAdd = async data => {
     return result;
 }
 
-export const usuarioGetAll = async () => await getDocs(collectionName).then(get => get)
+export const usuarioGetAll = async () => {
+    const field = 'tipo'
+    const condition = 'in'
+    const value = [ESTUDIANTE, PROFESOR]
+
+    return await getDocWhere(collectionName, field, condition, value).then(get => get)
+}
 
 export const usuarioGetByID = async id => await getDoc(collectionName, id).then(get => get)
+
+export const usuarioGetAllProfesor = async () => {
+    const field = 'tipo'
+    const condition = '=='
+    const value = PROFESOR
+
+    return await getDocWhere(collectionName, field, condition, value).then(get => get)
+}
+
+export const usuarioGetAllEstudiante = async () => {
+    const field = 'tipo'
+    const condition = '=='
+    const value = ESTUDIANTE
+
+    return await getDocWhere(collectionName, field, condition, value).then(get => get)
+}

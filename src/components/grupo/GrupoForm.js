@@ -1,27 +1,57 @@
-import { Form, FormikProvider, useFormik } from 'formik'
 import SaveIcon from '@material-ui/icons/Save'
+import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
-import { useMensaje } from '../uses'
-import usuarios from '../../_mocks_/usuario'
-import asignaturas from '../../_mocks_/asignatura'
+import { useMensaje, useGetDocs } from '../uses'
+import { grupoAdd, grupoUpdate } from './grupoService'
 import { grupoInitialValues, grupoSchema } from './GrupoSchema'
+import { usuarioGetAllProfesor } from '../usuario/usuarioService'
+import { asignaturaGetAll } from '../asignatura/asignaturaService'
+import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
 
 
-const GrupoForm = ({ id, init, setDocss }) => {
+const GrupoForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
+
+    const [profesores] = useGetDocs(usuarioGetAllProfesor())
+
+    const [asignaturas] = useGetDocs(asignaturaGetAll())
 
     const formik = useFormik({
         initialValues: id && init ? init : grupoInitialValues,
         validationSchema: grupoSchema,
         onSubmit: (values, { resetForm }) => {
             mensajeLoader()
+
+            if (id) {
+                grupoUpdate(id, values).then(result => {
+                    if (result === true) {
+                        setDocs(old => updateDataInDocumentArray(old, id, values))
+                        setMensaje('success', '¡Se ha actualizado el registro correctamente!')
+                        return;
+                    }
+                    console.log(result)
+                    setMensaje('error', '¡No se ha podido guardar el registro!')
+                })
+                return;
+            }
+
+            grupoAdd(values).then(result => {
+                if (isObject(result) && result.id) {
+                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data: values }))
+                    resetForm()
+                    setMensaje('success', '¡Se ha guardado el registro correctamente!')
+                    return;
+                }
+                console.log(result)
+                setMensaje('error', '¡No se ha podido guardar el registro!')
+            })
         }
     })
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-    const grupo = getFieldProps('grupo')
+    const numero = getFieldProps('numero')
     const profesor = getFieldProps('profesor')
     const asignatura = getFieldProps('asignatura')
 
@@ -43,10 +73,14 @@ const GrupoForm = ({ id, init, setDocss }) => {
                                 profesor.onChange(event)
                             }}
                         >
-                            {usuarios.map((row, index) =>
-                                <MenuItem key={index} value={row.identificacion}>
-                                    {`${row.identificacion} - ${row.nombres} ${row.apellidos}`}
-                                </MenuItem>
+                            {profesores.map((row, index) => {
+                                const data = row.data;
+                                return (
+                                    <MenuItem key={index} value={data.identificacion}>
+                                        {`${data.identificacion} - ${data.nombres} ${data.apellidos}`}
+                                    </MenuItem>
+                                )
+                            }
                             )}
                         </TextField>
                     </Grid>
@@ -64,25 +98,29 @@ const GrupoForm = ({ id, init, setDocss }) => {
                                 asignatura.onChange(event)
                             }}
                         >
-                            {asignaturas.map((row, index) =>
-                                <MenuItem key={index} value={row.codigo}>
-                                    {`${row.codigo} - ${row.titulo}`}
-                                </MenuItem>
+                            {asignaturas.map((row, index) => {
+                                const data = row.data;
+                                return (
+                                    <MenuItem key={index} value={data.codigo}>
+                                        {`${data.codigo} - ${data.titulo}`}
+                                    </MenuItem>
+                                )
+                            }
                             )}
                         </TextField>
                     </Grid>
                     <Grid item xs={12} md={12} sm={4} lg={4}>
                         <TextField
                             fullWidth
-                            {...grupo}
+                            {...numero}
                             type='number'
                             label='Grupo'
                             variant='outlined'
-                            helperText={touched.grupo && errors.grupo}
-                            error={Boolean(touched.grupo && errors.grupo)}
+                            helperText={touched.numero && errors.numero}
+                            error={Boolean(touched.numero && errors.numero)}
                             onChange={event => {
                                 setMensaje()
-                                grupo.onChange(event)
+                                numero.onChange(event)
                             }}
                         />
                     </Grid>
@@ -96,7 +134,7 @@ const GrupoForm = ({ id, init, setDocss }) => {
                             {init ? 'Actualizar' : 'Registrar'}
                         </Button>
                     </Grid>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                    <Grid container spacing={0} item xs={12} md={12} sm={12} lg={12} justifyContent='center'>
                         {mensaje}
                     </Grid>
                 </Grid>
