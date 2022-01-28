@@ -18,6 +18,7 @@ const headLabel = [
     { id: 'codigo', label: 'Codigo', alignRight: false },
     { id: 'titulo', label: 'Asignatura', alignRight: false },
     { id: 'estado', label: 'Estado', alignRight: false },
+    { id: '', }
 ]
 
 const FacultadTable = ({ docs, setDocs }) => {

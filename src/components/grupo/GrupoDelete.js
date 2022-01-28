@@ -3,7 +3,7 @@ import { grupoDelete } from './grupoService'
 import { deleteDataInDocumentArray } from '../../utils/specialFunctions'
 
 const GrupoDelete = ({ init, setDocs, closeModal, openAlert }) => {
-    const { id, titulo } = init;
+    const { id, numero, periodo } = init;
 
     const onSubmit = () => {
         grupoDelete(id).then(result => {
@@ -19,12 +19,12 @@ const GrupoDelete = ({ init, setDocs, closeModal, openAlert }) => {
 
     return (
         <Delete
-            value={titulo}
+            value={`${numero}`}
             onSubmitFormik={onSubmit}
-            label='Periodo academico'
-            mensajeError={`Digite el título del periodo academico: ${titulo}`}
+            label='Número del grupo'
+            mensajeError={`Digite el numero del grupo: ${numero}`}
         >
-            Esta seguro de desea eliminar el periodo academico nombrado como: <strong>{titulo}</strong>, si es así escriba el nombre del periodo abajo
+            Esta seguro de desea eliminar el grupo: <strong>{numero}</strong> del periodo <strong>{periodo}</strong>, si es así escriba el número del grupo
         </Delete>
     )
 }

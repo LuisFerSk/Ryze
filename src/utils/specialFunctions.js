@@ -22,4 +22,4 @@ export const updateDataInDocumentArray = (arrayDocs, id, newData) => [...arrayDo
 
 export const addDataInDocumentArray = (arrayDocs, data) => [...arrayDocs, data]
 
-export const deleteDataInDocumentArray = (arrayDocs, id) => arrayDocs.filter(row => row.id !== id)
+export const deleteDataInDocumentArray = (arrayDocs, id) => [...arrayDocs.filter(row => row.id !== id)]

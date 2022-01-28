@@ -7,6 +7,7 @@ import { grupoAdd, grupoUpdate } from './grupoService'
 import { grupoInitialValues, grupoSchema } from './GrupoSchema'
 import { usuarioGetAllProfesor } from '../usuario/usuarioService'
 import { asignaturaGetAll } from '../asignatura/asignaturaService'
+import { periodoAcademicoGetActived } from '../periodoAcademico/periodoAcademicoService'
 import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
 
 
@@ -16,6 +17,8 @@ const GrupoForm = ({ id, init, setDocs }) => {
     const [profesores] = useGetDocs(usuarioGetAllProfesor())
 
     const [asignaturas] = useGetDocs(asignaturaGetAll())
+
+    const [periodosAcademicos] = useGetDocs(periodoAcademicoGetActived())
 
     const formik = useFormik({
         initialValues: id && init ? init : grupoInitialValues,
@@ -52,6 +55,9 @@ const GrupoForm = ({ id, init, setDocs }) => {
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
     const numero = getFieldProps('numero')
+    const periodo = getFieldProps('periodo')
+
+    console.log({ periodo })
     const profesor = getFieldProps('profesor')
     const asignatura = getFieldProps('asignatura')
 
@@ -59,7 +65,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
         <FormikProvider value={formik}>
             <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                    <Grid item xs={12} md={12} sm={8} lg={8}>
                         <TextField
                             select
                             fullWidth
@@ -78,6 +84,31 @@ const GrupoForm = ({ id, init, setDocs }) => {
                                 return (
                                     <MenuItem key={index} value={data.identificacion}>
                                         {`${data.identificacion} - ${data.nombres} ${data.apellidos}`}
+                                    </MenuItem>
+                                )
+                            }
+                            )}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={4} lg={4}>
+                        <TextField
+                            select
+                            fullWidth
+                            {...periodo}
+                            variant='outlined'
+                            label='Periodo academico'
+                            helperText={touched.periodo && errors.periodo}
+                            error={Boolean(touched.periodo && errors.periodo)}
+                            onChange={event => {
+                                setMensaje()
+                                periodo.onChange(event)
+                            }}
+                        >
+                            {periodosAcademicos.map((row, index) => {
+                                const data = row.data;
+                                return (
+                                    <MenuItem key={index} value={data.titulo}>
+                                        {data.titulo}
                                     </MenuItem>
                                 )
                             }

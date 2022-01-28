@@ -2,12 +2,11 @@ import editFill from '@iconify/icons-eva/edit-fill'
 import trash2Outline from '@iconify/icons-eva/trash-2-outline'
 import { TableCell } from '@material-ui/core'
 
-import Label from '../Label'
 import { useFloat } from '../uses'
 import GrupoForm from './GrupoForm'
 import GrupoDelete from './GrupoDelete'
 import TableMoreMenu from '../shared/table/TableMoreMenu'
-import { Modal, CustomTable, FloatAlert } from '../shared'
+import { Modal, CustomTable, FloatAlert, Undefined } from '../shared'
 import { mappingMenuItem } from '../shared/table/TableFunctions'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
@@ -15,6 +14,8 @@ const headLabel = [
     { id: 'numero', label: 'Grupo', alignRight: false },
     { id: 'asignatura', label: 'Asignatura', alignRight: false },
     { id: 'profesor', label: 'Usuario', alignRight: false },
+    { id: 'periodo', label: 'Periodo', alignRight: false },
+    { id: '', },
 ]
 
 const GrupoTable = ({ docs, setDocs }) => {
@@ -26,7 +27,7 @@ const GrupoTable = ({ docs, setDocs }) => {
     )
 
     const createTableCells = row => {
-        const { id, numero, asignatura, profesor, estado } = row;
+        const { id, numero, asignatura, profesor, periodo } = row;
 
         const updateGrupo = createOptions('Editar', editFill, () => {
             setTitleModal('Actualizar grupo')
@@ -34,14 +35,14 @@ const GrupoTable = ({ docs, setDocs }) => {
                 <GrupoForm
                     id={id}
                     setDocs={setDocs}
-                    init={{ numero, asignatura, profesor }}
+                    init={{ numero, asignatura, profesor, periodo }}
                 />
             )
             openModal()
         })
 
         const deleteGrupo = createOptions('Eliminar', trash2Outline, () => {
-            setTitleModal('Eliminar periodo academico')
+            setTitleModal('Eliminar grupo')
             setContentModal(
                 <GrupoDelete
                     init={row}
@@ -57,17 +58,10 @@ const GrupoTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{numero}</TableCell>
-                <TableCell align='left'>{asignatura}</TableCell>
-                <TableCell align='left'>{profesor}</TableCell>
-                <TableCell align='left'>
-                    <Label
-                        variant='ghost'
-                        color={(estado === true && 'success') || 'error'}
-                    >
-                        {estado === true ? 'Abierto' : 'Cerrado'}
-                    </Label>
-                </TableCell>
+                <TableCell align='left'>{numero ? numero : <Undefined />}</TableCell>
+                <TableCell align='left'>{asignatura ? asignatura : <Undefined />}</TableCell>
+                <TableCell align='left'>{profesor ? profesor : <Undefined />}</TableCell>
+                <TableCell align='left'>{periodo ? periodo : <Undefined />}</TableCell>
                 <TableCell padding='checkbox'>
                     <TableMoreMenu>
                         {mappingMenuItem(options)}

@@ -1,4 +1,4 @@
-import { addDoc, updateDoc, getDocs, deleteDoc } from '../../database/fire'
+import { addDoc, updateDoc, getDocs, deleteDoc, getDocWhere } from '../../database/fire'
 
 const collectionName = 'periodo_academico'
 
@@ -13,3 +13,11 @@ export const periodoAcademicoUpdate = async (id, data) => {
 export const periodoAcademicoGetAll = async () => await getDocs(collectionName).then(get => get)
 
 export const periodoAcademicoDelete = async id => await deleteDoc(collectionName, id).then(get => get)
+
+export const periodoAcademicoGetActived = async () => {
+    const field = 'estado'
+    const condition = '=='
+    const value = true
+
+    return await getDocWhere(collectionName, field, condition, value).then(get => get)
+}
