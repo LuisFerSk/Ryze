@@ -5,12 +5,12 @@ import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { Box, Link, Drawer, Typography, Avatar } from '@material-ui/core'
 
 import Logo from '../../components/Logo'
-import sidebarConfig from './SidebarConfig'
 import Scrollbar from '../../components/Scrollbar'
-import { useContextUser } from '../../components/uses'
 import NavSection from '../../components/NavSection'
-import { isObject } from '../../utils/specialFunctions'
+import { useContextUser } from '../../components/uses'
 import { MHidden } from '../../components/@material-extend'
+import { ESTUDIANTE, ADMINISTRADOR, PROFESOR } from '../../_mocks_/roles'
+import { sidebarConfigAdministrador, sidebarConfigEstudiante, sidebarConfigProfesor } from './SidebarConfig'
 
 
 const DRAWER_WIDTH = 280;
@@ -35,6 +35,10 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
 
     const user = useContextUser()
 
+    console.log(user)
+
+    const { data } = user
+
     useEffect(() => {
         if (isOpenSidebar) {
             onCloseSidebar()
@@ -57,19 +61,19 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
             <Box sx={{ mb: 5, mx: 2.5 }}>
                 <Link underline='none' component={RouterLink} to='#'>
                     <AccountStyle>
-                        <Avatar src={isObject(user) && user.data.photoURL} alt='photoURL' />
+                        <Avatar src={data.photoURL} alt='photoURL' />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-                                {isObject(user) && user.data.nombres}
+                                {data.nombres}
                             </Typography>
                             <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-                                {isObject(user) && user.data.email}
+                                {data.email}
                             </Typography>
                         </Box>
                     </AccountStyle>
                 </Link>
             </Box>
-            <NavSection navConfig={sidebarConfig} />
+            <NavSection navConfig={data.tipo === ADMINISTRADOR ? sidebarConfigAdministrador : data.tipo === PROFESOR ? sidebarConfigProfesor : data.tipo === ESTUDIANTE ? sidebarConfigEstudiante : []} />
             <Box sx={{ flexGrow: 1 }} />
         </Scrollbar>
     )

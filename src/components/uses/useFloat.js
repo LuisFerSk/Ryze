@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const useFloat = (initialState = false, initialContent = '') => {
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(initialState)
     const [isOpen, setItsOpen] = useState(initialState)
     const [content, setContent] = useState(initialContent)
 

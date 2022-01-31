@@ -4,11 +4,9 @@ import { TableCell } from '@material-ui/core'
 
 import Label from '../Label'
 import { useFloat } from '../uses'
-import Modal from '../shared/Modal'
 import UsuarioForm from './UsuarioForm'
-import CustomTable from '../shared/Table'
-import { ADMINISTRADOR } from '../../_mocks_/roles'
 import TableMoreMenu from '../shared/table/TableMoreMenu'
+import { CustomTable, Modal, Undefined } from '../shared'
 import { mappingMenuItem } from '../shared/table/TableFunctions'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
@@ -46,11 +44,11 @@ const UsuarioTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{identificacion}</TableCell>
-                <TableCell align='left'>{email}</TableCell>
-                <TableCell align='left'>{nombres}</TableCell>
-                <TableCell align='left'>{apellidos}</TableCell>
-                <TableCell align='left'>{tipo}</TableCell>
+                <TableCell align='left'>{identificacion ? identificacion : <Undefined />}</TableCell>
+                <TableCell align='left'>{email ? email : <Undefined />}</TableCell>
+                <TableCell align='left'>{nombres ? nombres : <Undefined />}</TableCell>
+                <TableCell align='left'>{apellidos ? apellidos : <Undefined />}</TableCell>
+                <TableCell align='left'>{tipo ? tipo : <Undefined />}</TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'
@@ -68,11 +66,9 @@ const UsuarioTable = ({ docs, setDocs }) => {
         )
     }
 
-    const FilteredData = getDataForTable(docs).filter(row => !row.roles.find(element => element === ADMINISTRADOR))
-
     return (
         <>
-            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={FilteredData} selectBy='identificacion' searchBy='identificacion' />
+            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={getDataForTable(docs)} selectBy='identificacion' searchBy='identificacion' />
             <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
                 {contentModal}
             </Modal>

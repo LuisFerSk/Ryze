@@ -1,11 +1,8 @@
-import { useFormik } from 'formik'
-import { useMensaje } from '../uses'
+import { } from 'formik'
+
 import { object, string, date, boolean } from 'yup'
 
-import { isObject } from '../../utils/specialFunctions'
-import { periodoAcademicoAdd, periodoAcademicoUpdate } from './periodoAcademicoService'
-
-const peridoAcademicoSchema = object().shape({
+export const peridoAcademicoSchema = object().shape({
     titulo: string()
         .test('len', 'Verifique que el titulo cumpla con el formato Ej: 2020-20', val => val && val.replace(/\s+/g, '').length === 7),
 
@@ -26,50 +23,9 @@ const peridoAcademicoSchema = object().shape({
         )
 })
 
-const peridoAcademicoInitialValues = {
+export const peridoAcademicoInitialValues = {
     titulo: '',
     estado: '',
     fechaFin: '',
     fechaInicio: '',
 }
-
-const Schema = ({ id, init, setDocs }) => {
-    const [mensaje, setMensaje, mensajeLoader] = useMensaje()
-
-    const formik = useFormik({
-        initialValues: id && init ? init : peridoAcademicoInitialValues,
-        validationSchema: peridoAcademicoSchema,
-        onSubmit: (values, { resetForm }) => {
-            mensajeLoader()
-
-            if (id) {
-                periodoAcademicoUpdate(id, values).then(result => {
-                    if (result === true) {
-                        setDocs(old => [...old.filter(row => row.id !== id), { id, data: values }])
-                        setMensaje('success', '¡Se ha actualizado el registro correctamente!')
-                        return;
-                    }
-                    console.log(result)
-                    setMensaje('error', '¡No se ha podido guardar el registro!')
-                })
-                return;
-            }
-
-            periodoAcademicoAdd(values)
-                .then(result => {
-                    if (isObject(result) && result.id) {
-                        setDocs(old => [...old, { id: result.id, data: values }])
-                        resetForm()
-                        setMensaje('success', '¡Se ha guardado el registro correctamente!')
-                        return;
-                    }
-                    console.log(result)
-                    setMensaje('error', '¡No se ha podido guardar el registro!')
-                })
-        }
-    })
-
-    return [mensaje, setMensaje, formik]
-}
-
-export default Schema

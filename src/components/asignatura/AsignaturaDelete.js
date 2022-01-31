@@ -1,5 +1,6 @@
 import Delete from '../shared/Delete'
 import { asignaturaDelete } from './asignaturaService'
+import { deleteDataInDocumentArray } from '../../utils/specialFunctions'
 
 const AsignaturaDelete = ({ init, setDocs, closeModal, openAlert }) => {
     const { id, codigo } = init;
@@ -11,7 +12,7 @@ const AsignaturaDelete = ({ init, setDocs, closeModal, openAlert }) => {
             onSubmitFormik={() => {
                 asignaturaDelete(id).then(result => {
                     if (result === true) {
-                        setDocs(old => old.filter(row => row.id !== id))
+                        setDocs(old => deleteDataInDocumentArray(old, id))
                         openAlert()
                         closeModal()
                         return;

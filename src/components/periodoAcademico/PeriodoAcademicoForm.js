@@ -1,16 +1,49 @@
-import { Form, FormikProvider } from 'formik'
+import SaveIcon from '@material-ui/icons/Save'
+import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
-import SaveIcon from '@material-ui/icons/Save'
-
+import { useMensaje } from '../uses'
 import estados from '../../_mocks_/estados'
 import PeriodoAcademicoTitulo from './PeriodoAcademicoTitulo'
-import PeriodoAcademicoSchema from './PeriodoAcademicoSchema'
+import { periodoAcademicoAdd, periodoAcademicoUpdate } from './periodoAcademicoService'
+import { peridoAcademicoSchema, peridoAcademicoInitialValues } from './PeriodoAcademicoSchema'
+import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
 
-const PeriodoAcademicoForm = props => {
-    const [mensaje, setMensaje, formik] = PeriodoAcademicoSchema({ ...props })
+const PeriodoAcademicoForm = ({ id, init, setDocs }) => {
+    const [mensaje, setMensaje, mensajeLoader] = useMensaje()
 
-    const { init } = props;
+    const formik = useFormik({
+        initialValues: id && init ? init : peridoAcademicoInitialValues,
+        validationSchema: peridoAcademicoSchema,
+        onSubmit: (data, { resetForm }) => {
+            mensajeLoader()
+
+            if (id) {
+                periodoAcademicoUpdate(id, data).then(result => {
+                    if (result === true) {
+                        setDocs(old => updateDataInDocumentArray(old, id, data))
+                        setMensaje('success', '¡Se ha actualizado el registro correctamente!')
+                        return;
+                    }
+                    console.log(result)
+                    setMensaje('error', '¡No se ha podido guardar el registro!')
+                })
+                return;
+            }
+
+            periodoAcademicoAdd(data)
+                .then(result => {
+                    if (isObject(result) && result.id) {
+                        setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                        resetForm()
+                        setMensaje('success', '¡Se ha guardado el registro correctamente!')
+                        return;
+                    }
+                    console.log(result)
+                    setMensaje('error', '¡No se ha podido guardar el registro!')
+                })
+        }
+    })
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 

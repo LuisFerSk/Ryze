@@ -5,13 +5,11 @@ import { TableCell } from '@material-ui/core'
 
 import Label from '../Label'
 import { useFloat } from '../uses'
-import Modal from '../shared/Modal'
-import CustomTable from '../shared/Table'
-import FloatAlert from '../shared/FloatAlert'
 import TableMoreMenu from '../shared/table/TableMoreMenu'
 import PeriodoAcademicoForm from './PeriodoAcademicoForm'
 import PeriodoAcademicoDelete from './PeriodoAcademicoDelete'
 import { mappingMenuItem } from '../shared/table/TableFunctions'
+import { CustomTable, Undefined, FloatAlert, Modal } from '../shared'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
 const headLabel = [
@@ -61,9 +59,9 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{titulo}</TableCell>
-                <TableCell align='left'>{fechaInicio}</TableCell>
-                <TableCell align='left'>{fechaFin}</TableCell>
+                <TableCell align='left'>{titulo ? titulo : <Undefined />}</TableCell>
+                <TableCell align='left'>{fechaInicio ? fechaInicio : <Undefined />}</TableCell>
+                <TableCell align='left'>{fechaFin ? fechaFin : <Undefined />}</TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'

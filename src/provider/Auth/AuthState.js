@@ -7,6 +7,7 @@ import { UPDATE_USER } from '../types'
 import authContext from './authContext'
 import authReducer from './authReducer'
 import { auth } from '../../database/auth'
+import { isObject } from '../../utils/specialFunctions'
 import { usuarioGetByID } from '../../components/usuario/usuarioService'
 
 const AuthState = ({ children }) => {
@@ -37,7 +38,7 @@ const AuthState = ({ children }) => {
             return;
         }
 
-        if (result && typeof result === 'object' && result.uid) {
+        if (isObject(result) && result.uid) {
             usuarioGetByID(result.uid)
                 .then(result => updateUser(result))
                 .catch(error => console.log(error.a))
