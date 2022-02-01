@@ -1,20 +1,20 @@
 import { addDoc, updateDoc, getDocs, deleteDoc, getDocWhere } from '../../database/fire'
 
-const collectionName = 'grupo'
+const collectionName = 'asistencia'
 
-export const grupoAdd = async data => {
+export const asistenciaAdd = async data => {
     return await addDoc(collectionName, data).then(get => get)
 }
 
-export const grupoUpdate = async (id, data) => {
+export const asistenciaUpdate = async (id, data) => {
     return await updateDoc(collectionName, id, data).then(get => get)
 }
 
-export const grupoGetAll = async () => await getDocs(collectionName).then(get => get)
+export const asistenciaGetAll = async () => await getDocs(collectionName).then(get => get)
 
-export const grupoDelete = async id => await deleteDoc(collectionName, id).then(get => get)
+export const asistenciaDelete = async id => await deleteDoc(collectionName, id).then(get => get)
 
-export const grupoGetActivated = async () => {
+export const asistenciaGetActivated = async () => {
     const field = 'estado'
     const condition = '=='
     const value = true

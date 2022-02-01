@@ -1,6 +1,6 @@
 import { object, string, number } from 'yup'
 
-export const grupoSchema = object().shape({
+export const asistenciaSchema = object().shape({
     profesor: string()
         .required('Este campo es requerido'),
 
@@ -15,7 +15,7 @@ export const grupoSchema = object().shape({
         .required('Este campo es requerido'),
 })
 
-export const grupoInitialValues = {
+export const asistenciaInitialValues = {
     numero: '',
     periodo: '',
     profesor: '',

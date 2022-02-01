@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-// import schoolIcon from '@iconify/icons-mdi/school'
 import bookFill from '@iconify/icons-eva/book-fill'
 import clockFill from '@iconify/icons-eva/clock-fill'
 import dipSwitch from '@iconify/icons-mdi/dip-switch'
@@ -52,8 +51,8 @@ export const sidebarConfigEstudiante = [
 
 export const sidebarConfigProfesor = [
     {
-        title: 'dashboard',
-        path: '/dashboard/app',
-        icon: getIcon(pieChart2Fill),
+        title: 'grupos',
+        path: '/dashboard/asistencia',
+        icon: getIcon(peopleFill),
     },
 ]

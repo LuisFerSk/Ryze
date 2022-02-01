@@ -21,3 +21,11 @@ export const grupoGetActivated = async () => {
 
     return await getDocWhere(collectionName, field, condition, value).then(get => get)
 }
+
+export const grupoGetAllProfesor = async (identificacionProfesor) => {
+    const field = 'profesor'
+    const condition = '=='
+    const value = identificacionProfesor
+
+    return await getDocWhere(collectionName, field, condition, value).then(get => get)
+}

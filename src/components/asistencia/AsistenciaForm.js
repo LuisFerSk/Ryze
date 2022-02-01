@@ -3,30 +3,30 @@ import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
 import { useMensaje, useGetDocs } from '../uses'
-import { grupoAdd, grupoUpdate } from './grupoService'
-import { grupoInitialValues, grupoSchema } from './GrupoSchema'
-import { usuarioGetAllProfesor } from '../usuario/usuarioService'
 import { asignaturaGetAll } from '../asignatura/asignaturaService'
+import { usuarioGetAllEstudiante } from '../usuario/usuarioService'
+import { asistenciaAdd, asistenciaUpdate } from './AsistenciaService'
+import { asistenciaInitialValues, asistenciaSchema } from './AsistenciaSchema'
 import { periodoAcademicoGetActived } from '../periodoAcademico/periodoAcademicoService'
 import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
 
 
-const GrupoForm = ({ id, init, setDocs }) => {
+const AsistenciaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
 
-    const [profesores] = useGetDocs(usuarioGetAllProfesor())
+    const [estudiantes] = useGetDocs(usuarioGetAllEstudiante())
 
     const [asignaturas] = useGetDocs(asignaturaGetAll())
 
     const [periodosAcademicos] = useGetDocs(periodoAcademicoGetActived())
 
     const formik = useFormik({
-        initialValues: id && init ? init : grupoInitialValues,
-        validationSchema: grupoSchema,
+        initialValues: id && init ? init : asistenciaInitialValues,
+        validationSchema: asistenciaSchema,
         onSubmit: (values, { resetForm }) => {
             mensajeLoader()
             if (id) {
-                grupoUpdate(id, values).then(result => {
+                asistenciaUpdate(id, values).then(result => {
                     if (result === true) {
                         setDocs(old => updateDataInDocumentArray(old, id, values))
                         setMensaje('success', '¡Se ha actualizado el registro correctamente!')
@@ -40,7 +40,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
 
             const data = { ...values, estado: true }
 
-            grupoAdd(data).then(result => {
+            asistenciaAdd(data).then(result => {
                 if (isObject(result) && result.id) {
                     setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
                     resetForm()
@@ -78,7 +78,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
                                 profesor.onChange(event)
                             }}
                         >
-                            {profesores.map((row, index) => {
+                            {estudiantes.map((row, index) => {
                                 const data = row.data;
                                 return (
                                     <MenuItem key={index} value={data.identificacion}>
@@ -144,7 +144,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
                             fullWidth
                             {...numero}
                             type='number'
-                            label='Grupo'
+                            label='asistencia'
                             variant='outlined'
                             helperText={touched.numero && errors.numero}
                             error={Boolean(touched.numero && errors.numero)}
@@ -173,4 +173,4 @@ const GrupoForm = ({ id, init, setDocs }) => {
     )
 }
 
-export default GrupoForm;
+export default AsistenciaForm;

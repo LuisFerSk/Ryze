@@ -10,11 +10,12 @@ import Register from './pages/Register'
 import Usuario from './components/usuario'
 import DashboardApp from './pages/DashboardApp'
 import Asignatura from './components/asignatura'
+import Asistencia from './components/asistencia'
 import PeriodoAcademico from './components/periodoAcademico'
 import MatriculaCademica from './components/matriculaAcademica'
 import CircularIndeterminate from './components/shared/Progress'
 
-import { ADMINISTRADOR, ESTUDIANTE, PROFESOR } from './_mocks_/roles'
+import { ADMINISTRADOR, PROFESOR } from './_mocks_/roles'
 import { useContextUser } from './components/uses'
 
 const Router = () => {
@@ -32,6 +33,7 @@ const Router = () => {
                 { path: '/dashboard/asignatura', element: ADMINISTRADOR ? <Asignatura /> : <Navigate to='/404' replace /> },
                 { path: '/dashboard/matricula', element: ADMINISTRADOR ? <MatriculaCademica /> : <Navigate to='/404' replace /> },
                 { path: '/dashboard/periodo_academico', element: ADMINISTRADOR ? <PeriodoAcademico /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/asistencia', element: PROFESOR ? <Asistencia /> : <Navigate to='/404' replace /> },
             ]
         },
         {

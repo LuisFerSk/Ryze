@@ -35,8 +35,6 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
 
     const user = useContextUser()
 
-    console.log(user)
-
     const { data } = user
 
     useEffect(() => {
