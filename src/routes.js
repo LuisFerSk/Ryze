@@ -15,8 +15,9 @@ import PeriodoAcademico from './components/periodoAcademico'
 import MatriculaCademica from './components/matriculaAcademica'
 import CircularIndeterminate from './components/shared/Progress'
 
-import { ADMINISTRADOR, PROFESOR } from './_mocks_/roles'
+import { ADMINISTRADOR } from './_mocks_/roles'
 import { useContextUser } from './components/uses'
+import { isObject } from './utils/specialFunctions'
 
 const Router = () => {
     const user = useContextUser()
@@ -28,12 +29,12 @@ const Router = () => {
             children: [
                 { path: '/dashboard/app', element: <DashboardApp /> },
                 { path: '/dashboard/', element: <Navigate to='/dashboard/app' replace /> },
-                { path: '/dashboard/grupo', element: ADMINISTRADOR ? <Grupo /> : <Navigate to='/404' replace /> },
-                { path: '/dashboard/usuario', element: ADMINISTRADOR ? < Usuario /> : <Navigate to='/404' replace /> },
-                { path: '/dashboard/asignatura', element: ADMINISTRADOR ? <Asignatura /> : <Navigate to='/404' replace /> },
-                { path: '/dashboard/matricula', element: ADMINISTRADOR ? <MatriculaCademica /> : <Navigate to='/404' replace /> },
-                { path: '/dashboard/periodo_academico', element: ADMINISTRADOR ? <PeriodoAcademico /> : <Navigate to='/404' replace /> },
-                { path: '/dashboard/asistencia', element: PROFESOR ? <Asistencia /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/grupo', element: <Grupo /> },
+                { path: '/dashboard/usuario', element: isObject(user) && user.data.tipo === ADMINISTRADOR ? < Usuario /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/asignatura', element: isObject(user) && user.data.tipo === ADMINISTRADOR ? <Asignatura /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/matricula', element: isObject(user) && user.data.tipo === ADMINISTRADOR ? <MatriculaCademica /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/periodo_academico', element: isObject(user) && user.data.tipo === ADMINISTRADOR ? <PeriodoAcademico /> : <Navigate to='/404' replace /> },
+                { path: '/dashboard/asistencia/:grupo', element: <Asistencia /> },
             ]
         },
         {

@@ -52,7 +52,7 @@ export const sidebarConfigEstudiante = [
 export const sidebarConfigProfesor = [
     {
         title: 'grupos',
-        path: '/dashboard/asistencia',
+        path: '/dashboard/grupo',
         icon: getIcon(peopleFill),
     },
 ]

@@ -27,7 +27,6 @@ export const usuarioSchema = object().shape({
 
     tipo: string()
         .test('len', 'No se ha seleccionado una opción', value => value && (value === ESTUDIANTE || value === PROFESOR))
-
 })
 
 export const usuarioInitialValues = {

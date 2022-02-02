@@ -1,14 +1,11 @@
 import editFill from '@iconify/icons-eva/edit-fill'
-
 import { TableCell } from '@material-ui/core'
 
 import Label from '../Label'
 import { useFloat } from '../uses'
 import UsuarioForm from './UsuarioForm'
-import TableMoreMenu from '../shared/table/TableMoreMenu'
-import { CustomTable, Modal, Undefined } from '../shared'
-import { mappingMenuItem } from '../shared/table/TableFunctions'
-import { getDataForTable, createOptions } from '../../utils/specialFunctions'
+import { CustomTable, Modal, Undefined, IconButton } from '../shared'
+import { getDataForTable } from '../../utils/specialFunctions'
 
 const headLabel = [
     { id: 'identificacion', label: 'Número de identificación', alignRight: false },
@@ -26,21 +23,18 @@ const UsuarioTable = ({ docs, setDocs }) => {
     const createTableCells = (row) => {
         const { id, identificacion, email, nombres, apellidos, estado, tipo } = row;
 
-        const optionUpdateUser = createOptions('Editar', editFill,
-            () => {
-                setTitleModal('Actualizar usuario')
-                setContentModal(
-                    <UsuarioForm
-                        id={id}
-                        setDocs={setDocs}
-                        init={{ identificacion, email, nombres, apellidos, estado, tipo }}
-                    />
-                )
-                openModal()
-            }
-        )
+        const updateUser = () => {
+            setTitleModal('Actualizar usuario')
+            setContentModal(
+                <UsuarioForm
+                    id={id}
+                    setDocs={setDocs}
+                    init={{ identificacion, email, nombres, apellidos, estado, tipo }}
+                />
+            )
+            openModal()
+        }
 
-        const options = [optionUpdateUser]
 
         return (
             <>
@@ -58,9 +52,7 @@ const UsuarioTable = ({ docs, setDocs }) => {
                     </Label>
                 </TableCell>
                 <TableCell padding='checkbox'>
-                    <TableMoreMenu>
-                        {mappingMenuItem(options)}
-                    </TableMoreMenu>
+                    <IconButton onClick={updateUser} title='editar usuario' icon={editFill} />
                 </TableCell>
             </>
         )

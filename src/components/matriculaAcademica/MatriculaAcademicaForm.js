@@ -117,7 +117,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                             {grupos.map((row, index) => {
                                 const data = row.data;
                                 const { asignatura, numero } = data;
-                                const grupo = `${asignatura} - ${numero}`
+                                const grupo = `${asignatura}-${numero}`
                                 return (
                                     <MenuItem key={index} value={grupo}>
                                         {grupo}

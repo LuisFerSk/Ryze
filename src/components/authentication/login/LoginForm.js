@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useFormik, Form, FormikProvider } from 'formik'
-
 import { Icon } from '@iconify/react'
+import { useNavigate } from 'react-router-dom'
+import { LoadingButton } from '@material-ui/lab'
 import eyeFill from '@iconify/icons-eva/eye-fill'
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill'
-
-import { LoadingButton } from '@material-ui/lab'
+import { useFormik, Form, FormikProvider } from 'formik'
 import { Stack, TextField, IconButton, InputAdornment } from '@material-ui/core'
 
 import { authSignIn } from '../../../database/auth'
+import { isObject } from '../../../utils/specialFunctions'
 import { loginSchema, loginInitialValues } from './loginSchema'
 
 const LoginForm = () => {
@@ -20,8 +19,10 @@ const LoginForm = () => {
         initialValues: loginInitialValues,
         validationSchema: loginSchema,
         onSubmit: values => {
-            authSignIn(values.email, values.password).then(
-                result => typeof result === 'object' && result.status === 200
+            const { email, password } = values;
+
+            authSignIn(email, password).then(
+                result => isObject(result) && result.status === 200
                     ? navigate('/dashboard', { replace: true })
                     : console.log(result)
             )

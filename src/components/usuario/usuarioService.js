@@ -1,4 +1,3 @@
-import { authCreateUser } from '../../database/auth'
 import { ESTUDIANTE, PROFESOR } from '../../_mocks_/roles'
 import { response, isObject } from '../../utils/specialFunctions'
 import { setDoc, updateDoc, getDoc, getDocWhere } from '../../database/fire'
@@ -6,32 +5,64 @@ import { setDoc, updateDoc, getDoc, getDocWhere } from '../../database/fire'
 const collectionName = 'users'
 
 export const usuarioUpdate = async (id, data) => {
-    return await updateDoc(collectionName, id, data).then(get => get)
-}
-
-export const usuarioAdd = async data => {
     if (!isObject(data)) {
         return response(400, 'Se esperaba un JSON')
     }
 
-    const { email, identificacion } = data;
+    return await updateDoc(collectionName, id, data).then(get => get)
+}
 
-    if (!email) {
-        return response(400, 'email')
+export const usuarioAdd = async (uid, data) => {
+    let errores = []
+
+
+
+    if (!isObject(data)) {
+        errores = [...errores, response(400, 'Se esperaba un JSON')]
     }
 
-    let result;
+    if (!uid) {
+        errores = [...errores, response(400, 'Se necesita el uid')]
+    }
 
-    Promise.all([
-        await authCreateUser(email, identificacion)
-            .then(userData => result = userData)
-            .catch(error => error.a),
-        await setDoc(collectionName, result.uid, data)
-            .then(userData => result = userData)
-            .catch(error => error.a)
-    ])
+    if (errores.length > 0) {
+        return errores;
+    }
 
-    return result;
+
+
+    const { email, identificacion, nombres, apellidos, estado, tipo } = data;
+
+    if (!email) {
+        errores = [...errores, response(400, 'Se necesita el email')]
+    }
+
+    if (!identificacion) {
+        errores = [...errores, response(400, 'Se necesita la identificación')]
+    }
+
+    if (!nombres) {
+        errores = [...errores, response(400, 'Se necesita el nombres')]
+    }
+
+    if (!apellidos) {
+        errores = [...errores, response(400, 'Se necesita el apellidos')]
+    }
+
+    if (!estado) {
+        errores = [...errores, response(400, 'Se necesita el estado')]
+    }
+
+    if (!tipo) {
+        errores = [...errores, response(400, 'Se necesita el tipo de usuario')]
+    }
+
+    if (errores.length > 0) {
+        return errores;
+    }
+
+
+    return await setDoc(collectionName, uid, data).then(result => result)
 }
 
 export const usuarioGetAll = async () => {

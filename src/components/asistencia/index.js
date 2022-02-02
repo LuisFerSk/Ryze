@@ -1,21 +1,27 @@
-import { Box, Grid, Container } from '@material-ui/core'
+import { useParams } from "react-router-dom"
+import { Box, Grid, Container, Typography } from '@material-ui/core'
 
 import Page from '../Page'
-
 import AsistenciaTable from './AsistenciaTable'
-import { useGetDocs, useContextUser } from '../uses'
-import { grupoGetAllProfesor } from '../grupo/grupoService'
+import { useGetDocs } from '../uses'
+import { matriculaGetByGrupo } from '../matriculaAcademica/matriculaAcademicaService'
+
 const Asistencia = () => {
-    const user = useContextUser()
+    const params = useParams()
 
-    const { data } = user;
+    const { grupo } = params;
 
-    const [docs, setDocs] = useGetDocs(grupoGetAllProfesor(data.identificacion))
+    const [docs, setDocs] = useGetDocs(matriculaGetByGrupo(grupo))
 
     return (
         <Page title='Grupo | Ryze'>
             <Container>
                 <Grid container spacing={6}>
+                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                        <Typography variant="h4">
+                            Grupo: {grupo}
+                        </Typography>
+                    </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <Box>
                             <AsistenciaTable docs={docs} setDocs={setDocs} />
