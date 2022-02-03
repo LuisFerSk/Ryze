@@ -38,8 +38,8 @@ const AuthState = ({ children }) => {
             return;
         }
 
-        if (isObject(result) && result.uid) {
-            usuarioGetByID(result.uid)
+        if (isObject(result) && result.email) {
+            usuarioGetByID(result.email)
                 .then(result => updateUser(result))
                 .catch(error => console.log(error.a))
             return;

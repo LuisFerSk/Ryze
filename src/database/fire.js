@@ -24,7 +24,13 @@ export const setDoc = async (collectionName, id, data) =>
         .catch(error => error)
 
 export const getDoc = async (collection, id) =>
-    await getDocFire(doc(db, collection, id)).then(doc => ({ id: doc.id, data: doc.data() }))
+    await getDocFire(doc(db, collection, id))
+        .then(doc => {
+            if (doc.data()) {
+                return { id: doc.id, data: doc.data() }
+            }
+        })
+        .catch(error => error)
 
 export const getDocs = async collectionName => {
     const result = []

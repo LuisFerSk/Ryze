@@ -7,8 +7,7 @@ import {
 } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
 
-import { useMensaje, useContextUser } from '../uses'
-import { authCreateUser } from '../../database/auth'
+import { useMensaje } from '../uses'
 import { PROFESOR, ESTUDIANTE } from '../../_mocks_/roles'
 import { usuarioUpdate, usuarioAdd } from './usuarioService'
 import { estadosUsuarios as estados } from '../../_mocks_/estados'
@@ -19,8 +18,6 @@ const tipos = [PROFESOR, ESTUDIANTE]
 
 const UsuarioForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
-
-    const user = useContextUser()
 
     const formik = useFormik({
         initialValues: id && init ? init : usuarioInitialValues,
@@ -40,21 +37,17 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                 return;
             }
 
-            const { email, identificacion } = user;
+            usuarioAdd(data).then(result => {
+                if (isObject(result) && result.id) {
+                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                    resetForm()
+                    setMensaje('success', '¡Se ha guardado el registro correctamente!')
+                    return;
+                }
 
-            authCreateUser(data.email, data.identificacion).then(acountData =>
-                usuarioAdd(acountData.uid, data).then(result => {
-                    if (isObject(result) && result.id) {
-                        setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
-                        resetForm()
-                        setMensaje('success', '¡Se ha guardado el registro correctamente!')
-                        return;
-                    }
-
-                    console.log(result)
-                    setMensaje('error', '¡No se ha podido guardar el registro!')
-                })
-            ).catch(error => error.a)
+                console.log(result)
+                setMensaje('error', '¡No se ha podido guardar el registro!')
+            })
         }
     })
 

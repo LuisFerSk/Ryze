@@ -12,24 +12,16 @@ export const usuarioUpdate = async (id, data) => {
     return await updateDoc(collectionName, id, data).then(get => get)
 }
 
-export const usuarioAdd = async (uid, data) => {
+export const usuarioAdd = async (data) => {
     let errores = []
-
-
 
     if (!isObject(data)) {
         errores = [...errores, response(400, 'Se esperaba un JSON')]
     }
 
-    if (!uid) {
-        errores = [...errores, response(400, 'Se necesita el uid')]
-    }
-
     if (errores.length > 0) {
         return errores;
     }
-
-
 
     const { email, identificacion, nombres, apellidos, estado, tipo } = data;
 
@@ -61,8 +53,7 @@ export const usuarioAdd = async (uid, data) => {
         return errores;
     }
 
-
-    return await setDoc(collectionName, uid, data).then(result => result)
+    return await setDoc(collectionName, email, data).then(result => result)
 }
 
 export const usuarioGetAll = async () => {

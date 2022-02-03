@@ -1,0 +1,1 @@
+export const FIREBASE_ERROR_NO_ACOUNT = 'Firebase: Error (auth/user-not-found).'
