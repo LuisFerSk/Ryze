@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import CloseIcon from '@material-ui/icons/Close'
 import { Card, Modal, IconButton, Grid, Typography } from '@material-ui/core'
 
-import useStyles from '../../theme/modal'
+import useStyles from '../../theme/useStylesModal'
 
 const TransitionsModal = ({ children, title, isOpen, close }) => {
     const classes = useStyles()

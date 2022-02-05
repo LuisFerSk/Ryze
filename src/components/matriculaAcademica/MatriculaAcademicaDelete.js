@@ -8,7 +8,7 @@ const MatriculaAcademicaDelete = ({ init, setDocs, closeModal, openAlert }) => {
     const onSubmit = () => {
         matriculaAcademicaDelete(id).then(result => {
             if (result === true) {
-                setDocs(old => deleteDataInDocumentArray(old, id))
+                setDocs(oldDocs => deleteDataInDocumentArray(oldDocs, id))
                 openAlert()
                 closeModal()
                 return;
@@ -19,8 +19,8 @@ const MatriculaAcademicaDelete = ({ init, setDocs, closeModal, openAlert }) => {
 
     return (
         <Delete
-            value={estudiante.toString()}
             onSubmitFormik={onSubmit}
+            value={estudiante.toString()}
             label='Identificación del estudiante'
             mensajeError={`Digite la identificicación: ${estudiante}`}
         >

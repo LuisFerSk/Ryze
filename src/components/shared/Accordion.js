@@ -9,7 +9,7 @@ import {
     AccordionDetails,
 } from '@material-ui/core'
 
-import useStyles from '../../theme/accordion'
+import useStyles from '../../theme/useStylesAccordion'
 const CustomAccordion = ({ accordions, indexOpen }) => {
     const classes = useStyles()
     const [expanded, setExpanded] = useState(indexOpen >= 0 ? indexOpen : false)

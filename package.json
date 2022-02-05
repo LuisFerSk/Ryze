@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
+		"sonarqube": "sonar-scanner",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "jest",
@@ -78,6 +79,7 @@
 		"react-text-mask": "^5.4.3",
 		"simplebar": "^5.3.5",
 		"simplebar-react": "^2.3.5",
+		"sonar-scanner": "^3.1.0",
 		"web-vitals": "^2.1.0",
 		"yup": "^0.32.9"
 	},

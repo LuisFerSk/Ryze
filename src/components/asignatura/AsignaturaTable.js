@@ -21,7 +21,7 @@ const headLabel = [
     { id: '', }
 ]
 
-const FacultadTable = ({ docs, setDocs }) => {
+const AsignaturaTable = ({ docs, setDocs }) => {
     const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false)
 
     const [isOpenAlert, openAlert, closeAlert, contentAlert] = useFloat(
@@ -91,4 +91,4 @@ const FacultadTable = ({ docs, setDocs }) => {
     )
 }
 
-export default FacultadTable;
+export default AsignaturaTable;

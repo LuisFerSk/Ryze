@@ -31,7 +31,7 @@ const AsistenciaTable = ({ docs, setDocs }) => {
             <>
                 <TableCell align='left'>{estudiante ? estudiante : <Undefined />}</TableCell>
                 <TableCell padding='checkbox'>
-                    <IconButton icon={clipboardText} onClick={() => { }} title='asistencia' />
+                    <IconButton icon={clipboardText} title='asistencia' />
                 </TableCell>
             </>
         )

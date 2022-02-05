@@ -10,9 +10,13 @@ export const periodoAcademicoUpdate = async (id, data) => {
     return await updateDoc(collectionName, id, data).then(get => get)
 }
 
-export const periodoAcademicoGetAll = async () => await getDocs(collectionName).then(get => get)
+export const periodoAcademicoGetAll = async () => {
+    return await getDocs(collectionName).then(get => get)
+}
 
-export const periodoAcademicoDelete = async id => await deleteDoc(collectionName, id).then(get => get)
+export const periodoAcademicoDelete = async id => {
+    return await deleteDoc(collectionName, id).then(get => get)
+}
 
 export const periodoAcademicoGetActived = async () => {
     const field = 'estado'

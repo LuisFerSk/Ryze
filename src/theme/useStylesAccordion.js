@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStylesAccordion = makeStyles((theme) => ({
     root: {
         width: '100%'
     },
@@ -16,4 +16,4 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default useStyles;
+export default useStylesAccordion;

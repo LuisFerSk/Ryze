@@ -4,8 +4,8 @@ import { TableCell } from '@material-ui/core'
 import Label from '../Label'
 import { useFloat } from '../uses'
 import UsuarioForm from './UsuarioForm'
-import { CustomTable, Modal, Undefined, IconButton } from '../shared'
 import { getDataForTable } from '../../utils/specialFunctions'
+import { CustomTable, Modal, Undefined, IconButton } from '../shared'
 
 const headLabel = [
     { id: 'identificacion', label: 'Número de identificación', alignRight: false },

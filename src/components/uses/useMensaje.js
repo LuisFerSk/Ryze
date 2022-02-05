@@ -5,7 +5,7 @@ const useMensaje = () => {
     const [mensaje, setMensaje] = useState()
 
     const updateMensaje = (severity, label) => {
-        if (!severity || !label) {
+        if (!severity && !label) {
             setMensaje()
             return;
         }

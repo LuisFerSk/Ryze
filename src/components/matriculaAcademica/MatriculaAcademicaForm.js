@@ -50,6 +50,11 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
     const grupo = getFieldProps('grupo')
     const estudiante = getFieldProps('estudiante')
 
+    const handleChange = (event, onChange) => {
+        setMensaje()
+        onChange(event)
+    }
+
     return (
         <FormikProvider value={formik}>
             <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
@@ -64,10 +69,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                                 variant='outlined'
                                 helperText={touched.estudiante && errors.estudiante}
                                 error={Boolean(touched.estudiante && errors.estudiante)}
-                                onChange={event => {
-                                    setMensaje()
-                                    estudiante.onChange(event)
-                                }}
+                                onChange={event => { handleChange(event, estudiante.onChange) }}
                             >
                                 {estudiantes.map((row, index) => {
                                     const data = row.data;
@@ -109,10 +111,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                             variant='outlined'
                             helperText={touched.grupo && errors.grupo}
                             error={Boolean(touched.grupo && errors.grupo)}
-                            onChange={event => {
-                                setMensaje()
-                                grupo.onChange(event)
-                            }}
+                            onChange={event => { handleChange(event, grupo.onChange) }}
                         >
                             {grupos.map((row, index) => {
                                 const data = row.data;

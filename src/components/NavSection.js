@@ -68,12 +68,12 @@ const NavItem = ({ item, active }) => {
                 <ListItemStyle
                     onClick={handleOpen}
                     sx={{
-                        ...(isActiveRoot && activeRootStyle)
+                        ...(isActiveRoot ? activeRootStyle : undefined)
                     }}
                 >
-                    <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
+                    <ListItemIconStyle>{icon ? icon : null}</ListItemIconStyle>
                     <ListItemText disableTypography primary={title} />
-                    {info && info}
+                    {info ? info : null}
                     <Box
                         component={Icon}
                         icon={open ? arrowIosDownwardFill : arrowIosForwardFill}
@@ -83,17 +83,16 @@ const NavItem = ({ item, active }) => {
 
                 <Collapse in={open} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        {children.map(item => {
-                            const { title, path } = item;
-                            const isActiveSub = active(path)
+                        {children.map(rowChildren => {
+                            const isActiveSub = active(rowChildren.path)
 
                             return (
                                 <ListItemStyle
-                                    key={title}
+                                    to={rowChildren.path}
                                     component={RouterLink}
-                                    to={path}
+                                    key={rowChildren.title}
                                     sx={{
-                                        ...(isActiveSub && activeSubStyle)
+                                        ...(isActiveSub ? activeSubStyle : undefined)
                                     }}
                                 >
                                     <ListItemIconStyle>
@@ -107,7 +106,7 @@ const NavItem = ({ item, active }) => {
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
                                                 bgcolor: 'text.disabled',
-                                                transition: (theme) => theme.transitions.create('transform'),
+                                                transition: themeTransition => themeTransition.transitions.create('transform'),
                                                 ...(isActiveSub && {
                                                     transform: 'scale(2)',
                                                     bgcolor: 'primary.main',
@@ -115,7 +114,7 @@ const NavItem = ({ item, active }) => {
                                             }}
                                         />
                                     </ListItemIconStyle>
-                                    <ListItemText disableTypography primary={title} />
+                                    <ListItemText disableTypography primary={rowChildren.title} />
                                 </ListItemStyle>
                             )
                         })}
@@ -130,12 +129,12 @@ const NavItem = ({ item, active }) => {
             component={RouterLink}
             to={path}
             sx={{
-                ...(isActiveRoot && activeRootStyle)
+                ...(isActiveRoot ? activeRootStyle : null)
             }}
         >
-            <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
+            <ListItemIconStyle>{icon ? icon : null}</ListItemIconStyle>
             <ListItemText disableTypography primary={title} />
-            {info && info}
+            {info ? info : null}
         </ListItemStyle>
     )
 }

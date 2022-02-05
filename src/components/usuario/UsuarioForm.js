@@ -25,15 +25,17 @@ const UsuarioForm = ({ id, init, setDocs }) => {
         onSubmit: (data, { resetForm }) => {
             mensajeLoader()
             if (id) {
-                usuarioUpdate(id, data).then(result => {
-                    if (result === true) {
-                        setDocs(old => updateDataInDocumentArray(old, id, data))
-                        setMensaje('success', '¡Se ha actualizado el registro correctamente!')
-                        return;
+                usuarioUpdate(id, data,
+                    result => {
+                        if (result === true) {
+                            setDocs(old => updateDataInDocumentArray(old, id, data))
+                            setMensaje('success', '¡Se ha actualizado el registro correctamente!')
+                            return;
+                        }
+                        console.log(result)
+                        setMensaje('error', '¡No se ha podido guardar el registro!')
                     }
-                    console.log(result)
-                    setMensaje('error', '¡No se ha podido guardar el registro!')
-                })
+                )
                 return;
             }
 

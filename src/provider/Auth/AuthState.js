@@ -17,34 +17,33 @@ const AuthState = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-    const [result, setResult] = useState()
+    const [authState, setAuthState] = useState()
 
     const updateUser = (newUser) => {
         try {
             dispatch({
                 type: UPDATE_USER,
                 payload: newUser,
-            });
+            })
         } catch (error) {
             console.log(error.response)
         }
     }
 
-    onAuthStateChanged(auth, result => setResult(result))
+    onAuthStateChanged(auth, authResult => setAuthState(authResult))
 
     useEffect(() => {
-        if (result === null) {
-            updateUser(result)
+        if (authState === null) {
+            updateUser(authState)
             return;
         }
 
-        if (isObject(result) && result.email) {
-            usuarioGetByID(result.email)
-                .then(result => updateUser(result))
+        if (isObject(authState)) {
+            usuarioGetByID(authState.email)
+                .then(user => updateUser(user))
                 .catch(error => console.log(error.a))
-            return;
         }
-    }, [result])
+    }, [authState])
 
     return (
         <authContext.Provider

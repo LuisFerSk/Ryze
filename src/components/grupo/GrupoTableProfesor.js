@@ -11,7 +11,7 @@ const headLabel = [
     { id: '', },
 ]
 
-const AsistenciaTable = ({ docs, setDocs }) => {
+const GrupoTableProfesor = ({ docs, setDocs }) => {
     const navigate = useNavigate()
 
     const createTableCells = row => {
@@ -37,4 +37,4 @@ const AsistenciaTable = ({ docs, setDocs }) => {
     )
 }
 
-export default AsistenciaTable;
+export default GrupoTableProfesor;

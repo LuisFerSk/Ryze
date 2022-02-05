@@ -13,24 +13,25 @@ import {
     updateDoc as updateDocFire,
 } from 'firebase/firestore'
 
-export const addDoc = async (collectionName, data) =>
-    await addDocFire(collection(db, collectionName), data)
-        .then(result => result)
+export const addDoc = async (collectionName, data) => {
+    return await addDocFire(collection(db, collectionName), data)
+        .then(result => ({ id: result.id }))
         .catch(error => error)
+}
 
-export const setDoc = async (collectionName, id, data) =>
-    await setDocFire(doc(db, collectionName, id), data)
+export const setDoc = async (collectionName, id, data) => {
+    const document = doc(db, collectionName, id)
+    return await setDocFire(document, data)
         .then(() => ({ id, data }))
         .catch(error => error)
+}
 
-export const getDoc = async (collection, id) =>
-    await getDocFire(doc(db, collection, id))
-        .then(doc => {
-            if (doc.data()) {
-                return { id: doc.id, data: doc.data() }
-            }
-        })
+export const getDoc = async (collection, id) => {
+    const document = doc(db, collection, id)
+    return await getDocFire(document)
+        .then(doc => ({ id: doc.id, data: doc.data() }))
         .catch(error => error)
+}
 
 export const getDocs = async collectionName => {
     const result = []
@@ -52,19 +53,23 @@ export const getDocWhere = async (collectionName, field, condition, value) => {
     return result;
 }
 
-export const updateDoc = async (collectionName, id, data) =>
-    await updateDocFire(doc(db, collectionName, id), data)
+export const updateDoc = async (collectionName, id, data) => {
+    const document = doc(db, collectionName, id)
+    return await updateDocFire(document, data)
         .then(() => true)
         .catch(error => error)
+}
 
-export const deleteDoc = async (collectionName, id) =>
-    await deleteDocFire(doc(db, collectionName, id))
+export const deleteDoc = async (collectionName, id) => {
+    const document = doc(db, collectionName, id)
+    return await deleteDocFire(document)
         .then(() => true)
         .catch(error => error)
+}
 
-export const transaction = async (handler) => {
+export const transaction = async (handled) => {
     try {
-        await runTransaction(db, handler)
+        await runTransaction(db, handled)
         console.log('Transaction successfully committed!')
     } catch (e) {
         console.log('Transaction failed: ', e)

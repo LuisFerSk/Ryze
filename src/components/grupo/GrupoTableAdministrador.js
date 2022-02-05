@@ -18,7 +18,7 @@ const headLabel = [
     { id: '', },
 ]
 
-const GrupoTable = ({ docs, setDocs }) => {
+const GrupoTableAdministrador = ({ docs, setDocs }) => {
     const [isOpenModal, openModal, closeModal, contentModal, setContentModal, titleModal, setTitleModal] = useFloat(false)
 
     const [isOpenAlert, openAlert, closeAlert, contentAlert] = useFloat(
@@ -84,4 +84,4 @@ const GrupoTable = ({ docs, setDocs }) => {
     )
 }
 
-export default GrupoTable;
+export default GrupoTableAdministrador;

@@ -1,0 +1,3 @@
+yarn sonarqube -D sonar.login=669a6a77454c25ef91db31318e94a80b94e04c74
+
+yarn test --detectOpenHandles

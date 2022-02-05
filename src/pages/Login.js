@@ -1,10 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom'
-// material
 import { styled } from '@material-ui/core/styles'
-import { Card, Stack, Link, Container, Typography } from '@material-ui/core'
-// layouts
-import AuthLayout from '../layouts/AuthLayout'
-// components
+import { Card, Stack, Container, Typography } from '@material-ui/core'
+
 import Page from '../components/Page'
 import { MHidden } from '../components/@material-extend'
 import { LoginForm } from '../components/authentication/login'
@@ -37,13 +33,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 const Login = () => {
     return (
         <RootStyle title='Login | Minimal-UI'>
-            <AuthLayout>
-                ¿No tienes cuenta? &nbsp;
-                <Link underline='none' variant='subtitle2' component={RouterLink} to='/register'>
-                    ¡Registrate aqui!
-                </Link>
-            </AuthLayout>
-
             <MHidden width='mdDown'>
                 <SectionStyle>
                     <Typography variant='h3' sx={{ px: 5, mt: 10, mb: 5 }}>
@@ -61,14 +50,6 @@ const Login = () => {
                         <Typography sx={{ color: 'text.secondary' }}>Ingrese sus datos a continuación.</Typography>
                     </Stack>
                     <LoginForm />
-                    <MHidden width='smUp'>
-                        <Typography variant='body2' align='center' sx={{ mt: 3 }}>
-                            ¿No tienes cuenta? &nbsp;
-                            <Link variant='subtitle2' component={RouterLink} to='register'>
-                                ¡Registrate aqui!
-                            </Link>
-                        </Typography>
-                    </MHidden>
                 </ContentStyle>
             </Container>
         </RootStyle>
