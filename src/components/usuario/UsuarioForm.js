@@ -55,6 +55,16 @@ const UsuarioForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
+    const getHelperTextField = (filedName) => {
+        if (touched[filedName]) {
+            return errors[filedName].toString()
+        }
+    }
+
+    const getErrorFiled = (fieldName) => {
+        return Boolean(touched[fieldName] && errors[fieldName])
+    }
+
     const tipo = getFieldProps('tipo')
     const email = getFieldProps('email')
     const estado = getFieldProps('estado')
@@ -72,8 +82,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             {...nombres}
                             label='Nombres'
                             variant='outlined'
-                            helperText={touched.nombres && errors.nombres}
-                            error={Boolean(touched.nombres && errors.nombres)}
+                            error={getErrorFiled('nombres')}
+                            helperText={getHelperTextField('nombres')}
                             onChange={event => {
                                 setMensaje()
                                 nombres.onChange(event)
@@ -86,8 +96,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             {...apellidos}
                             label='Apellidos'
                             variant='outlined'
-                            helperText={touched.apellidos && errors.apellidos}
-                            error={Boolean(touched.apellidos && errors.apellidos)}
+                            error={getErrorFiled('apellidos')}
+                            helperText={getHelperTextField('apellidos')}
                             onChange={event => {
                                 setMensaje()
                                 apellidos.onChange(event)
@@ -101,8 +111,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             type='email'
                             label='Email'
                             variant='outlined'
-                            helperText={touched.email && errors.email}
-                            error={Boolean(touched.email && errors.email)}
+                            error={getErrorFiled('email')}
+                            helperText={getHelperTextField('email')}
                             onChange={event => {
                                 setMensaje()
                                 email.onChange(event)
@@ -116,8 +126,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             type='number'
                             variant='outlined'
                             label='Número de identificación'
-                            helperText={touched.identificacion && errors.identificacion}
-                            error={Boolean(touched.identificacion && errors.identificacion)}
+                            error={getErrorFiled('identificacion')}
+                            helperText={getHelperTextField('identificacion')}
                             onChange={event => {
                                 setMensaje()
                                 identificacion.onChange(event)
@@ -131,8 +141,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             {...tipo}
                             variant='outlined'
                             label='Tipo de usuario'
-                            helperText={touched.tipo && errors.tipo}
-                            error={Boolean(touched.tipo && errors.tipo)}
+                            error={getErrorFiled('tipo')}
+                            helperText={getHelperTextField('tipo')}
                             onChange={event => {
                                 setMensaje()
                                 tipo.onChange(event)
@@ -152,8 +162,8 @@ const UsuarioForm = ({ id, init, setDocs }) => {
                             {...estado}
                             label='Estado'
                             variant='outlined'
-                            helperText={touched.estado && errors.estado}
-                            error={Boolean(touched.estado && errors.estado)}
+                            error={getErrorFiled('estado')}
+                            helperText={getHelperTextField('estado')}
                             onChange={event => {
                                 setMensaje()
                                 estado.onChange(event)

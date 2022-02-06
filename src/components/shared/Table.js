@@ -4,9 +4,9 @@ import {
     TableRow,
     TableBody,
     TableCell,
-    MaterialTable,
     TableContainer,
-    TablePagination
+    TablePagination,
+    Table as MaterialTable,
 } from '@material-ui/core'
 
 import Scrollbar from '../Scrollbar'
