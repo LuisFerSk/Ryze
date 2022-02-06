@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { visuallyHidden } from '@material-ui/utils'
 import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@material-ui/core'
 
-const UserListHead = ({
+const TableListHead = ({
     order,
     orderBy,
     headLabel,
@@ -11,6 +11,10 @@ const UserListHead = ({
 }) => {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property)
+    }
+
+    const getOrderTextBox = () => {
+        return order === 'desc' ? 'sorted descending' : 'sorted ascending'
     }
 
     return (
@@ -31,7 +35,7 @@ const UserListHead = ({
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box sx={{ ...visuallyHidden }}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    {getOrderTextBox()}
                                 </Box>
                             ) : null}
                         </TableSortLabel>
@@ -42,11 +46,11 @@ const UserListHead = ({
     )
 }
 
-UserListHead.propTypes = {
+TableListHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']),
     orderBy: PropTypes.string,
     headLabel: PropTypes.array,
     onRequestSort: PropTypes.func,
 }
 
-export default UserListHead;
+export default TableListHead;

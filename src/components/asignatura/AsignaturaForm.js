@@ -111,7 +111,7 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
                             {init ? 'Actualizar' : 'Registrar'}
                         </Button>
                     </Grid>
-                    <Grid item xs={12} md={12} sm={12} lg={12}>
+                    <Grid container spacing={0} item xs={12} md={12} sm={12} lg={12} justifyContent='center'>
                         {mensaje}
                     </Grid>
                 </Grid>

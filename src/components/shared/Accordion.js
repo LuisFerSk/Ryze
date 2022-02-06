@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {
     Grid,
-    Accordion,
+    Accordion as MaterialAccordion,
     Typography,
     AccordionSummary,
     AccordionDetails,
 } from '@material-ui/core'
 
 import useStyles from '../../theme/useStylesAccordion'
-const CustomAccordion = ({ accordions, indexOpen }) => {
+const Accordion = ({ accordions, indexOpen }) => {
     const classes = useStyles()
     const [expanded, setExpanded] = useState(indexOpen >= 0 ? indexOpen : false)
 
@@ -21,7 +21,7 @@ const CustomAccordion = ({ accordions, indexOpen }) => {
     return (
         <>
             {accordions.map((element, index) => (
-                <Accordion
+                <MaterialAccordion
                     key={index}
                     expanded={expanded === index}
                     onChange={handleChange(index)}
@@ -44,15 +44,15 @@ const CustomAccordion = ({ accordions, indexOpen }) => {
                             </Grid>
                         </Grid>
                     </AccordionDetails>
-                </Accordion>
+                </MaterialAccordion>
             ))}
         </>
     )
 }
 
-CustomAccordion.prototype = {
+Accordion.prototype = {
     indexOpen: PropTypes.number,
     accordions: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-export default CustomAccordion;
+export default Accordion;

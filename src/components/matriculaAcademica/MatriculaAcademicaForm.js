@@ -47,8 +47,8 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-    const grupo = getFieldProps('grupo')
-    const estudiante = getFieldProps('estudiante')
+    const grupoFiled = getFieldProps('grupo')
+    const estudianteField = getFieldProps('estudiante')
 
     const handleChange = (event, onChange) => {
         setMensaje()
@@ -64,18 +64,19 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                             <TextField
                                 select
                                 fullWidth
-                                {...estudiante}
                                 label='Estudiante'
                                 variant='outlined'
+                                {...estudianteField}
                                 helperText={touched.estudiante && errors.estudiante}
                                 error={Boolean(touched.estudiante && errors.estudiante)}
-                                onChange={event => { handleChange(event, estudiante.onChange) }}
+                                onChange={event => { handleChange(event, estudianteField.onChange) }}
                             >
                                 {estudiantes.map((row, index) => {
                                     const data = row.data;
+                                    const { identificacion, nombres, apellidos } = data;
                                     return (
                                         <MenuItem key={index} value={data.identificacion}>
-                                            {`${data.identificacion} - ${data.nombres} ${data.apellidos}`}
+                                            {`${identificacion} - ${nombres} ${apellidos}`}
                                         </MenuItem>
                                     )
                                 }
@@ -86,7 +87,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                                 select
                                 disabled
                                 fullWidth
-                                {...estudiante}
+                                {...estudianteField}
                                 label='Estudiante'
                                 variant='outlined'
                             >
@@ -106,12 +107,12 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                         <TextField
                             select
                             fullWidth
-                            {...grupo}
+                            {...grupoFiled}
                             label='Grupo'
                             variant='outlined'
                             helperText={touched.grupo && errors.grupo}
                             error={Boolean(touched.grupo && errors.grupo)}
-                            onChange={event => { handleChange(event, grupo.onChange) }}
+                            onChange={event => { handleChange(event, grupoFiled.onChange) }}
                         >
                             {grupos.map((row, index) => {
                                 const data = row.data;

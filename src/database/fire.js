@@ -13,56 +13,62 @@ import {
     updateDoc as updateDocFire,
 } from 'firebase/firestore'
 
-export const addDoc = async (collectionName, data) => {
-    return await addDocFire(collection(db, collectionName), data)
+const getDocsSnapshot = (snapshot, result) => {
+    snapshot.forEach(get =>
+        result.push({ id: get.id, data: get.data() }),
+    )
+}
+
+export const addDoc = (collectionName, data) => {
+    return addDocFire(collection(db, collectionName), data)
         .then(result => ({ id: result.id }))
         .catch(error => error)
 }
 
-export const setDoc = async (collectionName, id, data) => {
+export const setDoc = (collectionName, id, data) => {
     const document = doc(db, collectionName, id)
-    return await setDocFire(document, data)
+    return setDocFire(document, data)
         .then(() => ({ id, data }))
         .catch(error => error)
 }
 
-export const getDoc = async (collection, id) => {
-    const document = doc(db, collection, id)
-    return await getDocFire(document)
-        .then(doc => ({ id: doc.id, data: doc.data() }))
+export const getDoc = (collectionName, id) => {
+    const document = doc(db, collectionName, id)
+    return getDocFire(document)
+        .then(get => ({ id: get.id, data: get.data() }))
         .catch(error => error)
 }
 
 export const getDocs = async collectionName => {
     const result = []
-    await getDocsFire(collection(db, collectionName)).then(snapshot =>
-        snapshot.forEach(doc =>
-            result.push({ id: doc.id, data: doc.data() }),
-        ),
+    await getDocsFire(collection(db, collectionName)).then(
+        snapshot => {
+            getDocsSnapshot(snapshot, result)
+        }
     )
     return result;
 }
 
 export const getDocWhere = async (collectionName, field, condition, value) => {
     const result = []
-    await getDocsFire(query(collection(db, collectionName), where(field, condition, value))).then(snapshot =>
-        snapshot.forEach(doc =>
-            result.push({ id: doc.id, data: doc.data() }),
-        ),
+    await getDocsFire(query(collection(db, collectionName), where(field, condition, value))).then(
+        snapshot => {
+            getDocsSnapshot(snapshot, result)
+        }
     )
     return result;
 }
 
-export const updateDoc = async (collectionName, id, data) => {
+export const updateDoc = (collectionName, id, data) => {
     const document = doc(db, collectionName, id)
-    return await updateDocFire(document, data)
+    return updateDocFire(document, data)
         .then(() => true)
         .catch(error => error)
 }
 
-export const deleteDoc = async (collectionName, id) => {
+export const deleteDoc = (collectionName, id) => {
     const document = doc(db, collectionName, id)
-    return await deleteDocFire(document)
+    return deleteDocFire(document)
         .then(() => true)
         .catch(error => error)
 }

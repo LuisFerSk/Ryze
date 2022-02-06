@@ -1,6 +1,6 @@
 import { Grid, CircularProgress } from '@material-ui/core'
 
-const CircularIndeterminate = ({ label }) => {
+const Progress = ({ label }) => {
     return (
         <Grid
             container
@@ -16,4 +16,4 @@ const CircularIndeterminate = ({ label }) => {
     )
 }
 
-export default CircularIndeterminate;
+export default Progress;

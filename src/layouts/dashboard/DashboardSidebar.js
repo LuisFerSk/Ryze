@@ -37,6 +37,19 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
 
     const { data } = user
 
+    const getDashboardConfig = () => {
+        switch (data.tipo) {
+            case ADMINISTRADOR:
+                return sidebarConfigAdministrador
+            case PROFESOR:
+                return sidebarConfigProfesor
+            case ESTUDIANTE:
+                return sidebarConfigEstudiante
+            default:
+                return []
+        }
+    }
+
     useEffect(() => {
         if (isOpenSidebar) {
             onCloseSidebar()
@@ -71,7 +84,7 @@ const DashboardSidebar = ({ isOpenSidebar, onCloseSidebar }) => {
                     </AccountStyle>
                 </Link>
             </Box>
-            <NavSection navConfig={data.tipo === ADMINISTRADOR ? sidebarConfigAdministrador : data.tipo === PROFESOR ? sidebarConfigProfesor : data.tipo === ESTUDIANTE ? sidebarConfigEstudiante : []} />
+            <NavSection navConfig={getDashboardConfig()} />
             <Box sx={{ flexGrow: 1 }} />
         </Scrollbar>
     )

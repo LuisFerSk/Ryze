@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import {
-    Table,
     TableRow,
     TableBody,
     TableCell,
+    MaterialTable,
     TableContainer,
     TablePagination
 } from '@material-ui/core'
@@ -15,7 +15,7 @@ import TableListHead from './table/TableListHead'
 import TableListToolbar from './table/TableListToolbar'
 import { getComparator, applySortFilter } from './table/TableFunctions'
 
-const CustomTable = ({ headLabel, data, selectBy, createTableCells, searchBy, filters = [] }) => {
+const Table = ({ headLabel, data, selectBy, createTableCells, searchBy, filters = [] }) => {
     const [page, setPage] = useState(0)
     const [filter, setFilter] = useState('')
     const [order, setOrder] = useState('asc')
@@ -37,7 +37,7 @@ const CustomTable = ({ headLabel, data, selectBy, createTableCells, searchBy, fi
             {filters.map((row, key) => row)}
             <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
-                    <Table>
+                    <MaterialTable>
                         <TableListHead
                             order={order}
                             orderBy={orderBy}
@@ -76,7 +76,7 @@ const CustomTable = ({ headLabel, data, selectBy, createTableCells, searchBy, fi
                                 </TableRow>
                             </TableBody>
                         )}
-                    </Table>
+                    </MaterialTable>
                 </TableContainer>
             </Scrollbar>
             <TablePagination
@@ -97,4 +97,4 @@ const CustomTable = ({ headLabel, data, selectBy, createTableCells, searchBy, fi
     )
 }
 
-export default CustomTable;
+export default Table;
