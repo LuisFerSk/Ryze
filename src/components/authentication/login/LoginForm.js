@@ -7,7 +7,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill'
 import { useFormik, Form, FormikProvider } from 'formik'
 import { Stack, TextField, IconButton, InputAdornment, Grid } from '@material-ui/core'
 
-import { useMensaje } from '../../uses'
+import { useMensaje, useFormikError } from '../../uses'
 import { isObject } from '../../../utils/specialFunctions'
 import { usuarioGetByID } from '../../usuario/usuarioService'
 import { loginSchema, loginInitialValues } from './loginSchema'
@@ -49,6 +49,8 @@ const LoginForm = () => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
+    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
+
     return (
         <FormikProvider value={formik}>
             <Form autoComplete='off' noValidate onSubmit={handleSubmit} >
@@ -59,17 +61,17 @@ const LoginForm = () => {
                         autoComplete='username'
                         label='Correo electronico'
                         {...getFieldProps('email')}
-                        helperText={touched.email && errors.email}
-                        error={Boolean(touched.email && errors.email)}
+                        error={getErrorFiled('email')}
+                        helperText={getHelperTextField('email')}
                     />
                     <TextField
                         fullWidth
                         label='Contraseña'
                         {...getFieldProps('password')}
                         autoComplete='current-password'
+                        error={getErrorFiled('password')}
                         type={showPassword ? 'text' : 'password'}
-                        helperText={touched.password && errors.password}
-                        error={Boolean(touched.password && errors.password)}
+                        helperText={getHelperTextField('password')}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position='end'>

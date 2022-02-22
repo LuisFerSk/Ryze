@@ -1,3 +1,5 @@
+import { filter } from 'lodash'
+
 export const indexTab = (index) => {
     return {
         id: `scrollable-force-tab-${index}`,
@@ -26,7 +28,10 @@ export const response = (status, result) => {
 }
 
 export const updateDataInDocumentArray = (arrayDocs, id, newData) => {
-    return [...arrayDocs.filter(row => row.id !== id), { id, data: newData }]
+    const data = deleteDataInDocumentArray(arrayDocs, id)
+    const newDoc = { id, data: newData }
+
+    return addDataInDocumentArray(data, newDoc)
 }
 
 export const addDataInDocumentArray = (arrayDocs, data) => {
@@ -34,11 +39,11 @@ export const addDataInDocumentArray = (arrayDocs, data) => {
 }
 
 export const deleteDataInDocumentArray = (arrayDocs, id) => {
-    return [...arrayDocs.filter(row => row.id !== id)]
+    return filter(arrayDocs, row => row.id !== id)
 }
 
 export const isObject = (value) => {
-    return value && typeof value === 'object'
+    return typeof value === 'object'
 }
 
 export const isBoolean = (value) => {
@@ -46,5 +51,5 @@ export const isBoolean = (value) => {
 }
 
 export const isString = (value) => {
-    return value && typeof value === 'string'
+    return typeof value === 'string'
 }

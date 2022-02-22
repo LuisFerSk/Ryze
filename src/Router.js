@@ -22,22 +22,23 @@ const Router = () => {
     const user = useContextUser()
 
     const elementOnlyForAdmin = (element) => {
-        if (isObject(user) && user.data.tipo === ADMINISTRADOR) {
+        if (isObject(user) && user && user.data.tipo === ADMINISTRADOR) {
             return element;
         }
         return <Navigate to='/404' replace />
     }
 
     const elementAccordingToUserLogin = (elementUserLoggedIn, elementUserLoggedOut) => {
-        if (user === undefined) {
-            return <CircularIndeterminate label='Cargando' />
-        }
+        switch (user) {
+            case undefined:
+                return <CircularIndeterminate label='Cargando' />
 
-        if (user) {
-            return elementUserLoggedIn;
-        }
+            case null:
+                return elementUserLoggedOut;
 
-        return elementUserLoggedIn;
+            default:
+                return elementUserLoggedIn;
+        }
     }
 
     return useRoutes([
@@ -45,14 +46,14 @@ const Router = () => {
             path: '/dashboard',
             element: elementAccordingToUserLogin(<DashboardLayout />, <Navigate to='/' replace />),
             children: [
-                { path: '/dashboard/app', element: <DashboardApp /> },
-                { path: '/dashboard/', element: <Navigate to='/dashboard/app' replace /> },
                 { path: '/dashboard/grupo', element: <Grupo /> },
+                { path: '/dashboard/app', element: <DashboardApp /> },
+                { path: '/dashboard/asistencia/:grupo', element: <Asistencia /> },
                 { path: '/dashboard/usuario', element: elementOnlyForAdmin(<Usuario />) },
+                { path: '/dashboard/', element: <Navigate to='/dashboard/app' replace /> },
                 { path: '/dashboard/asignatura', element: elementOnlyForAdmin(<Asignatura />) },
                 { path: '/dashboard/matricula', element: elementOnlyForAdmin(<MatriculaCademica />) },
                 { path: '/dashboard/periodo_academico', element: elementOnlyForAdmin(<PeriodoAcademico />) },
-                { path: '/dashboard/asistencia/:grupo', element: <Asistencia /> },
             ]
         },
         {

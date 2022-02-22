@@ -20,7 +20,11 @@ const useMensaje = () => {
         setMensaje(<CircularProgress color='success' />)
     }
 
-    return [mensaje, updateMensaje, mensajeLoader]
+    return [
+        mensaje,
+        updateMensaje,
+        mensajeLoader,
+    ]
 }
 
 export default useMensaje;

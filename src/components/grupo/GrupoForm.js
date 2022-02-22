@@ -9,6 +9,8 @@ import { usuarioGetAllProfesor } from '../usuario/usuarioService'
 import { asignaturaGetAll } from '../asignatura/asignaturaService'
 import { periodoAcademicoGetActived } from '../periodoAcademico/periodoAcademicoService'
 import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { useEffect } from 'react';
+import useFormikError from './../uses/useFormikError';
 
 
 const GrupoForm = ({ id, init, setDocs }) => {
@@ -55,10 +57,13 @@ const GrupoForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-    const numero = getFieldProps('numero')
-    const periodo = getFieldProps('periodo')
-    const profesor = getFieldProps('profesor')
-    const asignatura = getFieldProps('asignatura')
+    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
+
+
+    useEffect(() => {
+        setMensaje()
+        // eslint-disable-next-line
+    }, [values])
 
     return (
         <FormikProvider value={formik}>
@@ -68,15 +73,11 @@ const GrupoForm = ({ id, init, setDocs }) => {
                         <TextField
                             select
                             fullWidth
-                            {...profesor}
+                            {...getFieldProps('profesor')}
                             label='Profesor'
                             variant='outlined'
-                            helperText={touched.profesor && errors.profesor}
-                            error={Boolean(touched.profesor && errors.profesor)}
-                            onChange={event => {
-                                setMensaje()
-                                profesor.onChange(event)
-                            }}
+                            helperText={getHelperTextField('profesor')}
+                            error={getErrorFiled('profesor')}
                         >
                             {profesores.map((row, index) => {
                                 const data = row.data;
@@ -93,15 +94,11 @@ const GrupoForm = ({ id, init, setDocs }) => {
                         <TextField
                             select
                             fullWidth
-                            {...periodo}
+                            {...getFieldProps('periodo')}
                             variant='outlined'
                             label='Periodo academico'
-                            helperText={touched.periodo && errors.periodo}
-                            error={Boolean(touched.periodo && errors.periodo)}
-                            onChange={event => {
-                                setMensaje()
-                                periodo.onChange(event)
-                            }}
+                            helperText={getHelperTextField('periodo')}
+                            error={getErrorFiled('periodo')}
                         >
                             {periodosAcademicos.map((row, index) => {
                                 const data = row.data;
@@ -118,15 +115,11 @@ const GrupoForm = ({ id, init, setDocs }) => {
                         <TextField
                             select
                             fullWidth
-                            {...asignatura}
+                            {...getFieldProps('asignatura')}
                             label='Asignatura'
                             variant='outlined'
-                            helperText={touched.asignatura && errors.asignatura}
-                            error={Boolean(touched.asignatura && errors.asignatura)}
-                            onChange={event => {
-                                setMensaje()
-                                asignatura.onChange(event)
-                            }}
+                            helperText={getHelperTextField('asignatura')}
+                            error={getErrorFiled('asignatura')}
                         >
                             {asignaturas.map((row, index) => {
                                 const data = row.data;
@@ -142,16 +135,12 @@ const GrupoForm = ({ id, init, setDocs }) => {
                     <Grid item xs={12} md={12} sm={4} lg={4}>
                         <TextField
                             fullWidth
-                            {...numero}
+                            {...getFieldProps('numero')}
                             type='number'
                             label='Grupo'
                             variant='outlined'
-                            helperText={touched.numero && errors.numero}
-                            error={Boolean(touched.numero && errors.numero)}
-                            onChange={event => {
-                                setMensaje()
-                                numero.onChange(event)
-                            }}
+                            helperText={getHelperTextField('numero')}
+                            error={getErrorFiled('numero')}
                         />
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
@@ -169,7 +158,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
                     </Grid>
                 </Grid>
             </Form>
-        </FormikProvider>
+        </FormikProvider >
     )
 }
 

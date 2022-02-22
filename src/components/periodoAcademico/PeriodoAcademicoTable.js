@@ -13,11 +13,29 @@ import { CustomTable, Undefined, FloatAlert, Modal } from '../shared'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
 const headLabel = [
-    { id: 'titulo', label: 'Periodo', alignRight: false },
-    { id: 'fechaInicio', label: 'Fecha de inicio', alignRight: false },
-    { id: 'fechaFin', label: 'Fecha de finalización', alignRight: false },
-    { id: 'estado', label: 'Estado', alignRight: false, },
-    { id: '' }
+    {
+        id: 'titulo',
+        label: 'Periodo',
+        alignRight: false
+    },
+    {
+        id: 'fechaInicio',
+        label: 'Fecha de inicio',
+        alignRight: false
+    },
+    {
+        id: 'fechaFin',
+        label: 'Fecha de finalización',
+        alignRight: false
+    },
+    {
+        id: 'estado',
+        label: 'Estado',
+        alignRight: false,
+    },
+    {
+        id: ''
+    }
 ]
 
 const PeriodoAcademicoTable = ({ docs, setDocs }) => {
@@ -59,9 +77,15 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{titulo ? titulo : <Undefined />}</TableCell>
-                <TableCell align='left'>{fechaInicio ? fechaInicio : <Undefined />}</TableCell>
-                <TableCell align='left'>{fechaFin ? fechaFin : <Undefined />}</TableCell>
+                <TableCell align='left'>
+                    {titulo ? titulo : <Undefined />}
+                </TableCell>
+                <TableCell align='left'>
+                    {fechaInicio ? fechaInicio : <Undefined />}
+                </TableCell>
+                <TableCell align='left'>
+                    {fechaFin ? fechaFin : <Undefined />}
+                </TableCell>
                 <TableCell align='left'>
                     <Label
                         variant='ghost'
@@ -81,8 +105,18 @@ const PeriodoAcademicoTable = ({ docs, setDocs }) => {
 
     return (
         <>
-            <CustomTable createTableCells={createTableCells} headLabel={headLabel} data={getDataForTable(docs)} selectBy='titulo' searchBy='titulo' />
-            <Modal title={titleModal} isOpen={isOpenModal} close={closeModal}>
+            <CustomTable
+                createTableCells={createTableCells}
+                headLabel={headLabel}
+                data={getDataForTable(docs)}
+                selectBy='titulo'
+                searchBy='titulo'
+            />
+            <Modal
+                title={titleModal}
+                isOpen={isOpenModal}
+                close={closeModal}
+            >
                 {contentModal}
             </Modal>
             <FloatAlert isOpen={isOpenAlert} close={closeAlert}>

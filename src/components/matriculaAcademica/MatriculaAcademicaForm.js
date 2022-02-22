@@ -8,6 +8,8 @@ import { usuarioGetAllEstudiante } from '../usuario/usuarioService'
 import { matriculaAcademicaAdd, matriculaAcademicaUpdate } from './matriculaAcademicaService'
 import { matriculaAcademicaInitialValues, matriculaAcademicaSchema } from './MatriculaAcademicaSchema'
 import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { useEffect } from 'react';
+import useFormikError from './../uses/useFormikError';
 
 const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -47,72 +49,52 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
-    const grupoFiled = getFieldProps('grupo')
-    const estudianteField = getFieldProps('estudiante')
+    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
 
-    const handleChange = (event, onChange) => {
+    const estudianteFieldProps = getFieldProps('estudiante')
+
+    useEffect(() => {
         setMensaje()
-        onChange(event)
-    }
+        // eslint-disable-next-line
+    }, [values])
 
     return (
         <FormikProvider value={formik}>
             <Form noValidate autoComplete='off' onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={12} sm={6} lg={6}>
-                        {!id ?
-                            <TextField
-                                select
-                                fullWidth
-                                label='Estudiante'
-                                variant='outlined'
-                                {...estudianteField}
-                                helperText={touched.estudiante && errors.estudiante}
-                                error={Boolean(touched.estudiante && errors.estudiante)}
-                                onChange={event => { handleChange(event, estudianteField.onChange) }}
-                            >
-                                {estudiantes.map((row, index) => {
-                                    const data = row.data;
-                                    const { identificacion, nombres, apellidos } = data;
-                                    return (
-                                        <MenuItem key={index} value={data.identificacion}>
-                                            {`${identificacion} - ${nombres} ${apellidos}`}
-                                        </MenuItem>
-                                    )
-                                }
-                                )}
-                            </TextField>
-                            :
-                            <TextField
-                                select
-                                disabled
-                                fullWidth
-                                {...estudianteField}
-                                label='Estudiante'
-                                variant='outlined'
-                            >
-                                {estudiantes.map((row, index) => {
-                                    const data = row.data;
-                                    const { identificacion, nombres, apellidos } = data;
-                                    return (
-                                        <MenuItem key={index} value={identificacion}>
-                                            {`${identificacion} - ${nombres} ${apellidos}`}
-                                        </MenuItem>
-                                    )
-                                }
-                                )}
-                            </TextField>}
+                        <TextField
+                            select
+                            fullWidth
+                            disabled={!id}
+                            label='Estudiante'
+                            variant='outlined'
+                            {...estudianteFieldProps}
+                            error={getErrorFiled('estudiante')}
+                            helperText={getHelperTextField('estudiante')}
+                        >
+                            {estudiantes.map((row, key) => {
+                                const data = row.data;
+                                const { identificacion, nombres, apellidos } = data;
+                                return (
+                                    <MenuItem key={key} value={identificacion}>
+                                        {`${identificacion} - ${nombres} ${apellidos}`}
+                                    </MenuItem>
+                                )
+                            }
+                            )}
+                        </TextField>
+
                     </Grid>
                     <Grid item xs={12} md={12} sm={6} lg={6}>
                         <TextField
                             select
                             fullWidth
-                            {...grupoFiled}
                             label='Grupo'
                             variant='outlined'
-                            helperText={touched.grupo && errors.grupo}
-                            error={Boolean(touched.grupo && errors.grupo)}
-                            onChange={event => { handleChange(event, grupoFiled.onChange) }}
+                            {...getFieldProps('grupo')}
+                            error={getErrorFiled('grupo')}
+                            helperText={getHelperTextField('grupo')}
                         >
                             {grupos.map((row, index) => {
                                 const data = row.data;

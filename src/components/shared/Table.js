@@ -15,7 +15,7 @@ import TableListHead from './table/TableListHead'
 import TableListToolbar from './table/TableListToolbar'
 import { getComparator, applySortFilter } from './table/TableFunctions'
 
-const Table = ({ headLabel, data, selectBy, createTableCells, searchBy, filters = [] }) => {
+const Table = ({ headLabel, data, selectBy, createTableCells, searchBy, }) => {
     const [page, setPage] = useState(0)
     const [filter, setFilter] = useState('')
     const [order, setOrder] = useState('asc')
@@ -30,11 +30,10 @@ const Table = ({ headLabel, data, selectBy, createTableCells, searchBy, filters 
         <>
             <TableListToolbar
                 filter={filter}
-                onFilter={(event) => {
-                    setFilter(event.target.value)
+                onFilter={({ target }) => {
+                    setFilter(target.value)
                 }}
             />
-            {filters.map((row, key) => row)}
             <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
                     <MaterialTable>
@@ -85,8 +84,8 @@ const Table = ({ headLabel, data, selectBy, createTableCells, searchBy, filters 
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 rowsPerPageOptions={[5, 10, 25]}
-                onRowsPerPageChange={(event) => {
-                    setRowsPerPage(parseInt(event.target.value, 10))
+                onRowsPerPageChange={({ target }) => {
+                    setRowsPerPage(parseInt(target.value, 10))
                     setPage(0)
                 }}
                 onPageChange={(event, newPage) => {

@@ -15,7 +15,7 @@ import {
 
 const getDocsSnapshot = (snapshot, result) => {
     snapshot.forEach(get =>
-        result.push({ id: get.id, data: get.data() }),
+        result = [...result, { id: get.id, data: get.data() }],
     )
 }
 

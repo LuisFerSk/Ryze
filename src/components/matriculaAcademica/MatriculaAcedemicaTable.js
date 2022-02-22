@@ -11,9 +11,19 @@ import { Modal, CustomTable, FloatAlert, Undefined } from '../shared'
 import { getDataForTable, createOptions } from '../../utils/specialFunctions'
 
 const headLabel = [
-    { id: 'grupo', label: 'Grupo', alignRight: false },
-    { id: 'estudiante', label: 'Estudiante', alignRight: false },
-    { id: '', },
+    {
+        id: 'grupo',
+        label: 'Grupo',
+        alignRight: false
+    },
+    {
+        id: 'estudiante',
+        label: 'Estudiante',
+        alignRight: false
+    },
+    {
+        id: '',
+    },
 ]
 
 const MatriculaAcedemicaTable = ({ docs, setDocs }) => {
@@ -56,8 +66,12 @@ const MatriculaAcedemicaTable = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{grupo ? grupo : <Undefined />}</TableCell>
-                <TableCell align='left'>{estudiante ? estudiante : <Undefined />}</TableCell>
+                <TableCell align='left'>
+                    {grupo ? grupo : <Undefined />}
+                </TableCell>
+                <TableCell align='left'>
+                    {estudiante ? estudiante : <Undefined />}
+                </TableCell>
                 <TableCell padding='checkbox'>
                     <TableMoreMenu>
                         {mappingMenuItem(options)}

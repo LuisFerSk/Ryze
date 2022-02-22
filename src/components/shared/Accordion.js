@@ -32,7 +32,9 @@ const Accordion = ({ accordions, indexOpen }) => {
                         id={`${index}bh-header`}
                     >
                         {element.icon}
-                        <Typography className={classes.heading}>{element.title}</Typography>
+                        <Typography className={classes.heading}>
+                            {element.title}
+                        </Typography>
                         <Typography className={classes.secondaryHeading}>
                             {element.subtitle}
                         </Typography>

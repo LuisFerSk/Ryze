@@ -23,10 +23,18 @@ const GrupoTableProfesor = ({ docs, setDocs }) => {
 
         return (
             <>
-                <TableCell align='left'>{asignatura ? asignatura : <Undefined />}</TableCell>
-                <TableCell align='left'>{numero ? numero : <Undefined />}</TableCell>
+                <TableCell align='left'>
+                    {asignatura ? asignatura : <Undefined />}
+                </TableCell>
+                <TableCell align='left'>
+                    {numero ? numero : <Undefined />}
+                </TableCell>
                 <TableCell padding='checkbox'>
-                    <IconButton icon={clipboardText} onClick={openAsistenciaGrupo} title='asistencia' />
+                    <IconButton
+                        icon={clipboardText}
+                        onClick={openAsistenciaGrupo}
+                        title='asistencia'
+                     />
                 </TableCell>
             </>
         )

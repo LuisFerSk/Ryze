@@ -9,9 +9,11 @@ export const usuarioUpdate = (id, data, handled) => {
     })
 }
 
-export const usuarioAdd = (data) => {
+export const usuarioAdd = (data, handled) => {
     const { email } = data;
-    return setDoc(collectionName, email, data).then(result => result)
+    return setDoc(collectionName, email, data).then(result => {
+        handled(result)
+    })
 }
 
 export const usuarioGetAll = () => {
