@@ -3,12 +3,11 @@ import SaveIcon from '@material-ui/icons/Save'
 import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
-import { useMensaje } from '../uses'
+import { useMensaje, useFormikFiledProps } from '../uses'
 import estados from '../../_mocks_/estados'
 import { asignaturaUpdate, asignaturaAdd } from './asignaturaService'
 import { asignaturaInitialValues, asignaturaSchema } from './AsignaturaSchema'
-import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
-import useFormikError from './../uses/useFormikError';
+import { updateDataInDocumentArray, addInArray, isObject } from '../../utils/specialFunctions'
 
 const AsignaturaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -33,7 +32,7 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
             asignaturaAdd(data)
                 .then(result => {
                     if (isObject(result) && result.id) {
-                        setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                        setDocs(old => addInArray(old, { id: result.id, data }))
                         resetForm()
                         setMensaje('success', '¡Se ha guardado el registro correctamente!')
                         return;
@@ -44,9 +43,13 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
         }
     })
 
-    const { errors, touched, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, handleSubmit, values } = formik;
 
-    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
+    const getFieldProps = useFormikFiledProps({
+        errors,
+        touched,
+        getFieldPropsFormik: formik.getFieldProps
+    })
 
     useEffect(() => {
         setMensaje()
@@ -63,8 +66,6 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
                             label='Asignatura'
                             variant='outlined'
                             {...getFieldProps('titulo')}
-                            error={getErrorFiled('titulo')}
-                            helperText={getHelperTextField('titulo')}
                         />
                     </Grid>
                     <Grid item xs={12} md={6} sm={8} lg={8}>
@@ -73,8 +74,6 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
                             label='Codigo'
                             variant='outlined'
                             {...getFieldProps('codigo')}
-                            error={getErrorFiled('codigo')}
-                            helperText={getHelperTextField('codigo')}
                         />
                     </Grid>
                     <Grid item xs={12} md={6} sm={4} lg={4}>
@@ -84,8 +83,6 @@ const AsignaturaForm = ({ id, init, setDocs }) => {
                             label='Estado'
                             variant='outlined'
                             {...getFieldProps('estado')}
-                            error={getErrorFiled('estado')}
-                            helperText={getHelperTextField('estado')}
                         >
                             {estados.map((row, index) =>
                                 <MenuItem key={index} value={row.value}>

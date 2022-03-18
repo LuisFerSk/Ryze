@@ -31,10 +31,10 @@ export const updateDataInDocumentArray = (arrayDocs, id, newData) => {
     const data = deleteDataInDocumentArray(arrayDocs, id)
     const newDoc = { id, data: newData }
 
-    return addDataInDocumentArray(data, newDoc)
+    return addInArray(data, newDoc)
 }
 
-export const addDataInDocumentArray = (arrayDocs, data) => {
+export const addInArray = (arrayDocs, data) => {
     return [...arrayDocs, data]
 }
 

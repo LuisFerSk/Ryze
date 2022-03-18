@@ -2,14 +2,13 @@ import SaveIcon from '@material-ui/icons/Save'
 import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
-import { useMensaje, useGetDocs } from '../uses'
+import { useMensaje, useGetDocs, useFormikFiledProps } from '../uses'
 import { grupoGetActivated } from '../grupo/grupoService'
 import { usuarioGetAllEstudiante } from '../usuario/usuarioService'
 import { matriculaAcademicaAdd, matriculaAcademicaUpdate } from './matriculaAcademicaService'
 import { matriculaAcademicaInitialValues, matriculaAcademicaSchema } from './MatriculaAcademicaSchema'
-import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { updateDataInDocumentArray, addInArray, isObject } from '../../utils/specialFunctions'
 import { useEffect } from 'react';
-import useFormikError from './../uses/useFormikError';
 
 const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -36,7 +35,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
             }
             matriculaAcademicaAdd(data).then(result => {
                 if (isObject(result) && result.id) {
-                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                    setDocs(old => addInArray(old, { id: result.id, data }))
                     resetForm()
                     setMensaje('success', '¡Se ha guardado el registro correctamente!')
                     return;
@@ -47,11 +46,13 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
         }
     })
 
-    const { errors, touched, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, handleSubmit, values } = formik;
 
-    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
-
-    const estudianteFieldProps = getFieldProps('estudiante')
+    const getFieldProps = useFormikFiledProps({
+        errors,
+        touched,
+        getFieldPropsFormik: formik.getFieldProps
+    })
 
     useEffect(() => {
         setMensaje()
@@ -69,9 +70,7 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                             disabled={!id}
                             label='Estudiante'
                             variant='outlined'
-                            {...estudianteFieldProps}
-                            error={getErrorFiled('estudiante')}
-                            helperText={getHelperTextField('estudiante')}
+                            {...getFieldProps('estudiante')}
                         >
                             {estudiantes.map((row, key) => {
                                 const data = row.data;
@@ -93,8 +92,6 @@ const MatriculaAcademicaForm = ({ id, init, setDocs }) => {
                             label='Grupo'
                             variant='outlined'
                             {...getFieldProps('grupo')}
-                            error={getErrorFiled('grupo')}
-                            helperText={getHelperTextField('grupo')}
                         >
                             {grupos.map((row, index) => {
                                 const data = row.data;

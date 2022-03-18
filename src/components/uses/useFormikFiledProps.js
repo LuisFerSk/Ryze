@@ -11,13 +11,13 @@ const useFormikFiledProps = ({ touched, errors, getFieldPropsFormik }) => {
 
     const getFieldProps = (filedName) => {
         return {
-            error: getFiledError(filedName),
             ...getFieldPropsFormik(filedName),
+            error: getFiledError(filedName),
             helperText: getFieldHelperText(filedName)
         }
     }
 
-    return [getFieldProps];
+    return getFieldProps;
 }
 
 export default useFormikFiledProps;

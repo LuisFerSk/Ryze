@@ -4,13 +4,14 @@ import SaveIcon from '@material-ui/icons/Save'
 import { Form, FormikProvider, useFormik } from 'formik'
 import { Grid, TextField, Button, MenuItem } from '@material-ui/core'
 
-import { useMensaje, useGetDocs, useFormikError } from '../uses'
+import { useMensaje, useGetDocs, useFormikFiledProps } from '../uses'
 import { asignaturaGetAll } from '../asignatura/asignaturaService'
 import { usuarioGetAllEstudiante } from '../usuario/usuarioService'
 import { asistenciaAdd, asistenciaUpdate } from './AsistenciaService'
 import { asistenciaInitialValues, asistenciaSchema } from './AsistenciaSchema'
+import TextFieldOutlined from '../shared/TextFieldOutlined'
 import { periodoAcademicoGetActived } from '../periodoAcademico/periodoAcademicoService'
-import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { updateDataInDocumentArray, addInArray, isObject } from '../../utils/specialFunctions'
 
 const AsistenciaForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -43,7 +44,7 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
 
             asistenciaAdd(data).then(result => {
                 if (isObject(result) && result.id) {
-                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                    setDocs(old => addInArray(old, { id: result.id, data }))
                     resetForm()
                     setMensaje('success', '¡Se ha guardado el registro correctamente!')
                     return;
@@ -54,9 +55,13 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
         }
     })
 
-    const { errors, touched, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, handleSubmit, values } = formik;
 
-    const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
+    const getFieldProps = useFormikFiledProps({
+        errors,
+        touched,
+        getFieldPropsFormik: formik.getFieldProps
+    })
 
     useEffect(() => {
         setMensaje()
@@ -74,8 +79,6 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
                             label='Profesor'
                             variant='outlined'
                             {...getFieldProps('profesor')}
-                            error={getErrorFiled('profesor')}
-                            helperText={getHelperTextField('profesor')}
                         >
                             {estudiantes.map((row, index) => {
                                 const data = row.data;
@@ -95,8 +98,6 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
                             variant='outlined'
                             label='Periodo academico'
                             {...getFieldProps('periodo')}
-                            error={getErrorFiled('periodo')}
-                            helperText={getHelperTextField('periodo')}
                         >
                             {periodosAcademicos.map((row, index) => {
                                 const data = row.data;
@@ -116,8 +117,6 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
                             label='Asignatura'
                             variant='outlined'
                             {...getFieldProps('asignatura')}
-                            error={getErrorFiled('asignatura')}
-                            helperText={getHelperTextField('asignatura')}
                         >
                             {asignaturas.map((row, index) => {
                                 const data = row.data;
@@ -131,14 +130,10 @@ const AsistenciaForm = ({ id, init, setDocs }) => {
                         </TextField>
                     </Grid>
                     <Grid item xs={12} md={12} sm={4} lg={4}>
-                        <TextField
-                            fullWidth
+                        <TextFieldOutlined
                             type='number'
                             label='asistencia'
-                            variant='outlined'
                             {...getFieldProps('numero')}
-                            error={getErrorFiled('numero')}
-                            helperText={getHelperTextField('numero')}
                         />
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>

@@ -8,7 +8,7 @@ import { grupoInitialValues, grupoSchema } from './GrupoSchema'
 import { usuarioGetAllProfesor } from '../usuario/usuarioService'
 import { asignaturaGetAll } from '../asignatura/asignaturaService'
 import { periodoAcademicoGetActived } from '../periodoAcademico/periodoAcademicoService'
-import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { updateDataInDocumentArray, addInArray, isObject } from '../../utils/specialFunctions'
 import { useEffect } from 'react';
 import useFormikError from './../uses/useFormikError';
 
@@ -44,7 +44,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
 
             grupoAdd(data).then(result => {
                 if (isObject(result) && result.id) {
-                    setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                    setDocs(old => addInArray(old, { id: result.id, data }))
                     resetForm()
                     setMensaje('success', '¡Se ha guardado el registro correctamente!')
                     return;
@@ -55,7 +55,7 @@ const GrupoForm = ({ id, init, setDocs }) => {
         }
     })
 
-    const { errors, touched, handleSubmit, getFieldProps } = formik;
+    const { errors, touched, handleSubmit, getFieldProps, values } = formik;
 
     const [getHelperTextField, getErrorFiled] = useFormikError(touched, errors)
 

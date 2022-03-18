@@ -7,7 +7,7 @@ import estados from '../../_mocks_/estados'
 import PeriodoAcademicoTitulo from './PeriodoAcademicoTitulo'
 import { periodoAcademicoAdd, periodoAcademicoUpdate } from './periodoAcademicoService'
 import { peridoAcademicoSchema, peridoAcademicoInitialValues } from './PeriodoAcademicoSchema'
-import { updateDataInDocumentArray, addDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { updateDataInDocumentArray, addInArray, isObject } from '../../utils/specialFunctions'
 
 const PeriodoAcademicoForm = ({ id, init, setDocs }) => {
     const [mensaje, setMensaje, mensajeLoader] = useMensaje()
@@ -34,7 +34,7 @@ const PeriodoAcademicoForm = ({ id, init, setDocs }) => {
             periodoAcademicoAdd(data)
                 .then(result => {
                     if (isObject(result) && result.id) {
-                        setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                        setDocs(old => addInArray(old, { id: result.id, data }))
                         resetForm()
                         setMensaje('success', '¡Se ha guardado el registro correctamente!')
                         return;

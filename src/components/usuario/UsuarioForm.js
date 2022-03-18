@@ -15,7 +15,8 @@ import { PROFESOR, ESTUDIANTE } from '../../_mocks_/roles'
 import { usuarioUpdate, usuarioAdd } from './usuarioService'
 import { estadosUsuarios as estados } from '../../_mocks_/estados'
 import { usuarioInitialValues, usuarioSchema } from './UsuarioSchema'
-import { addDataInDocumentArray, updateDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+import { addInArray, updateDataInDocumentArray, isObject } from '../../utils/specialFunctions'
+
 const tipos = [PROFESOR, ESTUDIANTE]
 
 const UsuarioForm = ({ id, init, setDocs }) => {
@@ -43,7 +44,7 @@ const UsuarioForm = ({ id, init, setDocs }) => {
             usuarioAdd(data,
                 result => {
                     if (isObject(result) && result.id) {
-                        setDocs(old => addDataInDocumentArray(old, { id: result.id, data }))
+                        setDocs(old => addInArray(old, { id: result.id, data }))
                         resetForm()
                         setMensaje('success', '¡Se ha guardado el registro correctamente!')
                         return;
@@ -57,7 +58,7 @@ const UsuarioForm = ({ id, init, setDocs }) => {
 
     const { errors, touched, handleSubmit, values } = formik;
 
-    const [getFieldProps] = useFormikFiledProps({
+    const getFieldProps = useFormikFiledProps({
         errors,
         touched,
         getFieldPropsFormik: formik.getFieldProps
