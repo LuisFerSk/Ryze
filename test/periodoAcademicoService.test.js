@@ -25,6 +25,7 @@ test('agregar periodo academico', () => {
 test('actualizar periodo academico', () => {
     return periodoAcademicoUpdate(idPrueba, { estado: false }).then(result => {
         expect(result).toEqual(true)
+
     })
 });
 
